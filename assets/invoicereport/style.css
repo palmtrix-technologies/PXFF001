@@ -1,0 +1,94 @@
+        body{
+            font-family: 'Roboto', sans-serif;
+        }
+        .table-bordered>tbody>tr>td,
+        .table-bordered>tbody>tr>th,
+        .table-bordered>tfoot>tr>td,
+        .table-bordered>tfoot>tr>th,
+        .table-bordered>thead>tr>td,
+        .table-bordered>thead>tr>th {
+            border: 1px solid #000!important;
+        }
+        
+        table.tab2 td {
+            height: 40px;
+        }
+        
+        table.tab3 p {
+            font-size: 13px;
+            font-weight: bold;
+            line-height: 22px;
+            text-align: justify;
+            letter-spacing: 1px;
+        }
+        
+        table.tab3 p.tab3-p1 {
+            padding-top: 18px;
+            padding: 0px 6px 0px 6px;
+        }
+        
+        table.tab3 p.tab3-p2 {
+            margin-top: 6px;
+        }
+        
+        table.tab3 p.rtl {
+            direction: rtl;
+            text-align: justify;
+            font-size: 16px;
+            /*padding: 6px 6px;
+            line-height: 30px;*/
+        }
+        
+        table.tab4 p {
+            color: #003195;
+            font-weight: bold;
+           padding-left: 8px;
+        }
+        
+        .logo {
+            height: 70px;
+            width: 300px;
+        }
+        
+        h3 {
+            float: right;
+        }
+        
+        .rtl {
+            float: right;
+        }
+        
+        .m-b-1 {
+            margin-bottom: 1px;
+        }
+        
+        .b-zero {
+            border-right: 1px solid white;
+        }
+        
+        .ctr {
+            text-align: center;
+        }
+        
+        .fr {
+           float: right;
+        }
+        
+        .fl {
+            float: left;
+        }
+        
+        .inv-arb {
+            font-size: 20px;
+        }
+        
+        .inv-eng {
+            font-size: 35px;
+        }
+     .cus-con{
+            border:1px solid black; width: 100%;
+        }
+        .cus-con td{
+            padding: 3px;
+             /*padding: 6px;*/
+        }

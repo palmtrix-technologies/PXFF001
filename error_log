@@ -1,0 +1,4 @@
+[29-Sep-2020 12:13:22 UTC] PHP Fatal error:  Cannot redeclare Client_model::addto_opngbal_accountmaster() in /home/ferryfolks/public_html/VD/application/models/masters/Client_model.php on line 62
+[29-Sep-2020 12:13:35 UTC] PHP Fatal error:  Cannot redeclare Client_model::addto_opngbal_accountmaster() in /home/ferryfolks/public_html/VD/application/models/masters/Client_model.php on line 62
+[01-Oct-2020 16:31:14 UTC] PHP Warning:  POST Content-Length of 10131910 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[01-Oct-2020 16:33:27 UTC] PHP Warning:  POST Content-Length of 10131910 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
