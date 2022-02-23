@@ -27,8 +27,7 @@
       <div class="login-logo">
         <a href="#">
             
-             <img src ="<?php echo IMAGE_PATH.$cmpnydata[0]->Icon_image;?> "width="40px" height="40px"> 
-            <b>VISION DISPATCH</b></a>
+             <img src ="<?php echo IMAGE_PATH.$cmpnydata[0]->Icon_image;?> "width="100%"></a>
       </div>
       
       <div class="login-box-body">
