@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="fxt-switcher-description">Don't have an account?<a href="register-31.html" class="fxt-switcher-text ms-1">Register</a></div>
+                      
                     </div>
                 </div>
             </div>
