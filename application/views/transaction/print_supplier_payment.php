@@ -104,9 +104,7 @@
 							<th class="ctr" width="10.5%">Amount
 								
 							</th>
-							<th class="ctr" width="10%">Currency
-								
-							</th>
+							
 							<th width="13.2%" >Total
 							</th>
 						</tr>
@@ -129,9 +127,7 @@ $number=$number+1;
 									<span id="rptrDetail_lblDesc_0"><?php echo $value->Amount; ?></span>
 									<!-- <span id="rptrDetail_lblDescAr_0" style="float: right;">رسوم الشحن البري </span> -->
 								</td>
-								<td style="text-align: right;">
-									<?php echo " (" . $value->Currency . " - " . $value->ConvFactor . ")"; ?>
-								</td>
+								
 
 								<td style="text-align: right;"> <?php echo $value->Total; ?></td>
 
@@ -150,7 +146,7 @@ $number=$number+1;
 						<td style="text-align: right;border-right: solid 1px #FFF;"> <?php echo $paymentdata[0]->SubTotal; ?></td>	
 						</tr>
 						<tr>
-						<td>Vat Total(15%)</td>
+						<td>Vat Total(5%)</td>
 						<td style="background-color: #d2dede;text-align: right;"> <?php echo $paymentdata[0]->VatTotal; ?></td>	
 						</tr>
 						<tr style="background-color: #a1b0ab;" >
