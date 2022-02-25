@@ -22,7 +22,10 @@
 <style>
     @media print {
 
-		
+		.f-fix {
+				position: fixed;
+				bottom: 0;
+			}
        
 			@page {
 				margin-top: -100px;
@@ -59,6 +62,10 @@
         left:0;
         bottom:0;         
     
+}
+
+th {
+  border:1px solid black;
 }
     thead   {display: table-header-group;   }
 
@@ -118,142 +125,103 @@
 
 		
 			<div class="row" id="pdf">
-			<div style="margin-left: 8px;margin-top: 8pc">
+			<div style="margin-left: 8px;margin-top: 8pc;    margin-right: 8px;">
 			
 
-				<div class="f-fix">
-					<table class="table table-bordered tab3"  style="margin-bottom: 3px;">
+				<div class="">
+					<table class="table  tab3"  style="margin-bottom: 3px;">
 
 
 						<tbody>
 							<tr>
-							<!-- <td style="width: 500px !important;">
-							
-								<p class="text-left">
-								<img src="http://vd.ferryfolks.com//assets/images/vd_head.jpg" style="width:40%;" alt="logo"></td>
-									</p> 
-									</td> -->
-									<td style="width: 500px !important;">
-									<img src="http://vd.ferryfolks.com//assets/images/vd_head.jpg" style="width:65%;text-align:left;" alt="logo">
-									<h3>شركة الشحن والتموین للشحن الجوي	<br />
-									FREIGHT AND LOGISTICS CO<br />
-									<p class="text-right" style="text-align: right!important;">KING KHALED STREET </br>
-									DAMMAM SAUDI ARABIA </br>
-									DAMMAM EASTERN 31764 </br>
-									Tel : 966138946005 Fax: 00966 13 8946005 </br>
-									Email : info@fl-ksa.com, Web : www.fl-ksa.com </br>
-								</p>
-								</h3>
-							
-									
-									</td>
-							</tr>
+							<td style="width:100%;" >
+                            <img src="<?php echo IMAGE_PATH.$invoiceinfo[0]->Invheaderimage;?>" style="width:100%;" alt="logo"></td>
+                            <td style="width:34%;" >
+      <div class="textcenters" style="display: flex; align-items: center; justify-content: margin-bottom: 15px; margin-top: 15px;">
+                        
+                  
+                    </div>
+</td>
+							</tr></table>
+							<table class="table  tab3"  style="margin-bottom: 3px;">
 							<tr>
 							<td width="100%">
-								<h2 style="text-align: center!important;font-size: 24px;">RECEIPT VOUCHER - 		<span id="lblCustomerVat"><?php echo $receiptdata[0]->vat_no; ?></span> </h2>
-								</br>
+							<h2 style="font-size: 24px;"><strong>Payment Receipt : 		<span id="lblCustomerVat"><?php echo $receiptdata[0]->vat_no; ?></span> </strong></h2>
+	
 									<div class="row">
-									<div class="col-md-2"></div>
-									<div class="col-md-4"><strong>Received From : </strong><span id="lblClient"></span>
+									
+									<div class="col-md-4"><strong>Payment Date : </strong><span id="lblClient"></span>
 
-											<?php echo $receiptdata[0]->name; ?>
+											<?php echo $receiptdata[0]->Date; ?>
+									
+									</div>
+									
+									</div>
+									<div class="row">
+									
+									<div class="col-md-4"><strong>Customer :</strong><?php echo $receiptdata[0]->name; ?>
 									
 									</div>
 									<div class="col-md-4">
-									<strong>	Receipt No :</strong> 		<span id="lblCustomerVat"><?php echo $receiptdata[0]->vat_no; ?></span> 
+									<strong>	Payment Method : </strong><?php echo $receiptdata[0]->Mode; ?>
 									</div>
 									</div>
 									<div class="row">
-									<div class="col-md-2"></div>
-									<div class="col-md-4"><strong>A/C Name :</strong><?php echo $receiptdata[0]->name; ?>
+									
+									<div class="col-md-4"><strong>Payment Amount :</strong><?php echo $receiptdata[0]->SubTotal; ?>
 									
 									</div>
 									<div class="col-md-4">
-									<strong>	Date : </strong><?php echo $receiptdata[0]->Date; ?>
+									<strong>Memo :</strong> 
 									</div>
 									</div>
-									<div class="row">
-									<div class="col-md-2"></div>
-									<div class="col-md-4"><strong>Type :</strong><?php echo $receiptdata[0]->Mode; ?>
 									
-									</div>
-									<div class="col-md-4">
-									<strong>Cheque/Ref.No :</strong> 
-									</div>
-									</div>
-									<div class="row">
-									<div class="col-md-2"></div>
-									<div class="col-md-4"><strong>Narration : </strong>Payment from client, Amount:<?php echo $receiptdata[0]->SubTotal; ?>
-									</div>
-									</div>
 								</td></tr>
+</table><br/>
+<table class="table table-bordered tab3"  style="margin-bottom: 3px; margin: 10px;width: 98%;">
+<tr width="100%" style="color: #286090;">
+             <th >INVOICE DATE</th>
+			 <th>INVOICE NUMBER</th>
+			 <th>REFERENCE</th>
+			 <th>ORIGINAL AMOUNT</th>
+			 <th>AMOUNT PAID</th>
+			 <th>BALANCE</th>
+
+	                  </tr>
 								<tr>
-							<td>
-							<div class="row">
-									<div class="col-md-3"></div>
-									<div class="col-md-6"><strong>Description</strong>
-									</div>
-									<div class="col-md-3" style="border-left:2px solid black"><strong>Amount</strong>
-									</div>
-									</div>
-							</td>
+
+								<td><?php echo $receiptdata[0]->Date; ?></td>
+								<td><?php echo $invoiceinfo[0]->Invseries; ?></td>
+								<td><?php  ?></td>
+								<td style="text-align:right;"><?php $org=$receiptdata[0]->SubTotal; echo $receiptdata[0]->SubTotal." AED"; ?></td>
+								<td style="text-align:right;"><?php $paid=$receiptdata[0]->SubTotal; echo $receiptdata[0]->SubTotal." AED"; ?></td>
+								<td style="text-align:right;"><?php  $r=number_format($org - $paid, 2); echo $r." AED"; ?></td>
+							
 						</tr>
-						<tr>
-							<td>
-							<div class="row">
-									<div class="col-md-1"></div>
-									<div class="col-md-8">	<?php echo $receiptdata[0]->clientenglish; ?></br> </br>
-									<?php
-						$number=0;
-						foreach ($receiptdetails as $key => $value) {
-$number=$number+1;
-?>
-									<?php echo $receiptdata[0]->ID; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $receiptdata[0]->Date; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JOBNO:<?php echo $value->JobNo; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $receiptdata[0]->SubTotal; ?>
-									</div>
-									<?php } ?>
-									<div class="col-md-3" style="border-left:2px solid black;line-height: 8rem;"><strong><?php echo $receiptdata[0]->SubTotal; ?></strong>
-									</div>
-									</div>
-									<!-- <div class="col-md-2">INVDAM2000462</div><div class="col-md-2"> 30-SEP-20 </div><div class="col-md-2">JOBNO:JDAMAE2000447</div><div class="col-md-2">1500.00</div> -->
-							</td>
-						</tr>
-						<tr>
-						<td width="100%">
-						<div class="row">
-									<div class="col-md-3"></div>
-									<div class="col-md-6"><p class="totalamt" style=" text-transform: uppercase;" id="demo">
-									<span style="font-weight: 700; font-size: 13px;text-align:right"></span><span id="container" class="word"></span>
-									&nbsp;Only
-								</p>
-									</div>
-									<div class="col-md-3"><strong id="lblGrandTotal"><?php echo $receiptdata[0]->SubTotal; ?></strong>
-									</div>
-									</div>
-						</td>
-						</tr>
-						<tr>
 						
-						<td width="100%" style="height: 500px;">
-						<div class="row" style="margin-top: 317px;"></div>
-					<div class="row">
-					<div class="col-md-1"></div>
-						<div class="col-md-3"> <p style="border-top: 2px solid black;text-align:center">Accountant</br>( ASHRAF )</p></div>
-						<div class="col-md-3"><p style="border-top: 2px solid black;text-align:center">Checked by</p></div>
-						<div class="col-md-3"><p style="border-top: 2px solid black;text-align:center">Receiver's Signature</p></div>
-					</div>
-						</td>
 					
-						</tr>
 						</tbody>
 
-					</table>
+					</table><br/>
 				
 				</div>
+				
 
-			</div>
-			<div>
+				<div class="f-fix" style="width: 100%; padding-bottom: 58px;">
+                
+				<table >
+				 <tr>
+				<img src="<?php echo IMAGE_PATH.$invoiceinfo[0]->InvfooterImage;?>" style="width: 100%;" alt="logo">
+				</tr>
+				</table>
+				</div>
+
+				</div>
+			
+				<div>
 		</div>
-	</div>
+		</div>	
+	
 
 
 	</div>

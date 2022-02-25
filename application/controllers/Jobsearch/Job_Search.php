@@ -23,7 +23,6 @@ class Job_Search extends CI_Controller {
 	public function job_search()
 	{	
 		
-        // $data['bank']=$this->Bank_model->list();
       	$user_id=	$this->session->userdata('user_id');
 		$res = $this->Permission_model->userdetails($user_id);
 		$user_image['values']=$res[0]->user_image;
@@ -32,9 +31,6 @@ class Job_Search extends CI_Controller {
 		$result['permission']=$this->Login_model->select_all_menu($user_id);
 		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
 	
-		// $result['document']  = $this->Job_searchmodel->get_all_job_doc($masterid);
-// var_dump($data['document']);
-// exit;
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 		$this->load->view('jobsearch/Jobsearch');

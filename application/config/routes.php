@@ -257,6 +257,7 @@ $route['job-invoice/(:any)'] = 'transaction/Job_invoice_controller/job_invoice/$
 $route['job-invoice/job-invoice-description/(:any)'] = 'transaction/Job_invoice_controller/getdata/$1';
 $route['insert-job-details'] = 'transaction/Job_invoice_controller/insert_job_details';
 //print invoice
+$route['perfomainvoice-print/(:any)'] = 'transaction/Job_invoice_controller/perfomainvoice_print/$1';
 $route['invoice-print/(:any)'] = 'transaction/Job_invoice_controller/invoice_print/$1';
 // change-invoice-status
 $route['change-invoice-status/(:any)/(:any)'] = 'transaction/Job_invoice_controller/change_invoice_status/$1/$2';

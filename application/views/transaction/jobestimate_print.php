@@ -1,10 +1,5 @@
 <?php
-// var_dump($client_data);
-// var_dump($consignor_data);
 
-// var_dump($consignee_data);
-
-// die();
 ?>
 
 <!DOCTYPE html>
@@ -59,286 +54,61 @@
                         </tr>
                     </table>
                     <div class="textcenters" style="display: flex; align-items: center; justify-content: center; border-top: solid #7d7676 1px; border-bottom: solid #7d7676 1px; margin-bottom: 15px; margin-top: 15px;">
-                        <h3>Job Estimate<br />
-                        تقدير الوظيفة
+                       
                     </div>
-                    
-                    <table class="table tab1" style="margin-bottom: -4px;">
-                        <thead>
 
-
-                            <tr>
-                                <td  style="width: 34%;">
-                                    <table class="cus-con">
-                                        <tr>
-                                            <td style="border: 1px solid black;"><span class="fl"><b>Customer</b></span> <span class="fr"><b>زبون</b></span></td>
-
-                                        </tr>
-                                        <tr style="height: 107px;">
-
-                                            <td style="vertical-align: text-top; font-size: 13px;">
-                                                <span id="lblClient"></span>
-                                                
-                                                      <?php 
+                    <div style="width: 98%;  padding-left: 75%;"> 
+                    <?php 
                                                        if($client_data!=0)
                                                        {
-                                                      echo $client_data[0]->clientenglish;?>
-                                                        <br />
-                                                      
-                                                            <br />
-                                                            <?php echo $client_data[0]->clientarabic;}?>
-                                                       
-                                                    
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-                                        </tr>
-                                      
+                                                      echo $client_data[0]->clientenglish;}?>
 
-                                        <tr>
-                                            <td style="border: 1px solid black;"><b>Shiper Details</b> <span class="fr"><b>تفاصيل السفينة</b></span></td>
-                                        </tr>
-                                        <tr style="height: 93px; font-size: 13px;">
-
-                                            <td style="vertical-align: text-top;">
-                                                <p>
-                                                    <span id="lblShiper">  <?php 
-                                                       if($consignor_data!=0)
-                                                       {
-                                                            echo $consignor_data[0]->consignor;
-                                                       }?></span>
-                                                </p>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="border: 1px solid black;"><b>Consignee Details</b> <span class="fr"><b> المرسل إليه </b></span></td>
-                                        </tr>
-                                        <tr style="height: 93px; font-size: 13px;">
-
-                                            <td style="vertical-align: text-top;">
-                                            <?php
-                                            if($consignee_data!=0)
-                                                       {
-                                                echo $consignee_data[0]->consigni;
-                                                       }
-                                                       ?>
-                                                    
-                                            </td>
-                                        </tr>
-                                       
-                                      
-
-                                    </table>
-                                </td>
-                                <td style="width: 33%;">
-                                    <table class="cus-con" >
-
-                                        
-                                                <tr>
-                                                    <td style="border: 1px solid black;"><span class="fl"><b>Estimate No</b> </span><span class="fr"><b>رقم الفاتورة </b></span></td>
-
-                                                </tr>
-                                                 <tr>
-
-                                                    <td style="height: 33px; font-size: 13px;">
-                                                    <?php
+	</div>    
+    
+    <div class="textcenters" style="display: flex;   margin-bottom: 15px; ">
+				<h3><strong >Estimate  <?php
                                             if($estimatedata!=0)
                                                        {
                                                      echo $estimatedata[0]->estimate_no;
-                                                       }?>
-                                                    </td>
-                                                </tr> 
-                                                <tr>
-                                                    <td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid black;"><b>Estimate Date</b><span class="fr"><b> تاريخ الفاتورة </b></span></td>
-                                                </tr>
-                                                <tr>
+                                                       }?>  </strong></h3><br />
+            </div>
 
-                                                    <td style="height: 33px; font-size: 13px;">
-                                                    <?php
+		             	<div class="row">	
+									<div class="col-md-4"><strong style="color: #286090;">Invoice Date :</strong> </br>
+                                    <?php
                                             if($estimatedata!=0)
                                                        {
                                                      echo $estimatedata[0]->e_date;}?>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-                                                </tr>
-                                               
-                                                <tr>
-                                                    <td style="border: 1px solid black;"><b>Hawb / Mawb</b><span class="fr">الحب / موب</span> </td>
-                                                </tr>
-                                                <tr>
-
-                                                    <td style="height: 33px; font-size: 13px;">
-                                                    <?php
-                                            if($estimatedata!=0)
-                                                       {
-                                                    
-                                                     echo $estimatedata[0]->awb;}?>
-                                                        
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="border: 1px solid black;"><b>Weight</b><span class="fr"><b>الوزن </b></span></td>
-                                                </tr>
-                                                <tr>
-
-                                                    <td style="height: 33px; font-size: 13px;">
-                                                    <?php
-                                            if($estimatedata!=0)
-                                                       {
-                                                     echo $estimatedata[0]->ActualWeight;}?> &nbsp;&nbsp;KGS
-                                                    </td>
-                                                </tr>
-                                              
-
-                                               
-                                                <tr>
-
-                                                    <td style="height: 33px; font-size: 13px;">
-                              
-                                                    </td>
-                                                </tr>
-                                            
-                                         <!-- <tr>
-                                            <td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-                                        </tr> -->
-                                         <!-- <tr>
-                                                    <td style="border: 1px solid black;"><b>Custumer P.O / Date</b> <span class="fr"><b>رقم طلب الشراء / تاريخه </b></span></td>
-                                                </tr>
-                                                <tr>
-
-                                                    <td style="height: 50px; font-size: 13px;">
-                                                        <span id="lblPono"><?php echo $estimatedata[0]->PostingDate;?> </span>
-                                                    </td>
-                                                </tr>
-                                                -->
-                                    </table>
-                                </td>
-                                <td  style="width: 33%;">
-                                    <table class="cus-con">
-
-                                        <!-- <tr>
-                                            <td style="border: 1px solid black;"><b>Bank Details</b><span class="fr"> <b>تفاصيل البنكية</b> </span></td>
-                                        </tr>
-
-                                        <tr style="height: 90px;">
-
-                                             <td style="vertical-align: text-top; font-size: 13px;">
-                                                
-                                           <br />
-                                                       
-                                                    
-                                            </td> 
-
-                                        </tr> -->
-
-
-                                        <tr>
-                                            <td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="border: 1px solid black;"><b>Job No</b><span class="fr"><b>رقم العمل</b>  </span></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td style="height: 33px!important; font-size: 13px;">
-                                                <span id="lblJobNo">    <?php
-                                            if($estimatedata!=0)
-                                                       { echo $estimatedata[0]->Number;}?></span>
-
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="border: 1px solid black;"><b>Customer VAT No.</b><span class="fr"><b>رقم ضريبة القيمة المضافة للعميل</b>  </span></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td style="height: 33px!important; font-size: 13px;">
-                                                <span id="lblCustomerVat">
-                                                <?php
-                                            if($client_data!=0)
-                                                       {
-                                                 echo $client_data[0]->vat_no;}?></span>
-
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="border: 1px solid black;"><b>Estimated Time of Departure</b><span class="fr"><b> الوقت المتوقع للمغادرة</b>  </span></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td style="height: 33px!important; font-size: 13px;">
-                                                <span id="lblVendorId">
-                                                <?php
-                                            if($estimatedata!=0)
-                                                       {
-                                                            echo $estimatedata[0]->Etd;}?></span>
-
-                                            </td>
-                                        </tr>
-
-                                           <tr>
-                                            <td style="border: 1px solid black;"><b>Estimated Time of Arrival</b><span class="fr"><b> الوقت المقدر للوصول</b>  </span></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td style="height: 33px!important; font-size: 13px;">
-                                                <span id="lblEta">   <?php
-                                            if($estimatedata!=0)
-                                                       {
-                                                           echo $estimatedata[0]->Eta;}?></span>
-
-                                            </td>
-                                        </tr>
-
-
-                                    </table>
-                                </td>
-                            </tr>
-                        </thead>
-
-                    </table>
+									
+									</div>
+									<div class="col-md-4">
+									
+									</div>
+									</div>	</br>	
+                    
+                  
+                             
 
                     <div style="margin-left: 8px;">
                         <table class="table table-bordered tab2 m-b-1">
                             <thead>
-                                <tr>
+                                <tr style="color: #286090;">
                                     <th class="ctr" width="6.5%"><b>Sl No:</b>
-                                        <label>
-                                        SL. لا: 
-                                        </label>
+                                        
                                     </th>
                                     <th width="46.2%">Item Description
-                                        <label class="rtl">وصف البند </label>
+                                     
                                     </th>
                                     <th class="ctr" width="10.5%">Unit Price
-                                        <label>سعر الوحدة </label>
+                                       
                                     </th>
                                     <th class="ctr" width="10%">Quantity
-                                        <label>كمية </label>
+                                      
                                     </th>
                                      <th width="13.2%">Vat
-                                        <label class="rtl">ضريبة القيمة المضافة</label></th> 
+                                     </th> 
                                     <th width="12.3%">Amount
-                                        <label class="rtl">كمية </label>
+                                      
                                     </th>
                                 </tr>
                             </thead>
@@ -358,14 +128,11 @@
                                             </td>
                                             <td>
                                                 <span id="rptrDetail_lblDesc_0"><?php echo $value->description;?></span>
-                                                <!-- <span id="rptrDetail_lblDescAr_0" style="float: right;">رسوم الشحن البري </span> -->
+                                              
                                             </td>
                                             <td style="text-align: center;">
                                             <?php echo $value->unitprice;?> 
                                             </td>
-                                            <!-- <td style="text-align: center;">
-                                         
-                                            </td> -->
                                             <td style="text-align: center;">   <?php echo $value->quantity;?></td>
                                             <td style="text-align: center;">   <?php echo $value->vat;?></td>
                                             <td style="text-align: center;">
@@ -376,106 +143,38 @@
                                       <?php } ?>
                             </tbody>
                         </table>
-                        <br>
-                        <table class="table table-bordered tab3 ">
-                            <tbody>
-                                <tr>
-                                    <td colspan="2" style="width: 53.43%;">TOTAL INVOICE AMOUNT IN SAUDI RIYALS
-                                        <label class="rtl">المجموع الكلي للفاتورة بالريال السعودي</label></td>
-                                    <td colspan="3" >Total
-                                        <label class="rtl"><b>المجموع</b></label>
-                                    </td>
+                        
 
-                                    <td style="text-align: center; width:12.6%">
-                                        <span id="lblTotal"> <?php echo $estimatedata[0]->total_amount;?></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" >VALUE ADDED TAX (VAT) @ 15%
-                                        <label class="rtl">1ضريبة القيمة المضافة - القيمة الاعتيادية %5</label>
+                        <div style="width: 100%; padding-left: 53%;"> 
+				<table class="table table-bordered tab3 ">
+						<tr>
+						<td>Subtotal</td>
+						<td style="text-align: right;border-right: solid 1px #FFF;"><?php echo $estimatedata[0]->total_amount;?></td>	
+						</tr>
+						<tr>
+						<td>Vat Total(15%)</td>
+						<td style="background-color: #d2dede;text-align: right;"> <?php echo $estimatedata[0]->tax_amount;?></td>	
+						</tr>
+						<tr style="background-color: #a1b0ab;" >
+						<td>Grand Total</td>
+						<td style="text-align: right;"> <?php echo $estimatedata[0]->grand_total;?></td>	
+						</tr>
 
-                                    </td>
-                                    <td colspan="3">Vat Total
-                                        <label class="rtl">ضريبة القيمة المضافة المجموع</label></td>
-                                    <td style="text-align: center;">
-                                        <span id="lblVatTotal"> <?php echo $estimatedata[0]->tax_amount;?></span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="5">
-                                        <p style="font-weight: inherit; font-size: 15px; text-align: right; padding-right: 153px;">Advance Amount</p>
-                                    </td>
-                                    <td  colspan="3" style="text-align: center;">
-                                        <span id="lblAdv">0.00</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <p class="totalamt" style=" text-transform: uppercase;" id="demo">
-                                            <span style="font-weight: 700; font-size: 13px;"></span><span id="container" class="word"></span>
-                                            &nbsp;Only
-                                        </p>
-                                    </td>
+						</table>
+				
+				</div>
 
-                                    <td colspan="3" >GRAND TOTAL
-                                        <label class="rtl">المجموع الكلي</label></td>
+                Please use the following communication for your payment :  <?php echo $estimatedata[0]->estimate_no;?> 
+              
 
-                                    <td  style="text-align: center;">
-                                        <span id="lblGrandTotal"> <?php echo $estimatedata[0]->grand_total;?></span>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-                        <div class="f-fix">
-                            <table class="table table-bordered tab3" style="margin-bottom: 3px;">
-
-
-                                <tbody>
-                                    <tr>
-                                        <td width="550">
-                                            <p class="tab3-p1">
-                                                ANY DISCREPANCIES SHALL BE MARKED OFF IN THIS INVOICE WITHIN 3 WORKING DAYS AFTER RECEIPT OF INVOICE AND CONFIRM IN WRITING TO AOT (AS PER BELOW ADDRESS), OTHERWISE NO CLAIMS SHALL BE CONSIDERED.
-                                            </p>
-                                        </td>
-                                        <td style="width: 500px;">
-                                            <p class="rtl tab3-p2">
-                                                في حال وجود أي مشكلة في الفاتورة يجب أن يتم إبلاغ شركتنا عنها في مدة لا تزيد عن ثلاثة أيام عمل من تاريخ استلام هذه الفاتورة. ويجب أن يكون الإبلاغ خطياً (على عنوان الشركة الموضح أدناه) وإلا فلن يتم التعامل من قبلنا مع المشكلة
-
-
-                                            </p>
-                                        </td>
-
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
-                            <table class="table table-bordered " style="font-weight:bold">
-                <tbody>
-                    <tr>
-                        <td class="b-zero" width="280" style="line-height: 8px;">
-                            <p class="">Al Khobar, Saudi Arabia</p>
-                           
-
-                            <p>Tel/Fax: 00966 13 814 0279 / 00966 53 059 3094</p>
-  
-                        </td>
-                        <td width="120" style="line-height: 14px;">
-                            <p>
-                                VAT. : 300417066100003</p>
-
-                            <p> CR: 2051030330</p>
-                            <p>Email: info@aot-logistics.com</p>
-                            <p>Web : www.aot-logistics.com</</p>
-                        </td>
-                        <td width="280">
-                            <p>This is a computer genarated document and does not require a signature </p>
-                        </td>
-
-                    </tr>
-                </tbody>
-            </table>
-                        </div>
+              <div class="f-fix" style="width: 100%; padding-bottom: 58px;">
+              
+          <table >
+           <tr>
+          <img src="<?php echo IMAGE_PATH.$invoiceinfo[0]->InvfooterImage;?>" style="width: 100%;" alt="logo">
+          </tr>
+          </table>
+          </div>    
 
                     </div>
                 </div>

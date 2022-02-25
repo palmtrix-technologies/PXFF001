@@ -53,170 +53,62 @@
 
 				</tr>
 			</table>
-			<div class="textcenters" style="display: flex; align-items: center; justify-content: center; border-top: solid #7d7676 1px; border-bottom: solid #7d7676 1px; margin-bottom: 15px; margin-top: 15px;">
-				<h3>Supplier Payment <br />
-                دفع المورد
-            </div>
+			<table class="table  tab3"  style="margin-bottom: 3px;">
+							<tr>
+							<td width="100%">
+							<h2 style="font-size: 24px;"><strong>Supplier Payment : 		<span id="lblCustomerVat"><?php echo $paymentdata[0]->ID; ?></span> </strong></h2>
+	
+									<div class="row">
+									
+									<div class="col-md-4"><strong>Payment Date : </strong><span id="lblClient"></span>
 
-			<table class="table tab1" style="margin-bottom: -4px;">
-				<thead>
+									<?php echo $paymentdata[0]->Date; ?>
+									
+									</div>
+									
+									</div>
+									<div class="row">
+									
+									<div class="col-md-4"><strong>Supplier :</strong><?php echo $paymentdata[0]->supplierenglish; ?>
+									
+									</div>
+									<div class="col-md-4">
+									<strong>	Payment Method : </strong>
+									</div>
+									</div>
+									<div class="row">
+									
+									<div class="col-md-4"><strong>Payment Amount :</strong>
+									
+									</div>
+									<div class="col-md-4">
+									<strong>Memo :</strong> 
+									</div>
+									</div>
+									
+								</td></tr>
+</table><br/>
 
-
-					<tr>
-						<td style="width: 34%;">
-							<table class="cus-con">
-								<tr>
-									<td style="border: 1px solid black;"><span class="fl"><b>Supplier</b></span> <span class="fr"><b>المورد</b></span></td>
-
-								</tr>
-								<tr style="height: 211px;">
-
-									<td style="vertical-align: text-top; font-size: 13px;">
-										<span id="lblClient"></span>
-
-										<?php echo $paymentdata[0]->supplierenglish; ?>
-										<br /> <br /> <br />
-
-										<br />
-				
-
-
-									</td>
-								</tr>
-
-
-
-
-							</table>
-						</td>
-						<td style="width: 33%;">
-							<table class="cus-con">
-
-
-								<tr>
-									<td style="border: 1px solid black;"><span class="fl"><b>Code</b> </span><span class="fr"><b>الشفرة </b></span></td>
-
-								</tr>
-								<tr>
-
-									<td style="height: 33px; font-size: 13px;">
-										<?php echo $paymentdata[0]->ID; ?>
-									</td>
-								</tr>
-								<tr>
-									<td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-								</tr>
-								<tr>
-									<td style="border: 1px solid black;"><b> Date</b><span class="fr"><b> تاريخ الفاتورة </b></span></td>
-								</tr>
-								<tr>
-
-									<td style="height: 15px; font-size: 13px;">
-										<?php echo $paymentdata[0]->Date; ?>
-									</td>
-								</tr>
-
-
-
-
-
-								<tr>
-
-									<td style="height: 33px; font-size: 13px;"> &nbsp;&nbsp;
-									</td>
-								</tr>
-
-
-
-								<tr>
-
-									<td style="height: 33px; font-size: 13px;">
-
-									</td>
-								</tr>
-
-								<!-- <tr>
-									<td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-								</tr>
-								<tr>
-									<td style="border: 1px solid black;"><b>Custumer P.O / Date</b> <span class="fr"><b>رقم طلب الشراء / تاريخه </b></span></td>
-								</tr> -->
-								<tr>
-
-									<td style="height: 50px; font-size: 13px;">
-										<span id="lblPono"></span>
-									</td>
-								</tr>
-
-							</table>
-						</td>
-						<td style="width: 33%;">
-							<table class="cus-con">
-
-								<tr>
-									<td style="border: 1px solid black;"><b>Bank Details</b><span class="fr"> <b>تفاصيل البنكية</b> </span></td>
-								</tr>
-
-								<tr style="height: 90px;">
-
-									<td style="vertical-align: text-top; font-size: 13px;">
-
-										<?php echo $paymentdata[0]->bank; ?><br />
-
-
-									</td>
-
-								</tr>
-
-
-
-								<tr>
-									<td style="border: 1px solid black; border-right: hidden; border-left: hidden;"></td>
-								</tr>
-								<tr>
-									<td style="border: 1px solid black;"><b>Supplier VAT No.</b><span class="fr"><b>رقم ضريبة القيمة المضافة للمورد</b> </span></td>
-								</tr>
-								<tr>
-
-									<td style="height: 83px!important; font-size: 13px;">
-										<span id="lblCustomerVat"><?php echo $paymentdata[0]->vat_no; ?></span>
-
-									</td>
-								</tr>
-
-
-
-
-
-
-							</table>
-						</td>
-					</tr>
-				</thead>
-
-			</table>
+			
 
 			<div style="margin-left: 8px;">
 				<table class="table table-bordered tab2 m-b-1">
 					<thead>
-						<tr>
+						<tr style="color: #286090;">
 							<th class="ctr" width="6.5%"><b>Sl No:</b>
-								<label>
-									الرقم السلسل
-								</label>
+								
 							</th>
 							<th width="10%">JobNo
-								<label class="rtl">رقم الوظيفة</label>
+								
 							</th>
 							<th class="ctr" width="10.5%">Amount
-								<label>كمية </label>
+								
 							</th>
 							<th class="ctr" width="10%">Currency
-								<label>عملة </label>
+								
 							</th>
 							<th width="13.2%" >Total
-								<label class="rtl">مجموع</label></th>
-
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -233,119 +125,50 @@ $number=$number+1;
 								</td>
 								<td style="text-align: center;"> <?php echo $value->JobNo; ?></td>
 
-								<td>
+								<td style="text-align: right;">
 									<span id="rptrDetail_lblDesc_0"><?php echo $value->Amount; ?></span>
 									<!-- <span id="rptrDetail_lblDescAr_0" style="float: right;">رسوم الشحن البري </span> -->
 								</td>
-								<td style="text-align: center;">
+								<td style="text-align: right;">
 									<?php echo " (" . $value->Currency . " - " . $value->ConvFactor . ")"; ?>
 								</td>
 
-								<td style="text-align: center;"> <?php echo $value->Total; ?></td>
+								<td style="text-align: right;"> <?php echo $value->Total; ?></td>
 
 							</tr>
 
 						<?php } ?>
 					</tbody>
 				</table>
+				
+
+
+				<div style="width: 100%; padding-left: 53%;"> 
 				<table class="table table-bordered tab3 ">
-					<tbody>
 						<tr>
-							<td colspan="2" style="width: 53.43%;">TOTAL RECEIPT AMOUNT IN SAUDI RIYALS
-								<label class="rtl">المجموع الكلي للفاتورة بالريال السعودي</label></td>
-							<td colspan="3">Total
-								<label class="rtl"><b>المجموع</b></label>
-							</td>
-
-							<td style="text-align: center; width:12.6%">
-								<span id="lblTotal"> <?php echo $paymentdata[0]->SubTotal; ?></span>
-							</td>
+						<td>Subtotal</td>
+						<td style="text-align: right;border-right: solid 1px #FFF;"> <?php echo $paymentdata[0]->SubTotal; ?></td>	
 						</tr>
 						<tr>
-							<td colspan="2">VALUE ADDED TAX (VAT) @ 15%
-								<label class="rtl">1ضريبة القيمة المضافة - القيمة الاعتيادية %5</label>
-
-							</td>
-							<td colspan="3">Vat Total
-								<label class="rtl">ضريبة القيمة المضافة</label></td>
-							<td style="text-align: center;">
-								<span id="lblVatTotal"> <?php echo $paymentdata[0]->VatTotal; ?></span></td>
+						<td>Vat Total(15%)</td>
+						<td style="background-color: #d2dede;text-align: right;"> <?php echo $paymentdata[0]->VatTotal; ?></td>	
 						</tr>
-						<tr>
-							<td colspan="5">
-								<p style="font-weight: inherit; font-size: 15px; text-align: right; padding-right: 153px;">Advance Amount</p>
-							</td>
-							<td colspan="3" style="text-align: center;">
-								<span id="lblAdv">0.00</span></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<p class="totalamt" style=" text-transform: uppercase;" id="demo">
-									<span style="font-weight: 700; font-size: 13px;"></span><span id="container" class="word"></span>
-									SAR&nbsp;Only
-								</p>
-							</td>
-
-							<td colspan="3">GRAND TOTAL
-								<label class="rtl">المجموع الكلي</label></td>
-
-							<td style="text-align: center;">
-								<span id="lblGrandTotal"> <?php echo $paymentdata[0]->SubTotal; ?></span>
-							</td>
+						<tr style="background-color: #a1b0ab;" >
+						<td>Grand Total</td>
+						<td style="text-align: right;"> <?php echo $paymentdata[0]->SubTotal; ?></td>	
 						</tr>
 
-					</tbody>
+						</table>
+				
+				</div>
+
+				<div class="f-fix" style="width: 100%; padding-bottom: 58px;">
+                
+				<table >
+				 <tr>
+				<img src="<?php echo IMAGE_PATH.$invoiceinfo[0]->InvfooterImage;?>" style="width: 100%;" alt="logo">
+				</tr>
 				</table>
-
-				<div class="f-fix">
-					<table class="table table-bordered tab3" style="margin-bottom: 3px;">
-
-
-						<tbody>
-							<tr>
-								<td width="550">
-									<p class="tab3-p1">
-										ANY DISCREPANCIES SHALL BE MARKED OFF IN THIS INVOICE WITHIN 3 WORKING DAYS AFTER RECEIPT OF INVOICE AND CONFIRM IN WRITING TO AOT (AS PER BELOW ADDRESS), OTHERWISE NO CLAIMS SHALL BE CONSIDERED.
-									</p>
-								</td>
-								<td style="width: 500px;">
-									<p class="rtl tab3-p2">
-										في حال وجود أي مشكلة في الفاتورة يجب أن يتم إبلاغ شركتنا عنها في مدة لا تزيد عن ثلاثة أيام عمل من تاريخ استلام هذه الفاتورة. ويجب أن يكون الإبلاغ خطياً (على عنوان الشركة الموضح أدناه) وإلا فلن يتم التعامل من قبلنا مع المشكلة
-
-
-									</p>
-								</td>
-
-							</tr>
-
-						</tbody>
-
-					</table>
-					<table class="table table-bordered " style="font-weight:bold">
-					<tbody>
-                    <tr>
-                        <td class="b-zero" width="280" style="line-height: 8px;">
-                            <p class=""><?php echo $companyinfo[0]->Address;?></p>
-                           
-
-                            <p>Tel/Fax: <?php echo $companyinfo[0]->Phone;?> / <?php echo $companyinfo[0]->FAX;?></p>
-  
-                        </td>
-                        <td width="120" style="line-height: 14px;">
-                            <p>
-                                VAT. : <?php echo $companyinfo[0]->VAT;?></p>
-
-                            <p> CR: <?php echo $companyinfo[0]->CR;?></p>
-                            <p>Email: <?php echo $companyinfo[0]->Email;?></p>
-                            <p>Web : <?php echo $companyinfo[0]->Web;?></</p>
-                        </td>
-                        <td width="280">
-                            <p>This is a computer genarated document and does not require a signature </p>
-                        </td>
-
-                    </tr>
-                </tbody>
-					</table>
 				</div>
 
 			</div>

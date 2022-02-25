@@ -34,7 +34,7 @@ function datepickerinit()
                        $(win.document.body)
                            .css('font-size', '10pt')
                            .prepend(
-                               '<img src="http://aotlogisticsapp.com/invoicereport/invhead.jpg" style="width:100%;" />'
+                               '<img src="header.png" style="width:100%;" />'
                            );
 
                        $(win.document.body).find('table')
@@ -666,7 +666,7 @@ datepickerinit();
 function get_receiptreport()
 {
  
-  fromdate=$('#fromdate').val();
+  fromdate=$('#fromdate').val(); alert(fromdate);
   todate=$('#todate').val();
    
     var postData={

@@ -1,86 +1,123 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-     <!--<link rel = "icon" href = "<?php echo IMAGE_PATH.$cmpnydata[0]->Icon_image;?> "width="30px" height="30px"> -->
-    <title>VISION DISPATCH | Log in</title>
+
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Freighbrid | Login </title>
     <link rel = "icon" href = "<?php echo IMAGE_PATH.$cmpnydata[0]->Icon_image;?> "width="30px" height="30px"> 
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <!-- Bootstrap 3.3.2 -->
-    <link href="<?php echo base_url(); ?>/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
-    <link href="<?php echo base_url(); ?>/assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-    <!-- iCheck -->
-    <link href="<?php echo base_url(); ?>/assets/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>/assets/login/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/login/css/bootstrap.min.css">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/login/css/fontawesome-all.min.css">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/login/font/flaticon.css">
+    <!-- Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/login/style.css">
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-  </head>
-  <body class="login-page">
-    <div class="login-box">
-      <div class="login-logo">
-        <a href="#">
-            
-             <img src ="<?php echo IMAGE_PATH.$cmpnydata[0]->Icon_image;?> "width="100%"></a>
-      </div>
-      
-      <div class="login-box-body">
-        <p class="login-box-msg"><b>Login to your account</b></p>
-        <form action="<?php echo base_url();?>Home" method="post">
-          <div class="form-group has-feedback">
-            <input type="text" class="form-control" required name="Email" placeholder="Email"/>
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-          </div>
-          <div class="form-group has-feedback">
-            <input type="password" class="form-control" required name="Password" placeholder="Password"/>
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          </div>
-          <div class="row">
-            <div class="col-xs-8">    
-              <div class="checkbox icheck">
-                <label>
-                  <input type="checkbox" name="remember_me"> Remember Me
-                </label>
-              </div>                        
-            </div><!-- /.col -->
-            <div class="col-xs-4">
-              <button type="submit"  id="register"  class="btn btn-primary btn-block btn-flat">Sign In</button>
-            </div><!-- /.col -->
-          </div>
-        </form>
+    <div id="preloader" class="preloader">
+        <div class='inner'>
+            <div class='line1'></div>
+            <div class='line2'></div>
+            <div class='line3'></div>
+        </div>
+    </div>
+    <section class="fxt-template-animation fxt-template-layout31">
+        <span class="fxt-shape fxt-animation-active"></span>
+        <div class="fxt-content-wrap">
+            <div class="fxt-heading-content">
+                <div class="fxt-inner-wrap">
+                    <div class="fxt-transformY-50 fxt-transition-delay-3" style="font-size: 45px;
+    color: #ebebeb;">
+    
+                        FREIGHBRID LOGISTICS 
+                    </div>
+                    <div class="fxt-transformY-50 fxt-transition-delay-4">
+                        <h1 class="fxt-main-title" style="font-size: 27px;
+    ">We're a Digital Agency.</h1>
+                    </div>
+                    <!-- <div class="fxt-login-option">
+                        <ul>
+                            <li class="fxt-transformY-50 fxt-transition-delay-6"><a href="#">Sign in with Google</a></li>
+                            <li class="fxt-transformY-50 fxt-transition-delay-7"><a href="#">Sign in with Facebook</a></li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+            <div class="fxt-form-content">
+                <div class="fxt-page-switcher">
+                    <h2 class="fxt-page-title mr-3">Login</h2>
+                    <ul class="fxt-switcher-wrap">
+                 <a href="#">
+            <img src ="<?php echo IMAGE_PATH.$cmpnydata[0]->Icon_image;?> "width="175px;"></a> 
+                  <!--  <a href="login-31.html" class="fxt-logo"><img src="<?php echo base_url(); ?>/assets/login/img/freighbridlogo.png" alt="Logo"></a>-->
+                    
+                    </ul>
+                </div>
+                <div class="fxt-main-form">
+                    <div class="fxt-inner-wrap">
+                    <form action="<?php echo base_url();?>Home" method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input type="email" id="email" class="form-control" name="Email" placeholder="Email" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input id="password" type="password" class="form-control" name="Password" placeholder="********" required="required">
+                                        <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="fxt-checkbox-wrap">
+                                            <div class="fxt-checkbox-box mr-3">
+                                                <input id="checkbox1" type="checkbox">
+                                                <label for="checkbox1" class="ps-4">Keep me logged in</label>
+                                            </div>
+                                            <a href="forgot-password-31.html" class="fxt-switcher-text">Forgot Password</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="fxt-btn-fill">Log in</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="fxt-switcher-description">Don't have an account?<a href="register-31.html" class="fxt-switcher-text ms-1">Register</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- jquery-->
+    <script src="<?php echo base_url(); ?>/assets/login/js/jquery-3.5.0.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="<?php echo base_url(); ?>/assets/login/js/bootstrap.min.js"></script>
+    <!-- Imagesloaded js -->
+    <script src="<?php echo base_url(); ?>/assets/login/js/imagesloaded.pkgd.min.js"></script>
+    <!-- Validator js -->
+    <script src="<?php echo base_url(); ?>/assets/login/js/validator.min.js"></script>
+    <!-- Custom Js -->
+    <script src="<?php echo base_url(); ?>/assets/login/js/main.js"></script>
 
-        <!-- <div class="social-auth-links text-center">
-          <p>- OR -</p>
-          <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
-          <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-        </div>/.social-auth-links -->
+</body>
 
-        <a href="<?php echo base_url('forgot-password-page');?>">I forgot my password</a><br>
-      
-
-      </div><!-- /.login-box-body -->
-    </div><!-- /.login-box -->
-
-    <!-- jQuery 2.1.3 -->
-    <script src="<?php echo base_url(); ?>/assets/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-    <!-- Bootstrap 3.3.2 JS -->
-    <script src="<?php echo base_url(); ?>/assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- iCheck -->
-    <script src="<?php echo base_url(); ?>/assets/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script>
-      $(function () {
-        $('input').iCheck({
-          checkboxClass: 'icheckbox_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
-        });
-      });
-    </script>
-  </body>
 </html>

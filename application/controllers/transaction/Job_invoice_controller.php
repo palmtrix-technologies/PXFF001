@@ -74,6 +74,19 @@ public function insert_job_details()
 		
 	}
 	
+	public function perfomainvoice_print($invid)
+	{
+		$invid=$invid;
+		$result['invoicedata']=$this->Job_invoice_model->selectinvoicedetails($invid);
+		 $result['invoice']=$this->Job_invoice_model->select_job_invoice_details($invid);
+		 $result['companyinfo']=$this->Transaction_model->basic_company_details();
+		 $result['invoiceinfo']=$this->Transaction_model->basic_invoice_details();
+		 
+		
+		$this->load->view('transaction/perfoma-invoice',$result);
+	
+	}
+
 	public function invoice_print($invid)
 	{
 		$invid=$invid;
@@ -184,9 +197,8 @@ echo $result;
 		}
 	
 
-		
-// redirect('invoice-print'/$invmasterid);
-redirect(base_url()."invoice-print/".$invmasterid);
+//redirect(base_url()."invoice-print/".$invmasterid);
+redirect(base_url()."perfomainvoice-print/".$invmasterid);
 	}
 	public function getsupplierdata(){
         

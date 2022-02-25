@@ -83,11 +83,11 @@
                   columns: ':visible'
                     },
                     customize: function (win) {
-                        $(win.document.body)
-                            .css('font-size', '10pt')
-                            .prepend(
-                                '<img src="invoicereport/invhead.jpg" style="width:100%;" />'
-                            );
+                        // $(win.document.body)
+                        //     .css('font-size', '10pt')
+                        //     // .prepend(
+                        //     //     '<img src="<?php echo IMAGE_PATH.'header.png';?>" style="width:100%;" />'
+                        //     );
 
                         $(win.document.body).find('table')
                             .addClass('compact')

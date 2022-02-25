@@ -299,22 +299,14 @@ class Transaction extends CI_Controller {
 		//print estimate details
 		public function estimate_print($estimateid)
 		{
-			//$jobid=$jobid;
 			$estimateid = $estimateid;
 			$result['estimatedata'] = $this->Transaction_model->estimatemaster_details($estimateid);
-			//////////
 			$clientid=$this->Transaction_model->getclient_id_est($estimateid);
 
 			$consignorid=$this->Transaction_model->getconsigor_id_est($estimateid);
 	
 			$consigneeid=$this->Transaction_model->getconsignee_id_est($estimateid);
 
-// var_dump($clientid);
-// var_dump($consignorid);
-
-// var_dump($consigneeid);
-
-// die();
 			if($clientid!="0"){
 			$result['client_data'] = $this->Transaction_model->client_details($estimateid);
 		}

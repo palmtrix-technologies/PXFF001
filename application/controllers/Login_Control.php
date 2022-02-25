@@ -19,7 +19,7 @@ class Login_Control extends CI_Controller {
 	{
 	  
        
-        $iconimg['cmpnydata']=$this->Transaction_model->basic_company_details();
+        $iconimg['cmpnydata']=$this->Transaction_model->basic_company_details(); 
 		$this->load->view('usermanagement/login',$iconimg);
 		
 		
