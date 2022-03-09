@@ -36,8 +36,7 @@ class Transaction extends CI_Controller {
 		$data['currencylist']=$this->Transaction_model->list_currency();
 		$data['userlist']=$this->Transaction_model->list_user();
 		$data['truck']=$this->Transaction_model->list_truck();
-		// var_dump($data);
-		// die();
+		
 		$user_image['values']=$res[0]->user_image;
 		$result['permission']=$this->Login_model->select_all_menu($user_id);
 				// $this->index($result);
@@ -47,6 +46,37 @@ class Transaction extends CI_Controller {
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 		$this->load->view('transaction/transaction',$data);
+		$this->load->view('includes/footer');
+	}
+
+	public function estimation()
+	{
+		 $user_id=	$this->session->userdata('user_id');
+	
+		$data['value'] = $this->Shipper_model->list();
+		$res = $this->Permission_model->userdetails($user_id);
+		$result['roles']=$this->Login_model->userdetails($user_id);
+		$data['code']=$this->Transaction_model->selectcode();
+		$data['codes']=$this->Transaction_model->selectcode_estimate();
+		
+		$data['clientlist']=$this->Transaction_model->list_client();
+		$data['desclist']=$this->Transaction_model->list_desc();
+		$data['carrierlist']=$this->Transaction_model->list_carrier();
+		$data['currencylist']=$this->Transaction_model->list_currency();
+		$data['userlist']=$this->Transaction_model->list_user();
+		$data['truck']=$this->Transaction_model->list_truck();
+		
+		$user_image['values']=$res[0]->user_image;
+		$result['permission']=$this->Login_model->select_all_menu($user_id);
+		
+		 $data['values'] = $this->Transaction_model->list();
+		 $user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
+
+		 $data['values'] = $this->Transaction_model->listjobdetails();
+
+		$this->load->view('includes/header',$user_image);
+		$this->load->view('includes/navigation',$result,$user_image);
+		$this->load->view('transaction/estimation',$data);
 		$this->load->view('includes/footer');
 	}
 	
@@ -69,16 +99,12 @@ class Transaction extends CI_Controller {
 		$data['truck']=$this->Transaction_model->list_truck();
 		$data['datadoc'] =$this->Transaction_model->job_updateForm($id);
 		
-		// var_dump($data['doc']);
-		// exit;
-		
 		$user_image['values']=$res[0]->user_image;
 		$result['permission']=$this->Login_model->select_all_menu($user_id);
 		$data['values'] = $this->Transaction_model->getjobById($id);
 		$data['doc'] =$this->Transaction_model->get_all_job_doc_all($id);
 		$data['jobno'] = $this->Transaction_model->getmaxjobno();
-//   var_dump($data['doc']);
-// 		 die();
+
 		$masterid=$this->Transaction_model->getestimatemaster_id($id);
 		$clientid=$this->Transaction_model->getclient_id($id);
 
@@ -86,10 +112,6 @@ class Transaction extends CI_Controller {
 
 		$consigneeid=$this->Transaction_model->getconsignee_id($id);
 
-		//   var_dump($consignorid);
-		//   var_dump($consigneeid);
-
-		//  die();
 		if($clientid!="0")
 		{	$data['clientdata']=$this->Transaction_model->getclinetdetails($id);}
 		else{
@@ -119,21 +141,89 @@ class Transaction extends CI_Controller {
 			$estmasterid=$this->Transaction_model->selectmaxid_estimatemaster($id);
 			$estmasterid=$estmasterid+1;
 			$data['estmasterid']=$estmasterid;
-		// 	echo $estmasterid;
-		//  die();
+		
 		}
 		
 		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
 		$data['uploadedfile']=$this->Transaction_model->selectuploaded_file($id);
-
-		
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 		$this->load->view('transaction/edit_job',$data);
 		$this->load->view('includes/footer');
 	}
 	
-   
+	public function edit_consignment($id)
+	{
+		
+		 $user_id=	$this->session->userdata('user_id');
+		 $docid = $this->uri->segment(4);
+		
+		$data['value'] = $this->Shipper_model->list();
+		$res = $this->Permission_model->userdetails($user_id);
+		$result['roles']=$this->Login_model->userdetails($user_id);
+		$data['code']=$this->Transaction_model->selectcode();
+		$data['codes']=$this->Transaction_model->selectcode_estimate();
+		
+		$data['clientlist']=$this->Transaction_model->list_client();
+		$data['carrierlist']=$this->Transaction_model->list_carrier();
+		$data['currencylist']=$this->Transaction_model->list_currency();
+		$data['userlist']=$this->Transaction_model->list_user();
+		$data['truck']=$this->Transaction_model->list_truck();
+		$data['datadoc'] =$this->Transaction_model->job_updateForm($id);
+		
+		$user_image['values']=$res[0]->user_image;
+		$result['permission']=$this->Login_model->select_all_menu($user_id);
+		$data['values'] = $this->Transaction_model->getjobById($id);
+		$data['doc'] =$this->Transaction_model->get_all_job_doc_all($id);
+		$data['jobno'] = $this->Transaction_model->getmaxjobno();
+
+		$masterid=$this->Transaction_model->getestimatemaster_id($id);
+		$clientid=$this->Transaction_model->getclient_id($id);
+
+		$consignorid=$this->Transaction_model->getconsigor_id($id);
+
+		$consigneeid=$this->Transaction_model->getconsignee_id($id);
+
+		if($clientid!="0")
+		{	$data['clientdata']=$this->Transaction_model->getclinetdetails($id);}
+		else{
+			$data['clientdata']="";
+		}
+		if($consignorid!="0")
+		{
+			$data['consignordata']=$this->Transaction_model->getconsignordetails($id);}
+		else{
+			$data['consignordata']="";
+		}
+		if($consigneeid!="0")
+		{
+			$data['consigneedata']=$this->Transaction_model->getconsigneeedetails($id);}
+		else{
+			$data['consigneedata']="";
+		}
+		if($masterid!="0"){
+			$data['estimate']=$this->Transaction_model->job_estimate_details($masterid);
+			$data['estimatedata']=$this->Transaction_model->editestimateedetails($id);
+		
+
+		}
+		else{
+			$data['estimate']=0;
+			$data['estimatedata']=0;
+			$estmasterid=$this->Transaction_model->selectmaxid_estimatemaster($id);
+			$estmasterid=$estmasterid+1;
+			$data['estmasterid']=$estmasterid;
+		
+		}
+		
+		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
+		$data['uploadedfile']=$this->Transaction_model->selectuploaded_file($id);
+		$this->load->view('includes/header',$user_image);
+		$this->load->view('includes/navigation',$result,$user_image);
+		$this->load->view('transaction/edit_consignment',$data);
+		$this->load->view('includes/footer');
+	}
+	
 
 
     public function store()
@@ -241,16 +331,30 @@ class Transaction extends CI_Controller {
 			$this->load->view('includes/footer');
 	
 		}
-		
-		public function jobclosed_status($id)
-	
-	{
-// 		echo $id;
-	
+// List Consignment
+		public function job_consignment()
+		{	
+			
+			$user_id=	$this->session->userdata('user_id');
+			$res = $this->Permission_model->userdetails($user_id);
+			$user_image['values']=$res[0]->user_image;
+			$result['roles']=$this->Login_model->userdetails($user_id);
+			$data['jobid'] = $this->Transaction_model->listjobdetails(); 
+			$data['values'] = $this->Transaction_model->listestimatedetails(); 
+			$result['permission']=$this->Login_model->select_all_menu($user_id);
+			$user_image['cmpnydata']=$this->Transaction_model->basic_company_details(); 
 
-		$result = $this->Transaction_model->jobclosed_status($id);
-		redirect('list-job');
+			$this->load->view('includes/header',$user_image);
+			$this->load->view('includes/navigation',$result,$user_image);
+			$this->load->view('transaction/list_consignment',$data);
+			$this->load->view('includes/footer');
+	
+		}
 		
+public function jobclosed_status($id)
+	{
+        $result = $this->Transaction_model->jobclosed_status($id);
+		redirect('list-job');
 	}
 	public function update_estimate()
 	{
@@ -296,10 +400,11 @@ class Transaction extends CI_Controller {
 	}
 	echo json_encode($id1);
 	}
-		//print estimate details
-		public function estimate_print($estimateid)
+	
+	//print estimate details
+	public function estimate_print($estimateid)
 		{
-			$estimateid = $estimateid;
+			$estimateid = $estimateid; 
 			$result['estimatedata'] = $this->Transaction_model->estimatemaster_details($estimateid);
 			$clientid=$this->Transaction_model->getclient_id_est($estimateid);
 
@@ -309,7 +414,7 @@ class Transaction extends CI_Controller {
 
 			if($clientid!="0"){
 			$result['client_data'] = $this->Transaction_model->client_details($estimateid);
-		}
+	    	}
 			else{
 				$result['client_data']="0";
 			}
@@ -325,8 +430,7 @@ class Transaction extends CI_Controller {
 				else{
 				$result['consignee_data']="0";
 			}
-			//////////
-		
+			
 
 			$result['estimate'] = $this->Transaction_model->estimate_details($estimateid);
 			$result['invoiceinfo'] = $this->Transaction_model->basic_invoice_details();
@@ -344,17 +448,15 @@ if(($result['invoiceinfo'])=="NULL")
 	$result['invoiceinfo']=0;
 }	
 
-// var_dump($result);
-// die();
-
-			$this->load->view('transaction/jobestimate_print', $result);
-		}
-		//autocompleat description box
-		public function getdescriptiondata(){
-        
-			$data = $this->Transaction_model->getdescriptiondata();
-			echo json_encode($data);
-		  }
+$this->load->view('transaction/jobestimate_print', $result);
+	}
+	
+	//autocompleat description box
+public function getdescriptiondata()
+{
+	$data = $this->Transaction_model->getdescriptiondata();
+	echo json_encode($data);
+  }
 		  //to upload files
 		  
 	public function images_upload($id)

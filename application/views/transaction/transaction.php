@@ -14,9 +14,7 @@
 
 
 <?php 
-   // var_dump($currency);
-  
-   // die();
+
    $month = date('m');
    $day = date('d');
    $year = date('Y');
@@ -219,6 +217,11 @@
 <label class="control-label" for="date">Date</label>
 <input class="form-control" id="date" name="date" placeholder="" type="text"   value="<?php echo $today; ?>" />
 </div>
+
+<!-- <div class="form-group col-md-3">
+<label class="control-label" for="date">Job Code</label>
+<input class="form-control" id="jobcode" name="jobcode" placeholder="" type="text"   value="" />
+</div> -->
                     </div>
                     <div class=" row">
                         <div class="form-group col-md-4">
@@ -827,7 +830,8 @@ foreach ($truck as $truck_name) {
                                         <!-- /.box-body -->
                                     </div>
                                     <!-- /.box -->
-
+<?php $ab=$this->session->userdata('user_id');?>
+                    <input   type="hidden" id="userid"  class="form-control" placeholder="<?php echo $ab;?>"  value="<?php echo $ab; ?>"/>
                                 </div>
                             </div>
                             <input type="submit" name="submit"  style="float: right; margin-top:50px;" onclick="add_estimate();" value="Submit" id="submit" class="btn btn-success" >

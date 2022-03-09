@@ -231,6 +231,8 @@ $route['find-day-book'] = 'accounts/Day_book/finddata';
 //add job
 $route['job'] = 'transaction/Transaction/index';
 $route['edit-job/(:any)'] = 'transaction/Transaction/edit_job/$1';
+$route['edit-consignment/(:any)'] = 'transaction/Transaction/edit_consignment/$1';
+$route['estimation'] = 'transaction/Transaction/estimation';
 $route['transportation-store'] = 'transaction/Transaction/store';
 $route['transportation-update'] = 'transaction/Transaction/update';
 $route['transportation-description/(:any)'] = 'transaction/Transaction/getdescription/$1';
@@ -238,6 +240,7 @@ $route['transportation-jobdetails/(:any)'] = 'transaction/Transaction/jobdetails
 $route['transportation-estimate'] = 'transaction/Transaction/store_estimate';
 $route['transportation-carrier/(:any)'] = 'transaction/Transaction/getcarrier/$1';
 $route['list-job'] = 'transaction/Transaction/job_transactionlist';
+$route['list-consignment'] = 'transaction/Transaction/job_consignment';
 $route['job-closed-status/(:any)'] ='transaction/Transaction/jobclosed_status/$1';
 $route['update-estimate'] = 'transaction/Transaction/update_estimate';
 $route['estimate-print/(:any)'] = 'transaction/Transaction/estimate_print/$1';
@@ -253,9 +256,12 @@ $route['remove_uploadedfile/(:any)']='transaction/Transaction/remove_uploadedfil
 
 //invoice
 //job-invoice
+$route['new_invoice'] = 'transaction/Job_invoice_controller/new_invoice';
 $route['job-invoice/(:any)'] = 'transaction/Job_invoice_controller/job_invoice/$1';
+$route['estimate-invoice/(:any)'] = 'transaction/Job_invoice_controller/estimate_invoice/$1';
 $route['job-invoice/job-invoice-description/(:any)'] = 'transaction/Job_invoice_controller/getdata/$1';
 $route['insert-job-details'] = 'transaction/Job_invoice_controller/insert_job_details';
+$route['insert_expense_details'] = 'transaction/Job_invoice_controller/insert_expense_details';
 //print invoice
 $route['perfomainvoice-print/(:any)'] = 'transaction/Job_invoice_controller/perfomainvoice_print/$1';
 $route['invoice-print/(:any)'] = 'transaction/Job_invoice_controller/invoice_print/$1';
@@ -378,6 +384,7 @@ $route['profit-loss-data'] = 'reports/Reports/profit_loss_data';
 //vat report 
 
 $route['vat-report-total'] = 'reports/Vatreports_controller/vat_report_total';
+$route['getallvat'] = 'reports/Vatreports_controller/vat_report_total';
 
 $route['vat-report-total-data'] = 'reports/Vatreports_controller/vat_report_total_data';
 $route['vat-in-report'] = 'reports/Vatreports_controller/vat_in_report';
@@ -407,4 +414,40 @@ $route['update-basic-settings'] = 'Settings/Settings_controller/update_basic_set
 
 $route['soa-report'] = 'reports/Reports/soa_report_client';
 $route['soa-report-data-clientwise'] = 'reports/Reports/soa_report_data_clientwise';
+
+
+
+//genaral expense
+$route['genaral-expense-new'] = 'genaral_expense/Genaral_expense_Controller/genaral_expense';
+$route['insert-genaral-expense'] = 'genaral_expense/Genaral_expense_Controller/genaral_expense_details';
+$route['genaralexpense-report-data'] = 'genaral_expense/Genaral_expense_Controller/genaralexpense_report_data';
+$route['genaralexpense-report'] = 'genaral_expense/Genaral_expense_Controller/index';
+$route['genaralexpense-report-data-detail'] = 'genaral_expense/Genaral_expense_Controller/genaralexpense_report_data_detail';
+$route['genaralexpense-report-detailed'] = 'genaral_expense/Genaral_expense_Controller/detailedreport';
+$route['invoice-draft'] = 'invoice/Job_invoice_controller/job_invoice_draft';
+$route['expense-draft'] = 'invoice/Supplierexpense_Controller/supplier_expense_draft';
+
+
+//vehicle management
+
+$route['vehicle'] = 'vehicle/Vehicle/index';
+$route['vehicle-create'] = 'vehicle/Vehicle/create';
+$route['vehicle-store'] = 'vehicle/Vehicle/store';
+$route['vehicle-update'] = 'vehicle/Vehicle/update';
+$route['vehicle-edit/(:any)'] = 'vehicle/Vehicle/edit/$1';
+$route['vehicle-enable-status/(:any)'] ='vehicle/Vehicle/enable_status/$1';
+$route['vehicle-disable-status/(:any)'] = 'vehicle/Vehicle/disable_status/$1';
+$route['vehicle-view/(:any)'] = 'vehicle/Vehicle/view/$1';
+
+
+//Employee management
+
+$route['employee'] = 'employee/Employee/index';
+$route['employee-create'] = 'employee/Employee/create';
+$route['employee-store'] = 'employee/Employee/store';
+$route['employee-update'] = 'employee/Employee/update';
+$route['employee-edit/(:any)'] = 'employee/Employee/edit/$1';
+$route['employee-enable-status/(:any)'] ='employee/Employee/enable_status/$1';
+$route['employee-disable-status/(:any)'] = 'employee/Employee/disable_status/$1';
+$route['employee-view/(:any)'] = 'employee/Employee/view/$1';
 

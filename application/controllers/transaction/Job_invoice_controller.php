@@ -31,17 +31,101 @@ class Job_invoice_controller extends CI_Controller {
 		$result['permission']=$this->Login_model->select_all_menu($user_id);
         $result['bank']=$this->Job_invoice_model->select_all_bank();
         $result['jobdata']=$this->Job_invoice_model->select_job_details($id);
-      $result['currency']=$this->Job_invoice_model->select_currency();
-		$result['Inv']=$this->Job_invoice_model->selectcode();
+		$result['supcode']=$this->Supplier_expensemodel->selectcode();
+        $result['currency']=$this->Job_invoice_model->select_currency();
+		//$result['Inv']=$this->Job_invoice_model->selectcode();
+		$Inv=$this->Job_invoice_model->selectcodeid();
 		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
         $result['code']=$this->Supplier_expensemodel->selectcode();
 		$result['job']=$this->Supplier_expensemodel->select_all_job();
-	
+		if(($Inv)=='1'){$result['Inv']=1;}
+		else{$result['Inv']=$Inv[0]->Inv; } 
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 		$this->load->view('transaction/job_invoice',$result);
 		$this->load->view('includes/footer');
     }
+
+	public function new_invoice()
+	{
+		$user_id=	$this->session->userdata('user_id');
+		$res = $this->Permission_model->userdetails($user_id);
+		$result['roles']=$this->Login_model->userdetails($user_id);
+       	$user_image['values']=$res[0]->user_image;
+		$result['permission']=$this->Login_model->select_all_menu($user_id);
+        $result['bank']=$this->Job_invoice_model->select_all_bank();
+		$result['supcode']=$this->Supplier_expensemodel->selectcode();
+        $result['currency']=$this->Job_invoice_model->select_currency();
+		$Inv=$this->Job_invoice_model->selectcodeid();
+		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
+        $result['code']=$this->Supplier_expensemodel->selectcode();
+		$result['job']=$this->Supplier_expensemodel->select_all_job();
+		if(($Inv)=='1'){$result['Inv']=1;}
+		else{$result['Inv']=$Inv[0]->Inv; } 
+		$this->load->view('includes/header',$user_image);
+		$this->load->view('includes/navigation',$result,$user_image);
+		$this->load->view('transaction/new_invoice',$result);
+		$this->load->view('includes/footer');
+    }
+
+    public function estimate_invoice($masterid)
+	{
+		
+		$estimate=$this->Transaction_model->job_estimate_details($masterid); //jm_estimate_master_details
+		$estimatemaster=$this->Transaction_model->estimateedetails($masterid);
+		$Inv=$this->Job_invoice_model->selectcodeid(); 
+		$month = date('m');
+   $day = date('d');
+   $year = date('Y');
+		if(($Inv)=='1'){$iv=1;}
+		else{$Invv=$Inv[0]->Inv; } 
+		 $pieces = str_split($Invv, 12);
+        $iv=$pieces[1]+1;    $inv1= "INV/".$year."/".$month."/".$iv;
+		// foreach($Inv as $r)
+		// 	{$inv=$r->Inv;  $inv1=$inv+1;}
+        $today =date('Y-m-d'); 
+		foreach($estimatemaster as $row)
+			{
+				$data=array(
+				"Inv"=>$inv1,
+				"Date"=>$today,
+				"JobId"=>$row->job_id,
+				"Total"=>$row->total_amount,
+				"VatTotal"=>$row->tax_amount,
+				"Bank"=>1,
+				"Status"=>'Drafted',
+				"Active"=>'active',
+				"InvoiceType"=>'credit',
+				"GrandTotal"=>$row->grand_total,);
+				$master=	$this->Job_invoice_model->addjobmaster($data); 
+				$ids=$row->estimate_masterid;
+				$db=	$this->Job_invoice_model->updatejobmaster($ids); 
+
+			}
+
+			foreach($estimate as $rowa)
+			{
+				$data1=array(
+				"Description"=>$rowa->description,
+				"UnitPrice"=>$rowa->unitprice,
+				"Currency"=>$rowa->unit_type,
+				"ConvFactor"=>$rowa->conv_factor,
+				"Quantity"=>$rowa->quantity,
+				"Vat"=>$rowa->vat,
+				"Total"=>$rowa->subtotal,
+				"InvoiceMasterId"=>$master, );
+				$this->Job_invoice_model->addjobinvoicedetailsinsert($data1);
+				
+			}
+
+			$invid=$master; 
+		
+
+		redirect(base_url()."invoice-print/".$invid);
+	
+	}
+
+
     public function getdata($value)
     {
 	
@@ -54,7 +138,7 @@ public function insert_job_details()
 
 		 $data=$this->input->post('postData');
 	
-		$jobdata=$data["JobDetails"];
+		$jobdata=$data["JobDetails"]; 
 		$result=$this->Job_invoice_model->addjobmaster($data["JobData"]);
 		$my_values = array();
 		if($result!=0)
@@ -73,6 +157,70 @@ public function insert_job_details()
 		echo json_encode($result);
 		
 	}
+
+
+	public function insert_expense_details()
+	{
+
+		$data=$this->input->post('postData');
+		$jobdata=$data["ExpenseDetails"];
+		$jobdeta=$data["ExpenseData"];
+
+		foreach($jobdeta as $row1)
+		{   
+            $postid=$row1['PostId'];
+			$PostingDate=$row1['PostingDate'];
+			$JobID=$row1['JobID'];
+			$SupplierID=$row1['SupplierID'];
+			$data=$this->Job_invoice_model->viewjobmaster_expense($postid,$SupplierID); 
+			if($data[0]->PostId != $postid or $data[0]->PostId=='') {
+			
+			$result=$this->Job_invoice_model->addjobmaster_expense($row1); 
+			$SubTotal=0;  $VatTotal=0;$GrandTotal=0;
+			foreach($jobdata as $row)
+			{
+				
+
+				if($row1["SupplierID"]==$row["SupplierID"])
+				{
+				$r["ExpenseMasterId"]=$result;
+				$r["Description"]=$row["Description"];
+				$r["Amount"]=$row["Amount"];
+				$r["ConvFactor"]=$row["ConvFactor"];
+				$r["Vat"]=$row["Vat"];
+				$r["Total"]=$row["Total"];
+				$r["Currency"]=$row["Currency"];
+				$r["Code"]=$row["Code"];
+				$r["vat_persentage"]=$row["vat_persentage"];
+
+				$this->Job_invoice_model->addjobinvoicedetailsinsert_expense($r);
+				$my_values[] = $row;
+				$SubTotal=$SubTotal + $row["Amount"];
+				$VatTotal=$VatTotal + $row["Vat"];
+				$GrandTotal=$GrandTotal + $row["Total"];
+				}
+				$up=$this->Job_invoice_model->expensemaster_expense($SubTotal,$VatTotal,$GrandTotal,$result); 
+			}
+		
+	       }
+			
+		}
+		 $my_values = array();
+		if($result!=0)
+		{
+			
+			foreach($jobdata as $row)
+			{
+				$row["ExpenseMasterId"]=$result;
+				$this->Job_invoice_model->addjobinvoicedetailsinsert_expense($row);
+				$my_values[] = $row;
+			}
+		}
+		
+		echo json_encode($result);
+		
+	}	
+
 	
 	public function perfomainvoice_print($invid)
 	{
@@ -94,9 +242,8 @@ public function insert_job_details()
 		 $result['invoice']=$this->Job_invoice_model->select_job_invoice_details($invid);
 		 $result['companyinfo']=$this->Transaction_model->basic_company_details();
 		 $result['invoiceinfo']=$this->Transaction_model->basic_invoice_details();
-		 
 		
-		$this->load->view('transaction/invoice',$result);
+		$this->load->view('transaction/invoice',$result); 
 	
 	}
 	//Edit job-invoice

@@ -1,7 +1,5 @@
 <?php 
-   // var_dump($jobdata);
-   // var_dump ($Inv);
-   // die();
+  
    $month = date('m');
    $day = date('d');
    $year = date('Y');
@@ -61,7 +59,8 @@
                      <div class="row">
                      <div class="row">
           <div class="form-group col-md-2">
-                    <label class="control-label">Exp Id</label>
+                    <label class="control-label">Exp Id</label><?php $ab=$this->session->userdata('user_id');?>
+                    <input   type="hidden" id="userid"  class="form-control" placeholder="<?php echo $ab;?>"  value="<?php echo $ab; ?>"/>
                     <input type="hidden" name="eid" id="ejobid"  value="<?php  echo $jobdata[0]->JobId; ?>" />
                     <input maxlength="100" type="hidden" id="job_id"  class="form-control"  value="<?php echo $jobdata[0]->JobId;?>"/>
   
@@ -209,7 +208,7 @@ foreach($currency as $currency)
                      <div class="box-body">
                         <strong><i class=""></i> Job</strong>
                         <p class="text-muted" id="job_id">
-                           <?php echo $jobdata[0]->Number;?>
+                           <?php echo $jobdata[0]->Jobcode;?>
                         </p>
                         <hr>
                         <strong><i class=""></i> Shipper</strong>

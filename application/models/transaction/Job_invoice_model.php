@@ -37,17 +37,54 @@ if($result==NULL)
 return $result;
 
 }
+public function selectcodeid()
+{
+$maxquery="(SELECT * FROM jm_invoicemaster ORDER BY InvoiceMasterId DESC LIMIT 0,1)";
+$query = $this->db->query($maxquery);
+$result = $query->result();
+if($result==NULL)
+{
+  $result=1;
+}
+return $result;
+
+}
 public function list_description($data)
 {
   
 $this->db->where('code', $data);
 $this->db->select('description,id');
 $this->db->from('mst_description');
-$query = $this->db->get();
-$result = $query->result();
-return $result;
+$result = $this->db->get()->result_array();
 
 }
+
+public function viewjobmaster_expense($postid,$SupplierID)
+{
+$dataq="select * from jm_expensemaster
+ where PostId=".$postid." and SupplierID=".$SupplierID." ";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+
+}
+public function addjobmaster_expense($data_array)
+       {
+      
+          $this->db->insert('jm_expensemaster', $data_array);
+          $ExpenseMasterId=$this->db->insert_id();
+          return $ExpenseMasterId;
+       
+       }
+       public function addjobinvoicedetailsinsert_expense($data_array)
+       {
+      
+          $this->db->insert('jm_expensedetail', $data_array);
+          $ExpenseDetailId=$this->db->insert_id();
+          return $ExpenseDetailId;
+       
+       }
+
 //to insert into jobmaster tb
 public function addjobmaster($data_array)
    {
@@ -57,14 +94,11 @@ public function addjobmaster($data_array)
       $job_master_id=$this->db->insert_id();
       return $job_master_id;
    
-      
-
    }
    public function addjobinvoicedetailsinsert($data_array)
    {
    
-      // var_dump( $data_array);
-      // die();
+     
       $this->db->insert('jm_invoicedetail', $data_array);
       $job_invoice_details_id=$this->db->insert_id();
       return $job_invoice_details_id;
@@ -74,18 +108,18 @@ public function addjobmaster($data_array)
    }
    //to select invoicedetails
    
-   public function selectinvoicedetails($data)
+public function selectinvoicedetails($data)
 {
-  
+ 
 $dataq="select ji.Inv,ji.Date,ji.Total,ji.VatTotal,ji.GrandTotal,concat(jj.Hawb,'-',jj.Mawb) as awb,concat(jj.Hbl,'-',jj.Mbl) as hblmbl,jj.Number,jj.ActualWeight,jj.PoNo, jj.Etd,jj.Eta,concat(c.name,'|',c.address,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientenglish,c.vat_no, concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientearabic, jj.Shipper as consignor, jj.Consignee as consignee, concat(bn.bank_name,'<br>',bn.acc_number,'<br>',bn.other_info,'<br>',bn.iban) as bank from jm_invoicemaster ji inner join mst_bank bn on bn.id=ji.Bank inner join jm_job jj on ji.JobId=jj.JobId inner join mst_client c on c.id=jj.client_id inner join mst_shipper consignor on consignor.id=jj.consignor_id inner join mst_shipper consignee on consignee.id=jj.consignee_id where ji.InvoiceMasterId=".$data.";";
 
  $query = $this->db->query($dataq);
-    $result = $query->result();
-        return $result;
-     
- 
-
+ return $query->result();
+  
+   
 }
+
+
 
 // to select_job_invoice details
 public function select_job_invoice_details($data)
@@ -125,6 +159,25 @@ inner join mst_bank bn  on bn.id=ji.Bank
 
 }
 
+public function updatejobmaster($Id)
+   {
+      
+      $this->db->set('status',"Posted" );
+      $this->db->where('estimate_masterid', $Id);
+      $this->db->update('jm_estimate_master');
+      return 1;
+   }
+
+   public function expensemaster_expense($SubTotal,$VatTotal,$GrandTotal,$result)
+   {
+      
+      $this->db->set('SubTotal',$SubTotal );
+      $this->db->set('VatTotal',$VatTotal );
+      $this->db->set('GrandTotal',$GrandTotal );
+      $this->db->where('ExpenseMasterId', $result);
+      $this->db->update('jm_expensemaster');
+      return 1;
+   }
 
 public function updateJobinvoicemaster($Id,$data_array)
    {
@@ -133,9 +186,6 @@ public function updateJobinvoicemaster($Id,$data_array)
       $this->db->update('jm_invoicemaster', $data_array);
       
       return 1;
-   
-      
-
    }
    
    public function updateJobinvoicemaster_InvoiceMasterId($Id,$data_array)

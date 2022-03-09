@@ -61,7 +61,7 @@
                      }
                      
                      ?></td>
-                        <td class="text-center"><?php echo $value1->Number;?></td>
+                        <td class="text-center"><?php echo $value1->Jobcode;?></td>
                         <td class="text-center"><?php echo $value1->Type;?></td>
                         
                         <td class="text-center"><?php echo $value1->Date;?></td>

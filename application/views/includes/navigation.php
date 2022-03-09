@@ -155,6 +155,8 @@ p
               <ul class="treeview-menu">
               <!-- <li><a href="<?php echo base_url(); ?>job"><i class="fa fa-circle-o"></i>Job </a></li> -->
               <li><a href="<?php echo base_url(); ?>list-job"><i class="fa fa-circle-o"></i>List Job  </a></li>
+
+              <li><a href="<?php echo base_url(); ?>list-consignment"><i class="fa fa-circle-o"></i>Estimation  </a></li>
         
               </ul>
             </li>
@@ -230,6 +232,43 @@ p
         }
         ?>
         
+
+        <li class="treeview">
+           
+           <a href="<?php echo base_url(); ?>vehicle">
+             <i class=" fa fa-truck"></i> <span>Vehicles </span> </a>
+         
+        
+         </li>
+         
+          <li class="treeview">
+        
+           <a href="<?php echo base_url(); ?>employee">
+             <i class=" fa fa-user"></i> <span>Employees </span> </a>
+         
+        
+         </li>
+
+         <li class="treeview"> 
+         
+         <a href="">
+                   <i class="fa fa-exchange"></i> <span>General Expense </span> <i class="fa fa-angle-left pull-right"></i>
+                 </a>
+               
+                 <ul class="treeview-menu" style="display: none;">
+                                <li><a href="<?php echo base_url(); ?>genaral-expense-new"><i class="fa fa-circle-o"></i>Add Expense</a></li>
+                                <li><a href=" <?php echo base_url(); ?>genaralexpense-report"><i class="fa fa-circle-o"></i> Genaral Expense Report</a></li>
+                               
+                              
+                           <li><a href="<?php echo base_url(); ?>genaralexpense-report-detailed"><i class="fa fa-circle-o"></i> Genaral Expense Detailed</a></li>
+                           
+                           
+                           
+                           
+                                 </ul>
+              
+               </li>
+             
      
          <?php 
           

@@ -189,6 +189,19 @@ public function listjobdetails()
       
 
 }
+
+public function listestimatedetails()
+{
+     
+   $this->db->select('*');
+   $this->db->from('jm_estimate_master');
+   $this->db->join('jm_estimate_master_details', 'jm_estimate_master_details.estimate_masterid = jm_estimate_master.estimate_masterid');
+   $query = $this->db->get();
+   return $query->result();
+
+}
+
+
 public function jobclosed_status($id)
 {
      
@@ -359,13 +372,13 @@ public function job_estimate_details($mid)
    $query = $this->db->get();
    $result = $query->result();
    return $result;
- 
-
 }
+
+
 public function editestimateedetails($data)
 {
   
-$dataq="select ji.estimate_masterid,ji.estimate_no,ji.e_date,ji.total_amount,ji.tax_amount,ji.grand_total,concat(jj.Hawb,'-',jj.Mawb) as awb,jj.JobId,jj.Number,jj.ActualWeight,
+$dataq="select ji.estimate_masterid,ji.estimate_no,ji.job_id,ji.e_date,ji.status,ji.total_amount,ji.tax_amount,ji.grand_total,concat(jj.Hawb,'-',jj.Mawb) as awb,jj.JobId,jj.Number,jj.ActualWeight,
 jj.Etd,jj.Eta,jj.Type,jj.Mbl,jj.Carrier,jj.Pol,jj.Pod,jj.ShipmentTerms,jj.CargoDescription,jj.PoNo,
 jj.Date,jj.Origin,jj.Type,jj.Mawb,jj.Hawb,jj.ContainerNo,jj.Etd,jj.Eta,jj.ShipmentTerms,jj.ChargeableWeight,jj.Description,jj.Destination,jj.BayanNo,jj.NoContainers,jj.TruckNo,jj.Nopcs,jj.BayanDate,jj.BayanNo,jj.Status
 from jm_estimate_master ji
@@ -376,9 +389,22 @@ inner join jm_job jj on ji.job_id=jj.JobId
  $query = $this->db->query($dataq);
     $result = $query->result();
         return $result;
-     
- 
+}
 
+public function estimateedetails($data)
+{
+  
+$dataq="select ji.estimate_masterid,ji.estimate_no,ji.job_id,ji.e_date,ji.total_amount,ji.tax_amount,ji.grand_total,concat(jj.Hawb,'-',jj.Mawb) as awb,jj.JobId,jj.Number,jj.ActualWeight,
+jj.Etd,jj.Eta,jj.Type,jj.Mbl,jj.Carrier,jj.Pol,jj.Pod,jj.ShipmentTerms,jj.CargoDescription,jj.PoNo,
+jj.Date,jj.Origin,jj.Type,jj.Mawb,jj.Hawb,jj.ContainerNo,jj.Etd,jj.Eta,jj.ShipmentTerms,jj.ChargeableWeight,jj.Description,jj.Destination,jj.BayanNo,jj.NoContainers,jj.TruckNo,jj.Nopcs,jj.BayanDate,jj.BayanNo,jj.Status
+from jm_estimate_master ji
+inner join jm_job jj on ji.job_id=jj.JobId
+
+ where ji.estimate_masterid=".$data.";";
+
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
 }
 public function getclinetdetails($data)
 {
@@ -569,6 +595,16 @@ public function getdescriptiondata()
       
 $this->db->select('id as value, description as label');
 $this->db->from('mst_description');
+$query = $this->db->get();
+$result = $query->result();
+return $result;
+
+}
+public function getjobdata()
+{
+      
+$this->db->select('Number as value, Jobcode as label');
+$this->db->from('jm_job');
 $query = $this->db->get();
 $result = $query->result();
 return $result;

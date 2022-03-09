@@ -35,7 +35,8 @@
                      <div class="box-body">
                         <div class="row">
                            <div class="form-group col-md-1">
-                              <label class="control-label">Code*</label>
+                              <label class="control-label">Code*</label><?php $ab=$this->session->userdata('user_id');?>
+                           <input   type="hidden" id="userid"  class="form-control" placeholder="<?php echo $ab;?>"  value="<?php echo $ab; ?>"/>
                               <input   type="text" id="code" required="required" class="form-control" readonly="readonly" placeholder="<?php echo $receiptcode[0]->ID+1;?>"  value="<?php echo $receiptcode[0]->ID+1;?>"/>
 
                            </div>

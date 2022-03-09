@@ -31,7 +31,7 @@
                          {  
                         	?>
                      <tr>
-                        <td class="text-center"><?php echo $value1->Number;?></td>
+                        <td class="text-center"><?php echo $value1->Jobcode;?></td>
                         <td class="text-center"><?php echo $value1->Date;?></td>
                         <td class="text-center"><?php echo $value1->Shipper;?></td>
                         <td class="text-center"><?php echo $value1->Consignee;?></td>

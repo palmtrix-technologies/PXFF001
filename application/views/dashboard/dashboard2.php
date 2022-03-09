@@ -16,15 +16,39 @@
     <!-- Info boxes -->
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
+     
         <div class="info-box">
+        <a href="<?php echo base_url(); ?>job"> 
           <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+          
           <div class="info-box-content">
-            <span class="info-box-text">Total Job</span>
+            <span class="info-box-text"><h3>New Job</h3></span>
             <span class="info-box-number"><?php echo $jobs[0]->totaljobs;?></span>
           </div>
           <!-- /.info-box-content -->
-        </div>
+        </div></a>
         <!-- /.info-box -->
+      </div>
+
+      <!-- <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+        <a href="<?php echo base_url(); ?>new_invoice"> 
+          <span class="info-box-icon bg-yellow"><i class="fa fa-file-excel-o" aria-hidden="true"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text"><h3>New Invoice</h3></span>
+            <span class="info-box-number"></span>
+          </div>
+        </div></a>
+      </div> -->
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">New clients</span>
+            <span class="info-box-number"><?php echo $getcliennumber[0]->clients;?></span>
+          </div>
+        </div>
       </div>
       <!-- /.col -->
       <div class="col-md-3 col-sm-6 col-xs-12">
@@ -66,17 +90,7 @@
         <!-- /.info-box -->
       </div>
       <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">New clients</span>
-            <span class="info-box-number"><?php echo $getcliennumber[0]->clients;?></span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
+     
       <!-- /.col -->
     </div>
     <!-- /.row -->

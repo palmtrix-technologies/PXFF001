@@ -53,15 +53,11 @@ function get_vat_report_total()
 var invat=0;
   month=$('#month').val();
   year=$('#year').val();
-
-
-  
     var postData={
         month:month,
         year:year
      
     }
-
     var request = $.ajax({
         url: 'vat-report-total-data/',
         type: 'POST',
@@ -159,12 +155,14 @@ $(".expense").append( "<tr class='tbl_row' ><td  style='font-size:15px';><b>NET 
 }
 
 
+
+
 //vat in report
 function get_vatinreport()
 {
   fromdate=$('#fromdate').val();
   todate=$('#todate').val();
-  jobid=$('#jobid').val();
+  jobid=$('#jobid').val();            //alert(jobid);
   
   
    
@@ -215,8 +213,12 @@ datepickerinit();
            
               });
         
-});
+});   
+
+
 }
+
+
 function get_vatoutreport()
 {
   fromdate=$('#fromdate').val();

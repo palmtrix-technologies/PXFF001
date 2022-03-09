@@ -47,7 +47,7 @@ var request = $.ajax({
 }
 function insert_job_invoice()
 {
-  if($('#unitprice,#unit_price,#conv_factor,#quantity,#vat').val() == ''){
+  if($('#unitprice,#unit_price,#conv_factor,#quantity,#vat,#view_supplier_name,#eunitprice').val() == ''){
     swallokalert('Insert all fields!!','#');
     //alert('Insert all fields');
  }
@@ -78,8 +78,22 @@ function insertRow()
    var SubTotal=quantity*price;
  var taxvalue=((SubTotal * vatAmount) / 100);
  var total=SubTotal+taxvalue;
+
+
+ var eprice=parseFloat($("#eunitprice").val());
+ var eprice = eprice *  conv_factor;
+      var ecode=$("#edesc_code").val();
+      var evatAmount=parseFloat($("#vat").val());
+     var eSubTotal=1*eprice;
+   var etaxvalue=((eSubTotal * evatAmount) / 100);
+   var etotal=eSubTotal+etaxvalue;
+
+
+ var supp =$("#view_supplier_name").val();
+ var suppid =$("#supplier_id").val();
+ var unit_sup=$("#eunitprice").val();
 //  var currency=parseFloat($("#unit_price").val());
-$(".dataadd").append( "<tr class='tbl_row'><td class='job_desc'>"+desc+" </td> <td class='job_price'>"+price1+"</td><td class='job_quantity'>"+quantity+"</td> <td class='subtotalval_data'>"+SubTotal+"</td> <td class=''><span class='taxval_data'>"+taxvalue+"</span> ( <span class='taxpr_data'>"+vatAmount+"</span>% )</td>  <td class='totalval_data'>"+total+"</td> <td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a><input type='hidden' class='currency' value='"+currency+"'/><input type='hidden' class='cov_factor' value='"+conv_factor+"'/> </td></tr>" );
+$(".dataadd").append( "<tr class='tbl_row'><td class='job_desc'>"+desc+" </td> <td class='job_price'>"+price1+"</td><td class='job_quantity'>"+quantity+"</td> <td class='subtotalval_data'>"+SubTotal+"</td> <td class=''><span class='taxval_data'>"+taxvalue+"</span> ( <span class='taxpr_data'>"+vatAmount+"</span>% )</td>  <td class='totalval_data'>"+total+"</td><td class='supp'>"+supp+"</td><td class='unit_sup'>"+unit_sup+"</td> <td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a><input type='hidden' class='currency' value='"+currency+"'/><input type='hidden' class='cov_factor' value='"+conv_factor+"'/><input type='hidden' class='esubtotalval_data' value='"+eSubTotal+"'/><input type='hidden' class='etaxval_data' value='"+etaxvalue+"'/><input type='hidden' class='etotalval_data' value='"+etotal+"'/><input type='hidden' class='supp_id' value='"+suppid+"'/> </td></tr>" );
 
 
 calculates();
@@ -91,6 +105,8 @@ calculates();
         $('#step-1 #conv_factor').val('1');
 				$('#step-1 #quantity').val('1');
         $('#step-1 #vat').val('0');
+        $('#step-1 #view_supplier_name').val('');
+        $('#step-1 #eunitprice').val('');
         $('#step-1 #date').val($.datepicker.formatDate("yy-mm-dd", new Date()));
 
         
@@ -113,7 +129,6 @@ function calculates() {
       var s = parseFloat($(this).html());
       totalval_data_val=parseFloat(totalval_data_val)+s;
   });
-//  console.log("fgchf");
 
   $("#total").val(totsub_val.toFixed(2));
 
@@ -125,11 +140,8 @@ function calculates() {
 //insert data to job-details table
 
 function insert_job_details() {
-    var $jobid=$('#job_id').val();
-
-// var Data;
+    var $jobid=$('#job_id').val(); 
 var JobData = {
-              
   "Inv": $('#inv_code').val(),
   "Date":$('#date').val(),
   "JobId":$('#job_id').val(),
@@ -142,10 +154,56 @@ var JobData = {
   "Active":"active",
   "Total":$('#total').val(),
   "VatTotal":$('#vat_total').val(),
-  "GrandTotal":$('#grand_total').val()
-};
-  var JobDetails = [];
+  "GrandTotal":$('#grand_total').val(),
+  "Userid":$('#userid').val(),
+  "Remark":$('#remark').val()
+};   
+
+
+
+var ExpenseData = [];
+  $(".tbl_row").each(function () {
+    var Datas = {
+  "PostId": $('#epost_code').val(), 
+  "PostingDate":$('#date').val(),
+  "InvDate":$('#date').val(),
+  "SupplierID":$(this).find('.supp_id').val(),
+  "Reference": $('#inv_code').val(),
+  "OurInv": '',
+  "Mode":$('#type').val(),
+  "Status":"Drafted",
+  "JobId":$('#job_id').val(),
+  "SupplierInvoiceNo":1,
+  "SubTotal":$('#esubtotalval_data').val(),
+  "VatTotal":$('#etaxval_data').val(),
+  "GrandTotal":$('#etaxval_data').val(),
+  "Userid":$('#userid').val()
+};                                     
+ExpenseData.push(Datas);
+});
+
+
+var ExpenseDetails = [];
+$(".tbl_row").each(function () {
+    var Data1 = {
+      "Description":$(this).find('.job_desc').text(),
+      "Amount":$(this).find('.esubtotalval_data').val(),
+      "ConvFactor": $(this).find('.cov_factor').val(),
+      "Vat": parseFloat($(this).find('.etaxval_data').val()),
+      "Total": parseFloat($(this).find('.etotalval_data').val()),
+        "Currency": $(this).find('.currency').val(),
+        "Code":0,
+        "SupplierID":$(this).find('.supp_id').val(),
+        "vat_persentage": ''    
+     
+    };
+    ExpenseDetails.push(Data1);
+});
+
+
+       var JobDetails = [];
           $(".tbl_row").each(function () {
+              
               var Data = {
                 "Description":$(this).find('.job_desc').text(),
                   "UnitPrice": $(this).find('.job_price').text(),
@@ -153,35 +211,52 @@ var JobData = {
                   "ConvFactor": $(this).find('.cov_factor').val(),
                    "Quantity":$(this).find('.job_quantity').text(),
                    "Vat": parseFloat($(this).find('.taxval_data').text()),
-                   "Total": parseFloat($(this).find('.totalval_data').text()),
-                   "VAT_percentage": parseFloat($(this).find('.taxpr_data').text())
-                  
-              };
+                   "Total": parseFloat($(this).find('.totalval_data').text())
+                
+              };                             
               JobDetails.push(Data);
-             // console.log(JobDetails);
+                 // console.log(JobDetails);
           });
-     var  inv_code=$('#inv_code').val();  
+          var  inv_code=$('#inv_code').val();   
 
-var postData = {
-  JobDetails: JobDetails,
+var postDatas = {
+  JobDetails:JobDetails,
   JobData: JobData
-    };
-    // console.log(postData);
-    var request = $.ajax({
+    };                            // alert(JSON.stringify(JobDetails, "", 2));
+
+    var postData = {
+      ExpenseDetails: ExpenseDetails,
+      ExpenseData: ExpenseData
+        };  
+
+//  var request = $.ajax({
+//   url: '../insert_expense_details',
+//   type: 'POST',
+//   dataType: 'JSON',
+//   data: {postData:postData} ,
+
+//   });
+//   request.done( function ( data ) { alert(data);
+//     window.location.href='../invoice-print/'+data
+    
+//     });
+   
+
+    var request1 = $.ajax({
       url: '../insert-job-details',
       type: 'POST',
-      data: {postData:postData} ,
+      data: {postData:postDatas} ,
       dataType: 'JSON'
       });
-    request.done( function ( data ) {
+    request1.done( function ( data ) { 
     window.location.href='../invoice-print/'+data
     
     });
-    request.fail( function ( jqXHR, textStatus) {
-      swallokalert('Job Invoice  Creation failed!','#');
-    // alert("Job supplier payment Creation failed");
+    request1.fail( function ( jqXHR, textStatus) {
+      swallokalert('Job Invoice  Creation failed !','#');
+   
 
-      });
+      });  
 
   }
 

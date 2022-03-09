@@ -9,7 +9,7 @@ $( document ).ready(function() {
   function search_job()
 {
     var jobid = $('#q').val();
-    // alert(jobid);
+  
     if($.isNumeric(jobid))
     {
        visiblejobdescription();
@@ -28,13 +28,13 @@ function visiblejobdescription()
      $('#description').removeClass("hidden");
      $('#title').removeClass("hidden");
      postData=$('#q').val();
-//  alert(postData);
+ // alert(postData);
 var request = $.ajax({
   url: 'job-description/'+postData,
   type: 'GET',
   dataType: 'JSON'
   });
-  request.done( function (result) {
+  request.done( function (result) { 
     // console.log(result);
   
    var values=JSON.stringify(result);
@@ -42,7 +42,7 @@ var request = $.ajax({
    console.log(result);
    
   //  alert(values[0].JobId);
-  $("#job_id").text(result["jobdata"][0].Number);
+  $("#job_id").text(result["jobdata"][0].Jobcode);
   $("#id").text(result["jobdata"][0].JobId);
   $("#client_id").text(result["jobdata"][0].client_id);
   $("#shipper").text(result["jobdata"][0].consignor);
@@ -98,6 +98,45 @@ var Invsum=0;
     });
     Invsum=parseFloat(Invsum).toFixed(2);
     $(".dataadd").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='6' > Total Invoice </td><td style='text-align: right;'>"+Invsum+"</td><td></td></tr>"); 
+
+//Estimate
+var Invsum=0;
+    var slno=0; 
+    $(".dataadda").html("");
+    $.each(result["estimatedata"], function(index, value){
+      
+         slno=slno+1;
+        var inv=value.estimate_no;
+        var date=value.e_date;
+        var jobsid =value.job_id;
+       
+        var vattotal=value.tax_amount;
+        
+        var subtotaldata=parseFloat(value.total_amount);
+        sum=parseFloat(subtotaldata);
+
+        var grandtotal=parseFloat(value.grand_total).toFixed(2);
+
+        var status1=value.status; 
+
+       var stringval='<ul class="nav"><li class="dropdown"> <a class="btn btn-sm dropdown-toggle" style="width: 50px;" data-toggle="dropdown" href="#"><i class="fa fa-ellipsis-v"></i></a><ul class="dropdown-menu">';          
+        
+
+         stringval=stringval+'<li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="'+baseurl+'estimate-print/'+value.estimate_masterid+'">View Estimate</a></li>';
+ if(status1=='drafted')
+         {
+         stringval=stringval+'<li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="'+baseurl+'estimate-invoice/'+value.estimate_masterid+'">Post to Invoice</a></li>';
+        }
+         stringval=stringval+'</ul> </li>  </ul>';
+
+         $(".dataadda").append( "<tr class='tbl_row'><td class='sl'>"+slno+" </td> <td class='inv'>"+inv+"</td><td class='date'>"+date+"</td>   <td class='vattotal'>"+vattotal+"</td><td class='totaldata'>"+subtotaldata+"</td><td class='grandtotal' style='text-align:right;'>"+grandtotal+"</td><td>"+stringval+" </td></tr>" );
+
+                
+
+    });
+    Invsum=parseFloat(Invsum).toFixed(2);
+    $(".dataadda").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='6' > Total Invoice </td><td style='text-align: right;'>"+Invsum+"</td><td></td></tr>"); 
+
 
   //  console.log(Invsum);
     //credit note 

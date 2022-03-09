@@ -1,6 +1,5 @@
 <?php 
-// var_dump($suppliers);
-// die();
+
 ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-print-1.6.1/datatables.min.css"/>
 <link href="<?php echo base_url(); ?>/assets/expensereport/style.css" rel="stylesheet" />

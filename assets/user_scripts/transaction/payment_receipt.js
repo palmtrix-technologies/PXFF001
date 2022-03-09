@@ -125,7 +125,8 @@ function insert_payment_receipt() {
       "ChequeNo":$('#cheque_no').val(),
       "ChequeDate":$('#cheque_date').val(),
       "BankId":$('#bank_id').val(),
-      "TransactionId":$('#transaction_id').val()
+      "TransactionId":$('#transaction_id').val(),
+      "Userid":$('#userid').val()
 
     };
     var Clientid=$('#client_id').val();

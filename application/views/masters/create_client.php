@@ -47,7 +47,13 @@
                     <div class="form-group col-md-6">
                       <label for="code">VAT.No</label>
                       <input type="text" class="form-control" autocomplete="off" required id="client_vat" placeholder="Enter VAT number">
-                    </div></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="code">TRN.No</label>
+                      <input type="text" class="form-control" autocomplete="off" required id="client_trn" placeholder="Enter TRN number">
+                    </div>
+                  
+                  </div>
                     
                     <div class=" row">
                     <div class="form-group col-md-6">

@@ -25,7 +25,7 @@ $( document ).ready(function() {
     }
   
   
-    function expensegetdata()
+  function expensegetdata()
   {
   
   postData=$('#edesc_code').val();
@@ -75,10 +75,8 @@ $( document ).ready(function() {
       var eprice1=parseFloat($("#eunitprice").val());
       var econv_factor=parseFloat($("#econv_factor").val());
       var emode=$("#emode").val();
+      
        var eprice = eprice *  econv_factor;
-  
-    //   var quantity=$("#quantity").val();
-     
       var ecode=$("#edesc_code").val();
       var evatAmount=parseFloat($("#evat").val());
      var eSubTotal=1*eprice;
@@ -155,7 +153,8 @@ $('#emode').attr('disabled', true);
     "SupplierInvoiceNo":1,
     "SubTotal":$('#etotal').val(),
     "VatTotal":$('#evat_total').val(),
-    "GrandTotal":$('#egrand_total').val()  
+    "GrandTotal":$('#egrand_total').val(),
+    "Userid":$('#userid').val()  
   
   };
   // console.log(ExpenseData);

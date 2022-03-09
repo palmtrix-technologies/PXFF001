@@ -19,6 +19,12 @@ class Job_Search extends CI_Controller {
 		 $this->load->model('transaction/Transaction_model');
 	
 	}
+
+	public function getjobdata()
+{
+	$data = $this->Transaction_model->getjobdata(); 
+	echo json_encode($data);
+  }
 	
 	public function job_search()
 	{	
@@ -41,7 +47,7 @@ class Job_Search extends CI_Controller {
 	{	
 	
 		$result['jobdata']=$this->Job_searchmodel->select_job_decription($jobid);
-		$masterid=$this->Job_searchmodel->select_job_id($jobid);
+		$masterid=$this->Job_searchmodel->select_job_id($jobid);                 //JobId
 
 		$result['invoicetotal']=$this->Job_searchmodel->select_invoice_total($masterid);
 		$result['expensetotal']=$this->Job_searchmodel->select_expense_total($masterid);
@@ -61,6 +67,8 @@ class Job_Search extends CI_Controller {
 		$result['supplierpayment']=$this->Job_searchmodel->select_payment_details($masterid);
 		
 		$result['jobledger']=$this->Job_searchmodel->select_job_ledger_details($masterid);
+
+		$result['estimatedata']=$this->Transaction_model->editestimateedetails($masterid);
 		
 		echo json_encode($result);
 	

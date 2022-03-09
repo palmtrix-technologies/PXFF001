@@ -137,7 +137,8 @@ function insert_supplier_payment() {
       "ChequeNo":$('#cheque_no').val(),
       "ChequeDate":$('#cheque_date').val(),
       "BankId":$('#bank_id').val(),
-      "TransactionId":$('#transaction_id').val()
+      "TransactionId":$('#transaction_id').val(),
+      "Userid":$('#userid').val()
 
     };
     var Mode=$('#type').val();

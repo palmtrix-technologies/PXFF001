@@ -4,7 +4,7 @@
         <div class="pull-right hidden-xs">
           <b></b> 
         </div>
-        <strong>Copyright &copy; 2019-2020 &nbsp FERRY FOLKS logistics solutions| powered <a href="<?php echo base_url(); ?>user-home" > </a> by &nbsp <a href="http://www.palmtrix.com/"> Palmtrix Technologies llc</a>.</strong>
+        <strong>Copyright &copy; 2021-2022 &nbsp FERRY FOLKS logistics solutions| powered <a href="<?php echo base_url(); ?>user-home" > </a> by &nbsp <a href="http://www.palmtrix.com/"> Palmtrix Technologies llc</a>.</strong>
       </footer>
     </div><!-- ./wrapper -->
 

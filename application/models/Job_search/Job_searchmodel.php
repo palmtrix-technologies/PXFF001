@@ -34,7 +34,7 @@ class Job_searchmodel extends CI_Model {
        
        
         
-$dataq="select jj.client_id,jj.ShipmentTerms,jj.JobId,jj.CargoDescription,jj.Description,concat(c.name,'|',c.telephone,'-',c.mobile,'|',c.email) as clientenglish,c.vat_no,jj.Number,
+$dataq="select jj.client_id,jj.Jobcode,jj.ShipmentTerms,jj.JobId,jj.CargoDescription,jj.Description,concat(c.name,'|',c.telephone,'-',c.mobile,'|',c.email) as clientenglish,c.vat_no,jj.Number,
 concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'|',c.email) as clientearabic,
 concat(consignor.name,',',consignor.telephone,'-',consignor.mobile,',',consignor.email) as consignor,
 concat(consignee.name,',',consignee.telephone,'-',consignee.mobile,',',consignee.email) as consignee

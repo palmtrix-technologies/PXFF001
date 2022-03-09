@@ -13,6 +13,7 @@
             "address":$('#client_address').val(),
             "address_arabic":$('#client_address_arabic').val(),
             "vat_no": $('#client_vat').val(),
+            "trn_no": $('#client_trn').val(),
             "country": $('#client_country').val(),
             "country_arabic": $('#client_country_arabic').val(),
             "remarks": $('#client_remarks').val(),

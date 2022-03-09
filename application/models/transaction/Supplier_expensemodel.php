@@ -64,25 +64,18 @@ class Supplier_expensemodel extends CI_Model {
     public function addjobmaster($data_array)
        {
        
-        
           $this->db->insert('jm_expensemaster', $data_array);
           $job_master_id=$this->db->insert_id();
           return $job_master_id;
        
-          
-    
        }
        public function addjobinvoicedetailsinsert($data_array)
        {
        
-          // var_dump( $data_array);
-          // die();
           $this->db->insert('jm_expensedetail', $data_array);
           $job_invoice_details_id=$this->db->insert_id();
           return $job_invoice_details_id;
        
-          
-    
        }
       //print
       public function selectexpensedetails($data)
@@ -126,7 +119,7 @@ class Supplier_expensemodel extends CI_Model {
       {
         
       $dataq="select sp.id,sp.supplier_name,ji.ExpenseMasterId,ji.PostId,ji.InvDate,ji.PostingDate,ji.SubTotal,ji.VatTotal,ji.Reference,ji.OurInv,ji.Mode,ji.GrandTotal,concat(jj.Hawb,'-',jj.Mawb) as awb,jj.JobId,jj.Number,jj.ActualWeight,
-      jj.Etd,jj.Eta,jj.Type,jj.Mbl,jj.Carrier,jj.Pol,jj.Pod,jj.PoNo,concat(c.name,'|',c.address,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientenglish,c.vat_no,
+      jj.Etd,jj.Eta,jj.Type,jj.Mbl,jj.Carrier,jj.Pol,jj.Jobcode,jj.Pod,jj.PoNo,concat(c.name,'|',c.address,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientenglish,c.vat_no,
       concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientearabic,
       concat(consignor.name,',',consignor.address,',',consignor.telephone,'-',consignor.mobile,'\n',consignor.email) as consignor,
       concat(consignee.name,',',consignee.address,',',consignee.telephone,'-',consignee.mobile,'\n',consignee.email) as consignee
@@ -141,8 +134,6 @@ class Supplier_expensemodel extends CI_Model {
        $query = $this->db->query($dataq);
           $result = $query->result();
               return $result;
-           
-       
       
       }
       

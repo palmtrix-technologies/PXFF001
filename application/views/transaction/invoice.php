@@ -159,7 +159,7 @@
 						<td style="text-align: right;border-right: solid 1px #FFF;"><?php echo $invoicedata[0]->Total;?></td>	
 						</tr>
 						<tr>
-						<td>Vat Total(15%)</td>
+						<td>Vat Total</td>
 						<td style="background-color: #d2dede;text-align: right;"> <?php echo $invoicedata[0]->VatTotal;?></td>	
 						</tr>
 						<tr style="background-color: #a1b0ab;" >

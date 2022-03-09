@@ -32,15 +32,9 @@
   //  update
     function update()
     {
-   
-//       var shpr= $('#consignor_id').val();
-//       var csgn=  $('#shipperid').val();
-//  alert(shpr);
-    
-//  alert(csgn);
+ 
      var typevqal=$("#type").val();
-    // alert( $('#id').val());
-    // alert(typevqal);
+   
       if(typevqal=="airexport"||typevqal=="airimport")
       {
         var etd=$("#etd_air").val();  
@@ -100,6 +94,7 @@
       var now = moment().format('YYYY-MM-DD h:mm:ss a');
       Data = {
         "Number":$('#code').val(),
+        "Jobcode":"FBL"+''+$('#code').val()+'-'+$('#client_name').val(),//$('#client_name').val()+'.'+$('#code').val(),
         "Date": $('#date').val(),
         "Shipper": $('#shippername').val(),
         "Consignee": $('#consigneename').val(),
@@ -152,7 +147,7 @@
         old_id:$("#dummyjobid").val(),
 
     };
-    console.log(Data);
+    console.log(Data); 
       var request = $.ajax({
       url: 'transportation-update',
       type: 'POST',
@@ -362,7 +357,79 @@ function add_estimate()
   "tax_amount": $('#vat_total').val(),
   "grand_total": $('#grand_total').val(),
   "status": "drafted",
-  "IsActive":1
+  "IsActive":1,
+  "Userid":$('#userid').val()
+};
+
+console.log(estimate_master);
+
+var estimate_master_details =[];
+  $('.estmt_details').each(function()
+  {
+    var Data = {
+      "description":$(this).find('.desc').text(),
+        "unitprice": $(this).find('.price_val').text(),
+        "unit_type": $(this).find('.unittype').text(),
+        "subtotal":  $(this).find('.subtotalval_data').text(),
+        "conv_factor": $(this).find('.convfact').text(),
+         "quantity":$(this).find('.quanty').text(),
+         "vat": parseFloat($(this).find('.taxval_data').text()),
+         "total": parseFloat($(this).find('.totalval_data').text())
+    };
+    estimate_master_details.push(Data);
+  });
+  var postData = {
+   
+    estimate_master: estimate_master,
+     estimate_master_details: estimate_master_details
+      };
+  var request = $.ajax({
+    url: 'transportation-estimate',
+    type: 'POST',
+    data: {postData:postData} ,
+    dataType: 'JSON'
+    });
+    request.done( function ( data) {
+      console.log(data);
+     // window.location.href='estimate-print/'+data
+      swallokalert('Estimate Created Successfully!!','estimate-print/'+data);
+    // if(!alert('estimate Created Successfully!')){window.location.href=""}
+    });
+    request.fail( function ( jqXHR, textStatus) {
+     swallokalert('estimate Creation failed!!','#');
+      // alert('estimate Created Successfully');
+      // window.location.reload();
+      if (jqXHR.responseText=="success")
+      {
+      //  swallokalert('estimate Created Successfully!!','#');
+      //  if(!alert('estimate3 created Successfully!')){window.location.href=""}
+   
+      }
+    });
+}
+
+function new_estimate()
+{
+ 
+  var id=$('#jobid').val();   
+  
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  
+  today = yyyy + '/' + mm + '/' + dd;
+  // alert(today);
+    estimate_master= {
+  "estimate_no": $('#estimate_code').val(),
+  "e_date":today,
+  "job_id":$('#jobid').val(),
+  "total_amount": $('#total').val(),
+  "tax_amount": $('#vat_total').val(),
+  "grand_total": $('#grand_total').val(),
+  "status": "drafted",
+  "IsActive":1,
+  "Userid":$('#userid').val()
 };
 
 console.log(estimate_master);

@@ -212,7 +212,7 @@ foreach($currencylist as $currency)
                      <div class="box-body">
                         <strong><i class=""></i> Job</strong>
                         <p class="text-muted" id="job_id">
-                        <?php echo $expensedata[0]->JobId;?>
+                        <?php echo $expensedata[0]->Jobcode;?>
                         </p>
                         <hr>
                         <strong><i class=""></i> Shipper</strong>

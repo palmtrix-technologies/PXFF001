@@ -1,6 +1,5 @@
 <?php 
-// var_dump($suppliers);
-// die();
+
 ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-print-1.6.1/datatables.min.css"/>
 <link href="<?php echo base_url(); ?>/assets/expensereport/style.css" rel="stylesheet" />
@@ -23,20 +22,7 @@
                 <div class="box-header with-border" id="searchform">
 <div class="row" >
 <form role="form" method="post" action=""> 
-                <!-- <div class="col-md-2 form-group col-md-offset-3">
-                <select class="form-control" id="month" name="month"  value="">
-                                    <option value="1">Jan to Mar</option>
-                                    <option value="2">April to June</option>
-                                    <option value="3">July to Sept</option>
-                                    <option value="4">Oct to Dec</option>
-
-                               
-                                 </select>
-                </div>
-                <div class="col-md-2 form-group ">
-                <input class="date-own form-control" autocomplete="off" type="text" name="date" id="year" placeholder="select year">
-
-                </div> -->
+                
                 <div class="col-md-2 form-group">
                   <input type="text" autocomplete="off" placeholder="yyyy-mm-dd" id="month" name="date" class="form-control"/>
                 </div>
@@ -57,7 +43,7 @@
                   <center><h5 >(PERIOD: <span id="fromdate"></span>  TO <span id="todate"></span>)</h5></center>
 
                   <div class="col-md-12" id="salessummary" >
-                    <table id="" class="table table-stripped"  style="background:whitesmoke;">
+                    <!-- <table id="" class="table table-stripped"  style="background:whitesmoke;">
 
                     <thead >
                     <center><h5 >SALES SUMMARY  <span id=""></span></h5></center>
@@ -74,7 +60,26 @@
                         <tbody class="sales" >
                             
                             </tbody>
-                    </table>
+                    </table> -->
+
+                    <table id="" class="table table-stripped"  style="background:whitesmoke;">
+
+<thead >
+<center><h5 >SALES SUMMARY  <span id=""></span></h5></center>
+    <tr class="success">
+     
+        <th>DATAILS</th>
+        <th > STANDARD RATED</th>
+        <th>INPUT VAT</th>
+    
+    
+      </tr>
+
+    </thead>
+    <tbody class="sales" >
+        
+        </tbody>
+</table>
                     </div>
                     <div class="col-md-12" id="expensesummary" >
                     <table id="" class="table table-stripped " style="background:whitesmoke;">

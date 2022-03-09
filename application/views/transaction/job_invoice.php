@@ -59,10 +59,19 @@
                   <div class="box-header with-border">
                      <div class="box-body">
                         <div class="row">
-                           <div class="form-group col-md-2">
+                           <div class="form-group col-md-2"><?php $ab=$this->session->userdata('user_id');?>
+                           <input   type="hidden" id="userid"  class="form-control" placeholder="<?php echo $ab;?>"  value="<?php echo $ab; ?>"/>
                               <label class="control-label">Inv*</label>
-                              <input   type="text" id="inv_code" required="required" class="form-control" readonly="readonly"  placeholder="<?php echo $Inv[0]->Inv+1;?>"  value="<?php echo $Inv[0]->Inv+1;?>"/>
-
+                              <?php  
+                           
+                             if($Inv == '1') 
+                             {$iv=1;}
+                             else{
+                             $pieces = str_split($Inv, 12);
+                             $iv=$pieces[1]+1;  
+                             }  $INV1= "INV/".$year."/".$month."/".$iv;?>
+                              <input   type="text" id="inv_code" required="required" class="form-control" readonly="readonly"  placeholder="<?php echo $INV1;?>"  value="<?php echo $INV1;?>"/>
+                              <input   type="hidden" id="epost_code" required="required" class="form-control" readonly="readonly"  placeholder="<?php echo $supcode[0]->PostId+1;?>"  value="<?php echo $supcode[0]->PostId+1;?>"/>
                            </div>
                            <div class="form-group col-md-3">
                               <label class="control-label">Date</label>
@@ -84,11 +93,11 @@
                            <!-- <div class="row"> -->
                               <div class="form-group col-md-2">
                                  <label class="control-label">Unit Price</label>
-                                 <input maxlength="100" type="text" autocomplete="off" id="unitprice" required="required" class="form-control " placeholder=" unit price" />
+                                 <input maxlength="80" type="text" autocomplete="off" id="unitprice" required="required" class="form-control " placeholder=" unit price" />
                               </div>
-                              <div class="form-group col-md-2">
+                              <div class="form-group col-md-1">
                                  <label class="control-label">Currency</label>
-                                 <select class="form-control" id="unit_price" name="unit_price"  value="--Select Type--">
+                                 <select class="form-control" id="unit_price" name="unit_price"  value="--Select Type--" style="width: 70px;">
 
                                   <?php 
                                   foreach($currency as $key=>$value)
@@ -102,18 +111,28 @@
                                
                              
                               </div>
-                              <div class="form-group col-md-2">
+                              <div class="form-group col-md-1">
                                  <label class="control-label">Con.Fact</label>
                                  <input maxlength="100" type="text" autocomplete="off" id="conv_factor"  required="required" class="form-control " value="1" />
                               </div>
-                              <div class="form-group col-md-2">
+                              <div class="form-group col-md-1">
                                  <label class="control-label">Quantity</label>
                                  <input maxlength="100" type="text"autocomplete="off"  id="quantity" required="required" class="form-control " value=" 1" />
                               </div>
-                              <div class="form-group col-md-2">
+                              <div class="form-group col-md-1">
                                  <label class="control-label">VAT</label>
                                  <input maxlength="100" type="text" autocomplete="off" id="vat" required="required" class="form-control" value=" 0" />
                               </div>
+                              <div class="form-group col-md-2">
+                  <label class="control-label" for="date">Select Supplier</label>
+                  <input maxlength="100" type="text" id="view_supplier_name" required="required" class="form-control" placeholder=" supplier_name" value="">
+                  <input maxlength="100" type="hidden" id="supplier_id" class="form-control" value="">
+                 </div>
+                 <div class="form-group col-md-2">
+                                 <label class="control-label">Unit Price</label>
+                                 <input maxlength="100" type="number" autocomplete="off" id="eunitprice" required="required" class="form-control " placeholder=" unit price" />
+                              </div>
+
                            <!-- </div> -->
                            <input type="button" name="add" value="ADD" onclick="insert_job_invoice();" id="add" class="btn btn-success" style="float: right;">
                         </div>
@@ -133,6 +152,8 @@
                                              <th>SubTotal</th>
                                              <th>VAT</th>
                                              <th>TOTAL</th>
+                                             <th>Supplier</th>
+                                             <th>Unitprice</th>
                                              <th></th>
                                           </tr>
                                        </thead>
@@ -195,6 +216,11 @@
                               <label class="control-label"></label>
                               <input maxlength="100" autocomplete="off" type="text" id="amount"  class="form-control " placeholder="Amount" />
                            </div>
+
+                           <div class="form-group col-md-4">
+                              <label class="control-label">Remark</label>
+                              <textarea id="remark" name="remark" rows="1" cols="10" class="form-control"></textarea>
+                           </div>
                            <div class="form-group col-md-2">
                               <input type="button" name="submit" onclick="insert_job_details();" style=" margin-top:20px;" value="Submit" id="submit" class="btn btn-success"  >
                            </div>
@@ -212,7 +238,7 @@
                      <div class="box-body">
                         <strong><i class=""></i> Job</strong>
                         <p class="text-muted">
-                           <?php echo $jobdata[0]->Number;?>
+                           <?php echo $jobdata[0]->Jobcode;?>
                         </p>
                         <hr>
                         <strong><i class=""></i> Shipper</strong>
@@ -359,3 +385,30 @@
 
     });
 </script>
+<script>
+ $(document).ready(function(){
+
+  var obj=[];
+              $.ajax({
+               url: "<?php echo base_url(); ?>transaction/Supplierexpense_Controller/getsupplierdata",
+               type: 'post',
+               dataType: "json",
+               success: function( data ) 
+               {
+                   console.log(data);
+                obj=data;
+                $('#view_supplier_name').autocomplete({
+                              source: obj,
+                              select: function (event, ui) {
+                                  $("#view_supplier_name").val(ui.item.label);
+                                 $("#supplier_id").val(ui.item.value);
+                                  return false;
+  
+                              }
+                          });
+               }
+            });
+  
+  });
+
+  </script>

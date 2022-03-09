@@ -98,7 +98,7 @@ function get_jobreport_modewise()
       
 $.each(result["jobrepoprtmodewise"],function(index,value) {
     date=value.Date;
-    code=value.Number
+    code=value.Jobcode
       shipper=value.Shipper;
 
   consignee=value.Consignee;

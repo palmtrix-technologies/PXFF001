@@ -8,9 +8,7 @@
 <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dropzone.min.css"> -->
 
 <?php 
-   // var_dump($currency);
-  
-   // die();
+   
    $month = date('m');
    $day = date('d');
    $year = date('Y');
@@ -206,7 +204,7 @@
                             else
                             {
                                 ?>
-                                <input type="text" id="code" name="code" class="form-control" placeholder="" readonly="readonly" value="<?php echo $values[0]->Number; ?>">
+                                <input type="text" id="code" name="code" class="form-control" placeholder="" readonly="readonly" value="<?php echo $values[0]->Jobcode; ?>">
                          
                                 <?php
                                    }  
@@ -879,7 +877,7 @@ else{
                                 <div class="box-body">
                                     <strong><i class=""></i> Job</strong>
                                     <p class="text-dark" id="job_code">
-                                        <?php if($values[0]->Number!=0){echo $values[0]->Number;} ?>
+                                        <?php if($values[0]->Number!=0){echo $values[0]->Jobcode;} ?>
                                     </p>
                                     <hr>
                                     <strong><i class=""></i> Shipper</strong>
@@ -1330,8 +1328,7 @@ if(length!=8)
                          processData:false,  
                          success:function(data)  
                          {  
-                            //  $id=$.trim(data);
-                            //  addcategory($id);
+                            
                             console.log(data);
       
                             //    var base_url= "<?php echo base_url(); ?>";
