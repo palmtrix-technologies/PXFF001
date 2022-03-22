@@ -12,6 +12,18 @@ class Dashboard_model extends CI_Model
     $result = $query->result();
     return $result;
     }
+
+    public function getcredit_invoice()
+    {
+       $date=date('Y-m-d'); 
+      $db="select ji.*,c.name from jm_invoicemaster ji  join jm_job jj on ji.JobId=jj.JobId inner join mst_client c on c.id=jj.client_id  where ji.Status='Posted' and ji.credit_date<='".$date."'";
+  
+     $query = $this->db->query($db);
+    $result = $query->result();
+        return $result;
+    
+    }
+    
     public function pendingreceipt()
         {
             $data="  select sum(jm_invoicemaster.GrandTotal) as total

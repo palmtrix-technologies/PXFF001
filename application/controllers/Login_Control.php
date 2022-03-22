@@ -69,6 +69,7 @@ $result['joblandimport']=$this->Dashboard_model->select_job_land_import();
 $result['jobairexport']=$this->Dashboard_model->select_job_air_export();
 $result['jobseaexport']=$this->Dashboard_model->select_job_sea_export();
 $result['joblandexport']=$this->Dashboard_model->select_job_land_export();
+$result['creditdate'] = $this->Dashboard_model->getcredit_invoice();  // var_dump($result['creditdate']);die();
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 	

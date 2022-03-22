@@ -51,12 +51,12 @@ class Supplier_expensemodel extends CI_Model {
 
     public function getcredit_invoice()
     {
-       $date=date('Y-m-d'); 
-       $db="select ji.Inv,ji.credit_date,ji.Date,ji.Total,ji.VatTotal,ji.GrandTotal,concat(jj.Hawb,'-',jj.Mawb) as awb,concat(jj.Hbl,'-',jj.Mbl) as hblmbl,jj.Number,jj.ActualWeight,jj.PoNo,jj.ContainerNo,jj.Jobcode,jj.Etd,jj.Eta,c.name,c.country,c.trn_no,concat(c.address,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientenglish,c.vat_no, concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientearabic, jj.Shipper as consignor, jj.Consignee as consignee, concat(bn.bank_name,'<br>',bn.acc_number,'<br>',bn.other_info,'<br>',bn.iban) as bank from jm_invoicemaster ji inner join mst_bank bn on bn.id=ji.Bank inner join jm_job jj on ji.JobId=jj.JobId inner join mst_client c on c.id=jj.client_id inner join mst_shipper consignor on consignor.id=jj.consignor_id inner join mst_shipper consignee on consignee.id=jj.consignee_id where ji.Status='Posted' and ji.credit_date<=".$date."";
-    
+       
+       $date5 = date("Y-m-d",strtotime("+5 day"));
+      $db="select ji.*,c.name from jm_invoicemaster ji  join jm_job jj on ji.JobId=jj.JobId inner join mst_client c on c.id=jj.client_id  where ji.Status='Posted' and ji.credit_date<='".$date5."'";
        $query = $this->db->query($db);
-      $result = $query->result();
-          return $result;
+    $result = $query->result_array();
+        return $result;
     
     }
 

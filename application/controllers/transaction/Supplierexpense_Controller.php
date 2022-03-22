@@ -87,14 +87,13 @@ public function supplier_expense_details()
 	
 	public function getsupplierdata(){
         
-        $data = $this->Supplier_expensemodel->getsupplier(); 
+        $data = $this->Supplier_expensemodel->getsupplier();  
 		
         echo json_encode($data); 
 	}
 	public function getcreditData(){
-        
-        $data = $this->Supplier_expensemodel->getcredit_invoice(); //print_r($data[0]->name);die();
 
+		$data['rec'] = $this->Supplier_expensemodel->getcredit_invoice();  
         echo json_encode($data);
 	}
 

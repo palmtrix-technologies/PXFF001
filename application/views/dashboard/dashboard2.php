@@ -1,5 +1,49 @@
 <script src="<?php echo base_url(); ?>/assets/dist/js/pages/dashboard2.js" type="text/javascript"></script>
 
+
+
+
+
+ <?php 
+   $dates=date("Y-m-d");
+   foreach($creditdate as $value)
+   { 
+   echo '<script type="text/javascript">'
+   . '$( document ).ready(function() {'
+   . '$("#stat").modal("show");'
+   .  'show: true;'
+   . '});'
+   . '</script>';
+          ?>
+<!-- <div class="modal fade" id="stat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+   <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel" style="color: #9e111f;">Notification</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            
+           <?php foreach($creditdate as $value)
+                     { ?> <div class="modal-body"><p>
+               <h5>Pending Invoice of  <?php echo $value->name;?> , credit date is  <?php echo $value->credit_date;?> </h5>
+               </p> </div><?php   }?>
+           
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            
+            
+         </div>
+      </div>
+   </div>
+</div> -->
+<?php } ?> 
+
+
+
   <section class="content-header">
     <h1>
     
@@ -489,3 +533,61 @@ $("#salesdate").html(fromdate+"-"+todate);
   });
 
   </script> -->
+
+  <script>
+ $(document).ready(function(){
+
+  var obj=[];
+              $.ajax({
+               url: "<?php echo base_url(); ?>transaction/Supplierexpense_Controller/getsupplierdata",
+               type: 'post',
+               dataType: "json",
+               success: function( data ) 
+               {  
+                   console.log(data);
+                obj=data;
+                $('#view_supplier_name').autocomplete({
+                              source: obj,
+                              select: function (event, ui) {
+                                  $("#view_supplier_name").val(ui.item.label);
+                                 $("#supplier_id").val(ui.item.value);
+                                  return false;
+  
+                              }
+                          });
+               }
+            });
+  
+  });
+
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+           
+          
+
+           $.ajax({
+               url: "<?php echo base_url(); ?>transaction/Supplierexpense_Controller/getcreditData",
+               type: 'post',
+             // dataType: "json",
+               success: function( status ) 
+               {  
+                 var data = JSON.parse(status);
+                console.log(data);
+                $.each(data["rec"], function(index, value){
+
+                //  $('#creditdata').append(value.name); 
+                 // $('#cdate').append(value.credit_date);
+              // var name=value.Inv;
+               var a="#myModal"+value.InvoiceMasterId;   
+                $('#myModal9').modal("show");
+           //    $('a').modal("show"); exit();
+               });
+  
+             
+                     
+               }
+            });
+
+      }); 
+ </script>

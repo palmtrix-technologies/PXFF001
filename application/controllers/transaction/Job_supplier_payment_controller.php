@@ -190,9 +190,7 @@ public function print_supplier_payment($id)
 
 public function list_supplier()
 {
-
-
-		 $user_id=	$this->session->userdata('user_id');
+	 $user_id=	$this->session->userdata('user_id');
 		$res = $this->Permission_model->userdetails($user_id);
 		$result['roles']=$this->Login_model->userdetails($user_id);
        	$user_image['values']=$res[0]->user_image;
