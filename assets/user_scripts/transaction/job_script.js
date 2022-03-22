@@ -348,7 +348,7 @@ function add_estimate()
   var yyyy = today.getFullYear();
   
   today = yyyy + '/' + mm + '/' + dd;
-  // alert(today);
+   
     estimate_master= {
   "estimate_no": $('#estimate_code').val(),
   "e_date":today,
@@ -361,7 +361,7 @@ function add_estimate()
   "Userid":$('#userid').val()
 };
 
-console.log(estimate_master);
+console.log(estimate_master);       
 
 var estimate_master_details =[];
   $('.estmt_details').each(function()
@@ -372,6 +372,7 @@ var estimate_master_details =[];
         "unit_type": $(this).find('.unittype').text(),
         "subtotal":  $(this).find('.subtotalval_data').text(),
         "conv_factor": $(this).find('.convfact').text(),
+        "vatPercentage": $(this).find('.vatPercentage').text(),
          "quantity":$(this).find('.quanty').text(),
          "vat": parseFloat($(this).find('.taxval_data').text()),
          "total": parseFloat($(this).find('.totalval_data').text())
@@ -382,7 +383,7 @@ var estimate_master_details =[];
    
     estimate_master: estimate_master,
      estimate_master_details: estimate_master_details
-      };
+      };                                                          //alert(JSON.stringify(postData, "", 2));
   var request = $.ajax({
     url: 'transportation-estimate',
     type: 'POST',
@@ -430,7 +431,7 @@ function new_estimate()
   "status": "drafted",
   "IsActive":1,
   "Userid":$('#userid').val()
-};
+};                                          
 
 console.log(estimate_master);
 
@@ -449,34 +450,85 @@ var estimate_master_details =[];
     };
     estimate_master_details.push(Data);
   });
-  var postData = {
-   
-    estimate_master: estimate_master,
-     estimate_master_details: estimate_master_details
+
+
+  var ExpenseData_bc=0;
+  var ExpenseData = [];
+    $(".estmt_details").each(function () {
+        ExpenseData_bc=$(this).find('.supp_id').val();
+      var Datas = {
+    "postid": $('#epost_code').val(), 
+    "postingdate":today,
+    "supplierid":$(this).find('.supp_id').val(),
+    "status":"Drafted",
+    "jobid":$('#jobid').val(),
+    "supplierinvoiceno":1,
+    "subtotal":0,
+    "vattotal":0,
+    "grandtotal":0,
+    "Userid":$('#userid').val()
+  };                                              
+  ExpenseData.push(Datas);
+  });                                               
+  
+  var ExpenseDetails_bc=0;
+  var ExpenseDetails = [];
+  $(".estmt_details").each(function () {
+     ExpenseDetails_bc=1;
+      var Data1 = {
+        "description":$(this).find('.desc').text(),
+        "amount":$(this).find('.esubtotalval_data').text(),
+        "convfactor": $(this).find('.convfact').val(),
+        "vat": parseFloat($(this).find('.etaxval_data').text()),
+        "Extotal": parseFloat($(this).find('.etotalval_data').text()),
+          "currency": $(this).find('.unittype').val(),
+          "code":0,
+          "SupplierID":$(this).find('.supp_id').val(),
+          "expensequantity": $(this).find('.equantitys').text(),
+          "vatpersentage": $(this).find('.etaxpr_data').val(),
+           "unitpricesupp": $(this).find('.unit_sup').text()
+       
       };
-  var request = $.ajax({
-    url: 'transportation-estimate',
-    type: 'POST',
-    data: {postData:postData} ,
-    dataType: 'JSON'
-    });
-    request.done( function ( data) {
-      console.log(data);
-     // window.location.href='estimate-print/'+data
-      swallokalert('Estimate Created Successfully!!','estimate-print/'+data);
-    // if(!alert('estimate Created Successfully!')){window.location.href=""}
-    });
-    request.fail( function ( jqXHR, textStatus) {
-     swallokalert('estimate Creation failed!!','#');
-      // alert('estimate Created Successfully');
-      // window.location.reload();
-      if (jqXHR.responseText=="success")
-      {
-      //  swallokalert('estimate Created Successfully!!','#');
-      //  if(!alert('estimate3 created Successfully!')){window.location.href=""}
-   
-      }
-    });
+      ExpenseDetails.push(Data1);
+  });
+  
+                               //       alert(JSON.stringify(ExpenseDetails, "", 2));  
+
+  var postData = {
+    estimate_master: estimate_master,
+     estimate_master_details: estimate_master_details,
+     ExpenseDetails: ExpenseDetails,
+     ExpenseData: ExpenseData
+      };
+  // var request = $.ajax({
+  //   url: 'transportation-estimate',
+  //   type: 'POST',
+  //   data: {postData:postData} ,
+  //   dataType: 'JSON'
+  //   });
+  //   request.done( function ( data) {
+  //     console.log(data);
+  //    // window.location.href='estimate-print/'+data
+  //     swallokalert('Estimate Created Successfully!!','estimate-print/'+data);
+  //   });
+  //   request.fail( function ( jqXHR, textStatus) {
+  //    swallokalert('estimate Creation failed!!','#');
+  //     if (jqXHR.responseText=="success")
+  //     {
+     
+  //     }
+  //   });
+
+  $.ajax({  
+    url:'transportation-estimate-job',
+    method:"POST", 
+    dataType: 'JSON',
+    data: {postData:postData} ,  
+    success:function(data){  
+      
+         window.location.href='estimate-print/'+data;
+    }  
+});  
 }
 
 //onchange carrier and mawb

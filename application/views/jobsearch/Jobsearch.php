@@ -171,7 +171,8 @@
                <br>
             <ul class="nav nav-tabs">
               <li class="active"><a href="#activity" data-toggle="tab" aria-expanded="false">Job Ledger</a></li>
-              <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">Invoice</a></li>
+              <li class=""><a href="#invoice" data-toggle="tab" aria-expanded="false">Invoice</a></li>
+              <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">Proforma Invoice</a></li>
               <li class=""><a href="#estima" data-toggle="tab" aria-expanded="false">Estimate</a></li>
               <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">Supplier Expense</a></li>
               <li class=""><a href="#document" data-toggle="tab" aria-expanded="true">Documents</a></li>
@@ -222,8 +223,8 @@
                
                
               </div>
-           
-              <div class="tab-pane" id="timeline">
+
+              <div class="tab-pane" id="invoice">
                 <!-- The timeline -->
                 <section class="content">
    <div class="row">
@@ -231,16 +232,7 @@
       <h3 class="box-title"> Generated Invoices </h3>
          <div class="box ">
            <div class="box-header with-border">
-           <?php 
-          
-          if (in_array("create invoice",$permission))
-          { 
-             ?>
-           <input type="submit" onclick="createnewinvoice();" style="float: right; width:150px;" class="btn btn-block btn-success" value="Create new invoice">
-           <!-- <span class="new-button" style="float: right;" onclick="createnewinvoice();"><a href=" " class="btn btn-success btn-sm" ><span class="fa fa-plus"></span> &nbsp;Create Invoice </a></span> -->
-          <?php 
-         } 
-         ?>
+           
          </div>
            
             <div class="box-body">
@@ -257,6 +249,7 @@
                         <th> SubTotal</th>
 
                         <th style='text-align: right;'>  Grand Total</th>
+                        <th> Remarks</th>
                         <?php 
           
           if (in_array("update invoice",$permission))
@@ -266,7 +259,7 @@
           <?php } ?>
                      </tr>
                   </thead>
-                  <tbody class="dataadd">
+                  <tbody class="datainv">
                      
                   </tbody>
                   </table>
@@ -303,7 +296,7 @@
                         <th> Customer</th>
                       
                         <th >  Amount</th>
-                        <th >  Actions</th>
+                        <th >  Action</th>
                         
                      </tr>
                   </thead>
@@ -352,11 +345,69 @@
       </div>
    </div>
 </section> 
+              </div>      
+           
+              <div class="tab-pane" id="timeline">
+                <!-- The timeline -->
+                <section class="content">
+   <div class="row">
+      <div class="col-md-12">
+      <h3 class="box-title"> Proforma Invoices </h3>
+         <div class="box ">
+           <div class="box-header with-border">
+           <?php 
+          
+          if (in_array("create invoice",$permission))
+          { 
+             ?>
+           <input type="submit" onclick="createnewinvoice();" style="float: right; width:150px;" class="btn btn-block btn-success" value="Create new invoice">
+           <!-- <span class="new-button" style="float: right;" onclick="createnewinvoice();"><a href=" " class="btn btn-success btn-sm" ><span class="fa fa-plus"></span> &nbsp;Create Invoice </a></span> -->
+          <?php 
+         } 
+         ?>
+         </div>
+           
+            <div class="box-body">
+    
+               <table id="invoicereport" class="table table-stripped">
+                  <thead>
+                     <tr>
+                        <th> Sl.no</th>
+                        <th> Invoice.no</th>
+                        <th> Date</th>
+                        <!-- <th> Particulars</th> -->
+                        <th> Mode</th>
+                        <th>  Vat</th>
+                        <th> SubTotal</th>
+
+                        <th style='text-align: right;'>  Grand Total</th>
+                        <th> Remarks</th>
+                        <?php 
+          
+          if (in_array("update invoice",$permission))
+          { 
+             ?>
+                        <th >  Action</th>
+          <?php } ?>
+                     </tr>
+                  </thead>
+                  <tbody class="dataadd">
+                     
+                  </tbody>
+                  </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</section> 
+<br><br>
+
+
               </div>
             
 
               <div class="tab-pane" id="estima">
-                <!-- The timeline -->
+
                 <section class="content">
    <div class="row">
       <div class="col-md-12">

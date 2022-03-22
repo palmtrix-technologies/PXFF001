@@ -21,6 +21,7 @@
                   <tr>
                   <th>Id</th>
                     <th>Currency</th>
+                    <th>Conversion Factor</th>
                     <th>Status</th>
                     <?php 
           
@@ -39,6 +40,7 @@ foreach ($value as $key => $value1)
                   <tr>
                   <td><?php echo $value1->id;?></td>
                   <td ><?php echo $value1->currency;?></td>
+                  <td ><?php echo $value1->conversion_factor;?></td>
                   <?php 
                     if($value1->IsActive==1)
                       { ?> <td><span class="label label-primary"> <?php echo "Enabled";?></td></span><?php }

@@ -159,7 +159,7 @@ var request = $.ajax({
 //update estimate
 function update_estimate()
 {
-//  alert("ivdethi");
+
  var id=$("#id").val();  
  
  var today = new Date();
@@ -203,6 +203,50 @@ var estimateDetails_bc=0;
 
    console.log(estimate_master_details); 
            });
+
+
+           var ExpenseData = [];
+           var ExpenseData_bc=0;
+           $(".estmt_details").each(function () {
+            ExpenseData_bc=$(this).find('.supp_id').val();
+             var Datas = {
+           "postid": $('#epost_code').val(), 
+           "postingdate":today,
+           "supplierid":$(this).find('.supp_id').val(),
+           "status":"Drafted",
+           "jobid":id ,
+           "supplierinvoiceno":1,
+           "subtotal":0,
+           "vattotal":0,
+           "grandtotal":0,
+           "Userid":$('#userid').val()
+         };                                     
+         ExpenseData.push(Datas);
+         });                                
+         
+         
+         var ExpenseDetails = [];
+         var ExpenseDetails_bc=0;
+         $(".estmt_details").each(function () {
+          ExpenseDetails_bc=1;
+             var Data1 = {
+               "description":$(this).find('.desc').text(),
+               "amount":$(this).find('.esubtotalval_data').text(),
+               "convfactor":$(this).find('.convfact').text(),
+               "vat": parseFloat($(this).find('.etaxval_data').text()),
+               "Extotal": parseFloat($(this).find('.etotalval_data').text()),
+                 "currency": $(this).find('.currency').val(),
+                 "code":0,
+                 "SupplierID":$(this).find('.supp_id').val(),
+                 "expensequantity": $(this).find('.equantitys').text(),
+                 "vatpersentage": $(this).find('.etaxpr_data').val(),
+                  "unitpricesupp": $(this).find('.unit_sup').text()
+                   
+              
+             };
+             ExpenseDetails.push(Data1);
+         });
+                                                                      
   
            var  estimate_code=$('#master_id').val(); 
            var  dat=$('#dat').val(); 
@@ -213,11 +257,18 @@ var estimateDetails_bc=0;
            {
             var estimate_master_details ="";
            }
+
+           if(ExpenseData_bc==0)
+       {
+        var ExpenseData ="";
+        var ExpenseDetails ="";
+       }
+       
            if(deletedidarray.length == 0)
            {
             deletedidarray="";
            }
-    
+                                                alert(JSON.stringify(deletedidarray, "", 2));
  
  var postData = {
   
@@ -225,30 +276,36 @@ var estimateDetails_bc=0;
     estimate_master_details: estimate_master_details,
     Id:estimate_code,
     Dat:dat,
-    deleted:deletedidarray
-     };
- var request = $.ajax({
-   url: '../update-estimate',
-   type: 'POST',
-   data: {postData:postData} ,
-   dataType: 'JSON'
-   });
-   request.done( function ( data ) {
-     swallokalert('Estimate updated Successfully!','../estimate-print/'+data);
-  // if(!alert('estimate updated Successfully!')){
-    // location.reload()}
-   });
-   request.fail( function ( jqXHR, textStatus) {
-     swallokalert('Estimate UpdationFailed!','#');
-   //  alert('estimate updated Successfully');
-   //  location.reload();
-    //  if (jqXHR.responseText=="success")
-    //  {
-    //    swallokalert('estimate updated Successfully!','edit-job');
-    //   //if(!alert('estimate3 updated Successfully!')){window.location.href=""}
+    deleted:deletedidarray,
+    ExpenseDetails: ExpenseDetails,
+      ExpenseData: ExpenseData
+     };                                                
+//  var request = $.ajax({
+//    url: '../update-estimate',
+//    type: 'POST',
+//    data: {postData:postData} ,
+//    dataType: 'JSON'
+//    });
+//    request.done( function ( data ) {
+//      swallokalert('Estimate updated Successfully!','../estimate-print/'+data);
+//    });
+//    request.fail( function ( jqXHR, textStatus) {
+//      swallokalert('Estimate UpdationFailed!','#');
   
-    //  }
-   });
+//    });
+
+   $.ajax({  
+    url:'../update-estimate',
+    method:"POST", 
+    dataType: 'JSON',
+    data: {postData:postData} ,  
+    success:function(data){   
+      
+         window.location.href='../estimate-print/'+data;
+    }  
+});  
+
+
 }
 
 //onchange carrier and mawb
@@ -272,24 +329,23 @@ function Changepanel()
  $('.vzbtn2').removeClass("btn-success");
  $('.vzbtn3').removeClass("btn-success");
 }
-function deletedids(id,el)
+function deletedids(id,eid,el)
  {
-   deletedidarray.push(id);
+  var deletedarray = []; 
+  var Data = {
+    "id":id,
+    "eid":eid
+  }; 
+  deletedarray.push(Data); 
+  // deletedidarray.push(id);
+  deletedidarray.push(Data);
    console.log(id);
    console.log(deletedidarray);
    $(el).closest("tr").remove();
    calculates();
  return false;
  }
-//  $(document).ready(function()
-// {
-// $( "#Carrier_land" ).change(function() {
-//  var element = $(this).find('option:selected'); 
-//  var myTag = element.attr("code"); 
-//  $("#Mawb_land").val(myTag);
-//  console.log($(this).attr("code"));
-// });
-// });
+
 $( "#edit_btn_doc" ).click(function() {
   
   var type = $('#doc_type').val();

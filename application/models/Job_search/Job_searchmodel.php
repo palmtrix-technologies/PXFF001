@@ -88,7 +88,7 @@ join jm_invoicemaster on jm_invoicemaster.InvoiceMasterId=jm_receiptdetail.Invoi
     public function select_invoice_details($jobid)
     {
                
-$dataq="select jm_invoicemaster.InvoiceMasterId,jm_invoicemaster.Status,jm_invoicemaster.Inv,jm_invoicemaster.Date,jm_invoicemaster.JobId,jm_invoicemaster.InvoiceType,jm_invoicemaster.VatTotal,jm_invoicemaster.GrandTotal,jm_invoicedetail.Total,jm_invoicedetail.Vat
+$dataq="select jm_invoicemaster.InvoiceMasterId,jm_invoicemaster.Status,jm_invoicemaster.Inv,jm_invoicemaster.Remark,jm_invoicemaster.Date,jm_invoicemaster.JobId,jm_invoicemaster.InvoiceType,jm_invoicemaster.VatTotal,jm_invoicemaster.GrandTotal,jm_invoicedetail.Total,jm_invoicedetail.Vat
 from jm_invoicemaster 
 inner join jm_invoicedetail on jm_invoicemaster.InvoiceMasterId=jm_invoicedetail.InvoiceMasterId
 where jm_invoicemaster.JobId=".$jobid.";";
@@ -98,6 +98,20 @@ where jm_invoicemaster.JobId=".$jobid.";";
         return $result;
         
     }
+    public function select_invoice_datas($jobid)
+    {
+               
+$dataq="select jm_invoicemaster.InvoiceMasterId,jm_invoicemaster.Status,jm_invoicemaster.Inv,jm_invoicemaster.Remark,jm_invoicemaster.Date,jm_invoicemaster.JobId,jm_invoicemaster.InvoiceType,jm_invoicemaster.VatTotal,jm_invoicemaster.GrandTotal
+from jm_invoicemaster
+where jm_invoicemaster.JobId=".$jobid.";";
+
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+        
+    }
+
+
     public function select_creditnote_details($jobid)
     {
                

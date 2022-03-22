@@ -47,6 +47,9 @@ $( document ).ready(function() {
   }
   function insert_supplier_expense()
   {
+    
+    if($('#view_supplier_name').val()!='')
+    {
    if($('#evat').val()==''){
     $('#evat').val('0');
    }
@@ -57,6 +60,7 @@ $( document ).ready(function() {
   else{
     insertRow1();
   }
+}else{alert("Please select supplier..");}
   }
 
   
@@ -140,6 +144,9 @@ $('#emode').attr('disabled', true);
   // var Data;
   // var id=$('#jobid').val();
   // alert(id);
+
+ var supp= $('#supplier_id').val();
+ if(supp!=""){
   var ExpenseData = {
     "PostId": $('#epost_code').val(), 
     "PostingDate":$('#epost_date').val(),
@@ -168,7 +175,7 @@ $('#emode').attr('disabled', true);
                   "Total": parseFloat($(this).find('.etotalval_data').text()),
                     "Currency": $(this).find('.ecurrency').val(),
                     "Code": $(this).find('.edesc_code').val(),
-                    "VAT_percentage": parseFloat($(this).find('.taxpr_data').text())    
+                    "vat_persentage": parseFloat($(this).find('.taxpr_data').text())    
                 };
                 ExpenseDetails.push(Data);
                // console.log(JobDetails);
@@ -196,7 +203,8 @@ $('#emode').attr('disabled', true);
       //   console.log(jqXHR)
       // alert(0);
         });
-  
+      }
+      else{alert("Please select Supplier..");}
     }
   
   

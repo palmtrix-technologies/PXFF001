@@ -373,6 +373,18 @@ public function job_estimate_details($mid)
    $result = $query->result();
    return $result;
 }
+public function job_estimate_expdetails($mid)
+{
+  
+   $dataq="select DISTINCT ji.*,
+   (jj.description)asdesc,jj.EstimateExpDId,jj.amount,jj.expensequantity,jj.unitpricesupp,jj.convfactor,(jj.vat)evat,jj.Extotal,jj.currency,jj.EstimateExpId,jj.code,jj.vatpersentage,jj.EstMasterid,
+   c.supplier_name  from jm_estimate_master_details 
+    ji left join estimate_expensedetails jj on jj.EstMasterid=ji.estimate_masterid left join estimate_expense_master jm on jj.EstimateExpId=jm.EstimateExpId
+     left join mst_supplier c on c.id=jm.supplierid where ji.estimate_masterid=".$mid.";";
+   $query = $this->db->query($dataq);
+   $result = $query->result();
+   return $result;
+}
 
 
 public function editestimateedetails($data)
@@ -383,9 +395,34 @@ jj.Etd,jj.Eta,jj.Type,jj.Mbl,jj.Carrier,jj.Pol,jj.Pod,jj.ShipmentTerms,jj.CargoD
 jj.Date,jj.Origin,jj.Type,jj.Mawb,jj.Hawb,jj.ContainerNo,jj.Etd,jj.Eta,jj.ShipmentTerms,jj.ChargeableWeight,jj.Description,jj.Destination,jj.BayanNo,jj.NoContainers,jj.TruckNo,jj.Nopcs,jj.BayanDate,jj.BayanNo,jj.Status
 from jm_estimate_master ji
 inner join jm_job jj on ji.job_id=jj.JobId
-
  where ji.job_id=".$data.";";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+}
+public function editestimateedetails1($data)
+{
+  
+$dataq="select ji.*,concat(jj.Hawb,'-',jj.Mawb) as awb,jj.JobId,jj.Number,jj.ActualWeight,
+jj.Etd,jj.Eta,jj.Type,jj.Mbl,jj.Carrier,jj.Pol,jj.Pod,jj.ShipmentTerms,jj.CargoDescription,jj.PoNo,
+jj.Date,jj.Origin,jj.Type,jj.Mawb,jj.Hawb,jj.ContainerNo,jj.Etd,jj.Eta,jj.ShipmentTerms,jj.ChargeableWeight,jj.Description,jj.Destination,jj.BayanNo,jj.NoContainers,jj.TruckNo,jj.Nopcs,jj.BayanDate,jj.BayanNo,jj.Status
+from jm_estimate_master ji
+inner join jm_job jj on ji.job_id=jj.JobId
+ where ji.estimate_masterid=".$data.";";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+}
 
+public function editestimate_expense_edetails($data)
+{
+  
+$dataq="select ji.*,concat(jj.Hawb,'-',jj.Mawb) as awb,jj.JobId,jj.Number,jj.ActualWeight,
+jj.Etd,jj.Eta,jj.Type,jj.Mbl,jj.Carrier,jj.Pol,jj.Pod,jj.ShipmentTerms,jj.CargoDescription,jj.PoNo,
+jj.Date,jj.Origin,jj.Type,jj.Mawb,jj.Hawb,jj.ContainerNo,jj.Etd,jj.Eta,jj.ShipmentTerms,jj.ChargeableWeight,jj.Description,jj.Destination,jj.BayanNo,jj.NoContainers,jj.TruckNo,jj.Nopcs,jj.BayanDate,jj.BayanNo,jj.Status
+from estimate_expense_master ji
+inner join jm_job jj on ji.jobid=jj.JobId
+ where ji.EstMasterId=".$data.";";
  $query = $this->db->query($dataq);
     $result = $query->result();
         return $result;
@@ -453,9 +490,6 @@ where jm_job.JobId=".$data.";";
  $query = $this->db->query($dataq);
     $result = $query->result();
         return $result;
-     
- 
-
 }
 
 
@@ -610,6 +644,59 @@ $result = $query->result();
 return $result;
 
 }
+
+public function viewestmaster_expense($postid,$SupplierID)
+{
+$dataq="select * from estimate_expense_master
+ where postid=".$postid." and supplierid=".$SupplierID." ";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+}
+
+public function addestmaster_expense($data_array)
+       {
+      
+          $this->db->insert('estimate_expense_master', $data_array);
+          $ExpenseMasterId=$this->db->insert_id();
+          return $ExpenseMasterId;
+       
+       }
+
+       public function addestimate_expense($data_array)
+       {
+      
+          $this->db->insert('estimate_expensedetails', $data_array);
+          $ExpenseDetailId=$this->db->insert_id();
+          return $ExpenseDetailId;
+       
+       }
+
+       public function estimateupdate_expense($SubTotal,$VatTotal,$GrandTotal,$result)
+       {
+          
+          $this->db->set('subtotal',$SubTotal );
+          $this->db->set('vattotal',$VatTotal );
+          $this->db->set('grandtotal',$GrandTotal );
+          $this->db->where('EstimateExpId', $result);
+          $this->db->update('estimate_expense_master');
+          return 1;
+       }     
+public function selectcode_estexpns()
+    {
+    
+      $this->db->select_max('postid');
+    $this->db->from('estimate_expense_master');
+    $query = $this->db->get();
+    $result = $query->result();
+    if($result==NULL)
+    {
+      $result=1;
+    }
+    return $result;
+    
+    }
+
 //to upload files
 
 public function check_filename($image_name)
@@ -804,5 +891,78 @@ public function document_delete($id = null)
         return false;
     }
 }
+
+public function viewjobmaster_expense($postid,$SupplierID)
+{
+$dataq="select * from estimate_expense_master
+ where postid=".$postid." and supplierid=".$SupplierID." ";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+}
+
+public function addjobmaster_expense($data_array)
+       {
+      
+          $this->db->insert('estimate_expense_master', $data_array);
+          $ExpenseMasterId=$this->db->insert_id();
+          return $ExpenseMasterId;
+       
+       }
+       public function addjobinvoicedetailsinsert_expense($data_array)
+       {
+      
+          $this->db->insert('estimate_expensedetails', $data_array);
+          $ExpenseDetailId=$this->db->insert_id();
+          return $ExpenseDetailId;
+       
+       }
+
+
+       public function expensemaster_expense($SubTotal,$VatTotal,$GrandTotal,$result)
+       {
+          
+          $this->db->set('subtotal',$SubTotal );
+          $this->db->set('vattotal',$VatTotal );
+          $this->db->set('grandtotal',$GrandTotal );
+          $this->db->where('EstimateExpId', $result);
+          $this->db->update('estimate_expense_master');
+          return 1;
+       }
+        
+       public function viewjobdetails_expense($ids)
+       {
+       $dataq="select * from estimate_expensedetails
+        where EstimateExpDId=".$ids." ";
+        $query = $this->db->query($dataq);
+           $result = $query->result();
+               return $result;
+       }  
+
+       public function viewmasterdata_expense($mid)
+{
+$dataq="select * from estimate_expense_master
+ where EstimateExpId=".$mid." ";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+}
+
+
+public function deletexpensmaser($Id)
+{
+   $this->db->where('EstimateExpId',$Id);
+   $this->db->delete('estimate_expense_master');
+   return 1;
+}
+
+public function deletexpenseedetailsinsert($Id)
+   {
+
+      $this->db->where('EstimateExpDId',$Id);
+      $this->db->delete('estimate_expensedetails');
+      return 1;
+
+   }
 
 }

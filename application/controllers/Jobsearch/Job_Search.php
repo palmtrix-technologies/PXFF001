@@ -57,7 +57,8 @@ class Job_Search extends CI_Controller {
 	//  $result['amountdue']=$this->Job_searchmodel->select_amount_due($jobid);
 	$result['jobdocument']  = $this->Job_searchmodel->get_all_job_doc($masterid);
 
-		$result['invoicedata']=$this->Job_searchmodel->select_invoice_details($masterid);
+		$result['invoicedata1']=$this->Job_searchmodel->select_invoice_details($masterid);
+		$result['invoicedata']=$this->Job_searchmodel->select_invoice_datas($masterid);
 		
 		$result['creditnotedata']=$this->Job_searchmodel->select_creditnote_details($masterid);
 		$result['receiptdata']=$this->Job_searchmodel->select_customer_payment_receipt_details($masterid);

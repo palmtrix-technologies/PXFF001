@@ -58,6 +58,15 @@ $this->db->from('mst_description');
 $result = $this->db->get()->result_array();
 
 }
+public function get_covnfactor($data)
+{
+  
+$this->db->select('conversion_factor');
+$this->db->from('mst_currency');
+$this->db->where('currency', $data);
+$result = $this->db->get()->result_array(); 
+return $result;
+}
 
 public function viewjobmaster_expense($postid,$SupplierID)
 {
@@ -66,8 +75,27 @@ $dataq="select * from jm_expensemaster
  $query = $this->db->query($dataq);
     $result = $query->result();
         return $result;
-
 }
+
+public function viewjobdetails_expense($ids)
+{
+$dataq="select * from jm_expensedetail
+ where ExpenseDetailId=".$ids." ";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+}
+
+public function viewmasterdata_expense($mid)
+{
+$dataq="select * from jm_expensemaster
+ where ExpenseMasterId=".$mid." ";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
+}
+
+
 public function addjobmaster_expense($data_array)
        {
       
@@ -111,7 +139,7 @@ public function addjobmaster($data_array)
 public function selectinvoicedetails($data)
 {
  
-$dataq="select ji.Inv,ji.Date,ji.Total,ji.VatTotal,ji.GrandTotal,concat(jj.Hawb,'-',jj.Mawb) as awb,concat(jj.Hbl,'-',jj.Mbl) as hblmbl,jj.Number,jj.ActualWeight,jj.PoNo, jj.Etd,jj.Eta,concat(c.name,'|',c.address,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientenglish,c.vat_no, concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientearabic, jj.Shipper as consignor, jj.Consignee as consignee, concat(bn.bank_name,'<br>',bn.acc_number,'<br>',bn.other_info,'<br>',bn.iban) as bank from jm_invoicemaster ji inner join mst_bank bn on bn.id=ji.Bank inner join jm_job jj on ji.JobId=jj.JobId inner join mst_client c on c.id=jj.client_id inner join mst_shipper consignor on consignor.id=jj.consignor_id inner join mst_shipper consignee on consignee.id=jj.consignee_id where ji.InvoiceMasterId=".$data.";";
+$dataq="select ji.Inv,ji.Date,ji.Total,ji.VatTotal,ji.GrandTotal,concat(jj.Hawb,'-',jj.Mawb) as awb,concat(jj.Hbl,'-',jj.Mbl) as hblmbl,jj.Number,jj.ActualWeight,jj.PoNo,jj.ContainerNo,jj.Jobcode,jj.Etd,jj.Eta,c.name,c.country,c.trn_no,concat(c.address,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientenglish,c.vat_no, concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientearabic, jj.Shipper as consignor, jj.Consignee as consignee, concat(bn.bank_name,'<br>',bn.acc_number,'<br>',bn.other_info,'<br>',bn.iban) as bank from jm_invoicemaster ji inner join mst_bank bn on bn.id=ji.Bank inner join jm_job jj on ji.JobId=jj.JobId inner join mst_client c on c.id=jj.client_id inner join mst_shipper consignor on consignor.id=jj.consignor_id inner join mst_shipper consignee on consignee.id=jj.consignee_id where ji.InvoiceMasterId=".$data.";";
 
  $query = $this->db->query($dataq);
  return $query->result();
@@ -124,7 +152,14 @@ $dataq="select ji.Inv,ji.Date,ji.Total,ji.VatTotal,ji.GrandTotal,concat(jj.Hawb,
 // to select_job_invoice details
 public function select_job_invoice_details($data)
 {
-   $this->db->where('jm_invoicedetail.InvoiceMasterId', $data);
+   // $this->db->where('jm_invoicedetail.InvoiceMasterId', $data);
+   // $this->db->select('jm_invoicedetail.*,mst_description.description_arabic,jm_expensedetail.Amount,jm_expensedetail.ExpenseDetailId,jm_expensedetail.expense_quantity,jm_expensedetail.unitprice_supp,jm_expensedetail.ExpenseMasterId,jm_expensedetail.Code,jm_expensedetail.vat_persentage,jm_expensedetail.InvMasterid,(jm_expensedetail.Total)as extotal,(jm_expensedetail.Vat)as evat,mst_supplier.supplier_name');    
+   // $this->db->from('jm_invoicedetail');
+   // $this->db->join('mst_description', 'mst_description.description = jm_invoicedetail.Description','left');
+   // $this->db->join('jm_expensedetail', 'jm_expensedetail.InvMasterid = jm_invoicedetail.InvoiceMasterId');
+   // $this->db->join('jm_expensemaster', 'jm_expensemaster.ExpenseMasterId = jm_expensedetail.ExpenseMasterId');
+   // $this->db->join('mst_supplier', 'mst_supplier.id = jm_expensemaster.SupplierID','left');
+  $this->db->where('jm_invoicedetail.InvoiceMasterId', $data);
    $this->db->select('jm_invoicedetail.*,mst_description.description_arabic');    
    $this->db->from('jm_invoicedetail');
    $this->db->join('mst_description', 'mst_description.description = jm_invoicedetail.Description','left');
@@ -132,12 +167,28 @@ public function select_job_invoice_details($data)
    $result = $query->result();
    return $result;
 
+
+}
+public function select_job_invoice_details_all($data)
+{
+   $this->db->where('jm_invoicedetail.InvoiceMasterId', $data);
+   $this->db->select('jm_invoicedetail.*,mst_description.description_arabic,jm_expensedetail.Amount,jm_expensedetail.ExpenseDetailId,jm_expensedetail.expense_quantity,jm_expensedetail.unitprice_supp,jm_expensedetail.ExpenseMasterId,jm_expensedetail.Code,jm_expensedetail.vat_persentage,jm_expensedetail.InvMasterid,(jm_expensedetail.Total)as extotal,(jm_expensedetail.Vat)as evat,mst_supplier.supplier_name');    
+   $this->db->from('jm_invoicedetail');
+   $this->db->join('mst_description', 'mst_description.description = jm_invoicedetail.Description','left');
+   $this->db->join('jm_expensedetail', 'jm_expensedetail.InvMasterid = jm_invoicedetail.InvoiceMasterId');
+   $this->db->join('jm_expensemaster', 'jm_expensemaster.ExpenseMasterId = jm_expensedetail.ExpenseMasterId');
+   $this->db->join('mst_supplier', 'mst_supplier.id = jm_expensemaster.SupplierID','left');
+   $query = $this->db->get();
+   $result = $query->result();
+   return $result;
+
+
 }
  
 public function editinvoicedetails($data)
 {
   
-$dataq="select ji.InvoiceMasterId,ji.Inv,ji.Date,ji.Total,ji.VatTotal,ji.GrandTotal,ji.InvoiceType,ji.ReceiptNo,ji.ReceiptDescription,ji.Amount,concat(jj.Hawb,'-',jj.Mawb) as awb,jj.Number,jj.ActualWeight,
+$dataq="select ji.InvoiceMasterId,ji.Inv,ji.Remark,ji.Date,ji.Total,ji.VatTotal,ji.GrandTotal,ji.InvoiceType,ji.ReceiptNo,ji.ReceiptDescription,ji.Amount,concat(jj.Hawb,'-',jj.Mawb) as awb,jj.Number,jj.ActualWeight,
 jj.Etd,jj.Eta,jj.Type,jj.Mbl,jj.Carrier,jj.Pol,jj.Pod,jj.PoNo,bn.id,bn.bank_name,bn.id,concat(c.name,'|',c.address,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientenglish,c.vat_no,
 concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientearabic,
 concat(consignor.name,',',consignor.address,',',consignor.telephone,'-',consignor.mobile,'\n',consignor.email) as consignor,
@@ -154,9 +205,15 @@ inner join mst_bank bn  on bn.id=ji.Bank
  $query = $this->db->query($dataq);
     $result = $query->result();
         return $result;
-     
- 
 
+}
+public function editexpensedetails($data)
+{
+  
+$dataq="select * from jm_expensemaster where InvMasterId=".$data.";";
+ $query = $this->db->query($dataq);
+    $result = $query->result();
+        return $result;
 }
 
 public function updatejobmaster($Id)
@@ -195,17 +252,12 @@ public function updateJobinvoicemaster($Id,$data_array)
       $this->db->update('jm_invoicemaster', $data_array);
       
       return 1;
-   
-      
 
    }
-   
-   
    
    public function insertjobinvoicedetails($data_array)
    {
    
-    
       $this->db->insert('jm_invoicedetail', $data_array);
       return 1;
    
@@ -216,9 +268,22 @@ public function updateJobinvoicemaster($Id,$data_array)
       $this->db->where('InvoiceDetailId',$Id);
       $this->db->delete('jm_invoicedetail');
       return 1;
-   
-      
 
+   }
+
+   public function deletexpenseedetailsinsert($Id)
+   {
+
+      $this->db->where('ExpenseDetailId',$Id);
+      $this->db->delete('jm_expensedetail');
+      return 1;
+
+   }
+   public function deletexpensmaser($Id)
+   {
+      $this->db->where('ExpenseMasterId',$Id);
+      $this->db->delete('jm_expensemaster');
+      return 1;
    }
    
    public function change_invoice_status($invoicemasteid)

@@ -41,7 +41,7 @@
     </tr>
        <thead>
      <tbody>
-     <?php 
+     <?php  
                   foreach($bank as $key=>$value1)
                   {
                     ?>

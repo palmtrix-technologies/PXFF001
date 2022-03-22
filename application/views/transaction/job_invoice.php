@@ -91,9 +91,17 @@
                               <input type="hidden" id="description_id" class="form-control" value="" />
                            </div>
                            <!-- <div class="row"> -->
-                              <div class="form-group col-md-2">
-                                 <label class="control-label">Unit Price</label>
-                                 <input maxlength="80" type="text" autocomplete="off" id="unitprice" required="required" class="form-control " placeholder=" unit price" />
+                              <div class="form-group col-md-1">
+                                 <label class="control-label">UnitPrice</label>
+                                 <input maxlength="50" type="text" autocomplete="off" id="unitprice" required="required" class="form-control " placeholder=" unit price" />
+                              </div>
+                              <div class="form-group col-md-1">
+                                 <label class="control-label">Quantity</label>
+                                 <input maxlength="100" type="text"autocomplete="off"  id="quantity" required="required" class="form-control " value=" 1" />
+                              </div>
+                              <div class="form-group col-md-1">
+                                 <label class="control-label">VAT</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="vat" required="required" class="form-control" value=" 0" />
                               </div>
                               <div class="form-group col-md-1">
                                  <label class="control-label">Currency</label>
@@ -111,27 +119,30 @@
                                
                              
                               </div>
-                              <div class="form-group col-md-1">
+                              <!-- <div class="form-group col-md-1">
                                  <label class="control-label">Con.Fact</label>
                                  <input maxlength="100" type="text" autocomplete="off" id="conv_factor"  required="required" class="form-control " value="1" />
-                              </div>
-                              <div class="form-group col-md-1">
-                                 <label class="control-label">Quantity</label>
-                                 <input maxlength="100" type="text"autocomplete="off"  id="quantity" required="required" class="form-control " value=" 1" />
-                              </div>
-                              <div class="form-group col-md-1">
-                                 <label class="control-label">VAT</label>
-                                 <input maxlength="100" type="text" autocomplete="off" id="vat" required="required" class="form-control" value=" 0" />
-                              </div>
-                              <div class="form-group col-md-2">
-                  <label class="control-label" for="date">Select Supplier</label>
+                              </div> -->
+                             
+                             
+                              <div class="form-group col-md-3">
+                  <label class="control-label" for="date"> Supplier</label>
                   <input maxlength="100" type="text" id="view_supplier_name" required="required" class="form-control" placeholder=" supplier_name" value="">
                   <input maxlength="100" type="hidden" id="supplier_id" class="form-control" value="">
                  </div>
-                 <div class="form-group col-md-2">
-                                 <label class="control-label">Unit Price</label>
-                                 <input maxlength="100" type="number" autocomplete="off" id="eunitprice" required="required" class="form-control " placeholder=" unit price" />
+                 <div class="form-group col-md-1">
+                                 <label class="control-label">UnitPrice</label>
+                                 <input maxlength="100" type="number" autocomplete="off" id="eunitprice" value="0"  required="required" class="form-control " placeholder="unit price" style="width: 65px;" />
                               </div>
+                              <div class="form-group col-md-1">
+                                 <label class="control-label">Quantity</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppqty" value=" 1" required="required" class="form-control " placeholder="Quantity" style="width: 65px;" />
+                              </div>
+
+                              <div class="form-group col-md-1">
+                                 <label class="control-label"> SuppVat</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppvat" value="0" required="required" class="form-control " placeholder="vat" style="width: 65px;" />
+                              </div>            
 
                            <!-- </div> -->
                            <input type="button" name="add" value="ADD" onclick="insert_job_invoice();" id="add" class="btn btn-success" style="float: right;">
@@ -154,6 +165,7 @@
                                              <th>TOTAL</th>
                                              <th>Supplier</th>
                                              <th>Unitprice</th>
+                                             <th>Total</th>
                                              <th></th>
                                           </tr>
                                        </thead>
@@ -163,8 +175,21 @@
                                        </tfoot>
                                     </table>
                                  </div>
+                                
+
                                  <div id="ContentPlaceHolder1_upTotals">
                                     <div style="float: right;">
+                                       <span id="ContentPlaceHolder1_lbl">EXPENSE TOTAL</span>        
+                                       <input name="total" type="text" value="0" readonly="readonly" id="etotal" class="form-control " style="width: 100%;">
+                                       <span id="ContentPlaceHolder1_Label1">Vat Total</span>        
+                                       <input name="vat_total" type="text" value="0" readonly="readonly" id="evat_total" class="form-control " style="width: 100%;"> 
+                                       <span id="ContentPlaceHolder1_Label2">Grand Total</span>        
+                                       <input name="grand_total" type="text" value="0" readonly="readonly" id="egrand_total" class="form-control " style="width: 100%;">                 
+                                    </div>
+                                 </div>
+
+                                 <div id="ContentPlaceHolder1_upTotals">
+                                    <div style="float: right;padding-right: 20px;">
                                        <span id="ContentPlaceHolder1_lbl">TOTAL</span>        
                                        <input name="total" type="text" value="0" readonly="readonly" id="total" class="form-control " style="width: 100%;">
                                        <span id="ContentPlaceHolder1_Label1">Vat Total</span>        
@@ -173,6 +198,7 @@
                                        <input name="grand_total" type="text" value="0" readonly="readonly" id="grand_total" class="form-control " style="width: 100%;">                 
                                     </div>
                                  </div>
+
                                  <!-- /.box-body -->
                               </div>
                               <!-- /.box -->
@@ -221,8 +247,15 @@
                               <label class="control-label">Remark</label>
                               <textarea id="remark" name="remark" rows="1" cols="10" class="form-control"></textarea>
                            </div>
+                          
+                          <div class="form-group col-md-4">
+                              <label class="control-label">Credit Date</label>
+                              <input type="date" name="creditdate" id="creditdate" class="form-control">
+                           </div>
+
                            <div class="form-group col-md-2">
                               <input type="button" name="submit" onclick="insert_job_details();" style=" margin-top:20px;" value="Submit" id="submit" class="btn btn-success"  >
+                           <!--  <button type="button" id="Submit_form"> Submit</button> -->
                            </div>
                         </div>
                      </div>

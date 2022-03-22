@@ -76,7 +76,10 @@
             </b>
         </td>
         <td width="25%" colspan="2" >
-        <?php echo ":  ".$expdata[0]->PostId;?>
+
+        <?php 
+        
+        echo ":  ".$expdata[0]->PostId; ?>
         </td>
         <td width="20%">
        <b>GL Date</b>

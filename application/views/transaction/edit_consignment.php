@@ -764,38 +764,61 @@ else{
                                             <input type="hidden" id="estimate_code" name="code" class="form-control" placeholder="<?php echo $codes[0]->estimate_no+1; ?>" readonly="readonly" value="<?php echo $codes[0]->estimate_no+1; ?>">
                                             <input type="hidden" name="master_id" id="master_id" value="<?php if($estimatedata!=0){echo $estimatedata[0]->estimate_masterid;} else{echo $estmasterid;} ?>" />
                                             <input type="hidden" name="dat" id="dat" value="<?php if($estimatedata!=0){echo $estimatedata[0]->estimate_masterid;} else{echo 0;} ?>" />
-
+                                            <input maxlength="100" type="hidden" id="epost_code"  class="form-control"  value="<?php echo $expensedata[0]->postid;?>"/>
                                             <input maxlength="100" type="text" id="description_job" class="form-control" placeholder=" Description" value="" />
                                             <input type="hidden" id="description_id" class="form-control" value="<?php echo $values[0]->JobId; ?>" />
+                                             <?php $ab=$this->session->userdata('user_id');?>
+                                            <input   type="hidden" id="userid"  class="form-control" placeholder="<?php echo $ab;?>"  value="<?php echo $ab; ?>"/>
                                         </div>
-                                        <div class="form-group col-md-2">
-                                            <label class="control-label">Unit Price</label>
-                                            <input maxlength="100" type="text" id="unitprice" class="form-control " placeholder=" unit price" />
+                                        <div class="form-group col-md-1">
+                                            <label class="control-label">UnitPrice</label>
+                                            <input maxlength="100" type="text" id="unitprice" class="form-control " placeholder=" unit price" style="width: 47px;" />
                                         </div>
-                                        <div class="form-group col-md-2">
-                                            <label class="control-label">Currency</label>
-                                            <select class="form-control" id="unit_price" name="unit_price" value="--Select Type--">
-                                                <option value="bank">--Select Type--</option>
-                                                <?php
-
-                                                foreach ($currencylist as $currency) {
-                                                    echo '<option value="' . $currency->currency . '" id="' . $currency->id . '">' . $currency->currency . '</option>';
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label class="control-label">Conv.Factor</label>
-                                            <input maxlength="100" type="text" id="conv_factor" class="form-control " placeholder=" conv.factor" />
-                                        </div>
-                                        <div class="form-group col-md-2">
+                                        <div class="form-group col-md-1">
                                             <label class="control-label">Quantity</label>
-                                            <input maxlength="100" type="text" id="quantity" class="form-control " placeholder=" quantity" />
+                                            <input maxlength="100" type="text" id="quantity" class="form-control " placeholder=" quantity" style="width: 47px;" />
                                         </div>
                                         <div class="form-group col-md-1">
                                             <label class="control-label">VAT</label>
-                                            <input maxlength="100" type="text" id="vat" class="form-control" placeholder=" vat" />
+                                            <input maxlength="100" type="text" id="vat" class="form-control" placeholder=" vat" style="width: 47px;" />
                                         </div>
+                                        <div class="form-group col-md-1">
+                                            <label class="control-label">Currency</label>
+                                            <select class="form-control" id="unit_price" name="unit_price" value="--Select Type--" style="width: 53px;">
+                                            <?php 
+                                  foreach($currencylist as $key=>$value)
+                                  {?>
+                                 <option value="<?php echo $value->currency;?>"><?php echo $value->currency;?></option>
+                                  <?php
+                                  }
+                                   ?>
+                                            </select>
+                                        </div>
+                                        <!-- <div class="form-group col-md-2">
+                                            <label class="control-label">Conv.Factor</label>
+                                            <input maxlength="100" type="text" id="conv_factor" class="form-control " placeholder=" conv.factor" />
+                                        </div> -->
+                                        <div class="form-group col-md-3">
+                  <label class="control-label" for="date"> Supplier</label>
+                  <input maxlength="100" type="text" id="view_supplier_name" required="required" class="form-control" placeholder=" supplier_name" value="">
+                  <input maxlength="100" type="hidden" id="supplier_id" class="form-control" value="">
+                 </div>
+                 <div class="form-group col-md-1">
+                                 <label class="control-label">UnitPrice</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="eunitprice" value="0"  style="width: 65px;" required="required" class="form-control " placeholder="unit price" style="width: 54px;" />
+                              </div>
+                              <div class="form-group col-md-1">
+                                 <label class="control-label">Quantity</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppqty" value=" 1" required="required" class="form-control " placeholder="Quantity" style="width: 65px;" />
+                              </div>
+
+                              <div class="form-group col-md-1">
+                                 <label class="control-label"> SuppVat</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppvat" value="0" required="required" class="form-control " placeholder="vat" style="width: 65px;" />
+                              </div>  
+
+                           
+                                      
                                         <br>
                                         <input type="submit" name="add" value="ADD" id="add" class="btn btn-success" style="float: right;">
                                         <br>
@@ -815,6 +838,9 @@ else{
                                                                 <th>SubTotal</th>
                                                                 <th>VAT</th>
                                                                 <th>TOTAL</th>
+                                                                <th>Supplier</th>
+                                             <th>Unitprice</th>
+                                             <th>TOTAL</th>
                                                       </tr>
                                                         </thead>
                                                         <tbody class="dataadd">
@@ -828,11 +854,16 @@ else{
                                                                     <td class="job_desc"><?php echo $value1->description; ?> </td>
                                                                     <td class="job_price"><?php echo $value1->unitprice; ?></td>
                                                                     <td class="job_price"><?php echo $value1->quantity; ?></td>
-                                                                    <td class='subtotalval_data'><?php echo ($value1->subtotal) * ($value1->conv_factor); ?></td>
+                                                                    <td class='subtotalval_data'><?php echo ($value1->subtotal); ?></td>
                                                                     <td class="taxval_data"><?php echo $value1->vat; ?> </td>
                                                                     <td class="totalval_data"><?php echo $value1->total; ?></td>
+                                                                    <td class="supp"><?php echo $value1->supplier_name; ?></td>
+                                 <td class="unit_sup"><?php if($value1->unitpricesupp !=0){ echo $value1->unitpricesupp;}else{echo 0;} ?></td> 
+                                 <td class="esubtotalval_data" hidden><?php if($value1->amount !=0){ echo $value1->amount;}else{echo 0;} ?></td> 
+                                 <td  class="etaxval_data_val" hidden><?php if($value1->evat !=0){ echo $value1->evat;}else{echo 0;} ?></td> 
+                                 <td  class="etotalval_data" ><?php if($value1->Extotal !=0){ echo $value1->Extotal; }else{echo 0;}?></td> 
                                                                     <td>
-                                                                        <a class="" onclick="deletedids(<?php echo $value1->estimate_details_id; ?>,this)"><i class="fa fa-trash-o"></i></a>
+                                                                        <a class="" onclick="deletedids(<?php echo $value1->estimate_details_id; ?>,<?php echo $value1->EstimateExpDId; ?>,this)"><i class="fa fa-trash-o"></i></a>
                                                                         <input type="hidden" class="currency" value="<?php echo $value1->unit_type; ?>" />
                                                                         <input type='hidden' class="cov_factor" value="<?php echo $value1->conv_factor; ?>" />
                                                                         <input type='hidden' class="credit_detail_id" value="<?php echo $value1->estimate_details_id; ?>" />
@@ -846,8 +877,20 @@ else{
                                                         </tfoot>
                                                     </table>
                                                 </div>
+                                                 
                                                 <div id="ContentPlaceHolder1_upTotals">
-                                                    <div style="float: right;">
+                                    <div style="float: right;">
+                                       <span id="ContentPlaceHolder1_lbl">EXPENSE TOTAL</span>   
+                                       <input name="etotal" type="text"  readonly="readonly" value="<?php if($expensedata!=0){echo $expensedata[0]->subtotal; }else {echo 0;}?>" id="etotal" class="form-control " style="width: 100%;">
+                                       <span id="ContentPlaceHolder1_Label1">Vat Total</span>        
+                                       <input name="evat_total" type="text"  readonly="readonly" value="<?php if($expensedata!=0){echo $expensedata[0]->vattotal; }else {echo 0;}?>" id="evat_total" class="form-control " style="width: 100%;"> 
+                                       <span id="ContentPlaceHolder1_Label2">Grand Total</span>        
+                                       <input name="egrand_total" type="text"  readonly="readonly" value="<?php if($expensedata!=0){echo $expensedata[0]->grandtotal; }else {echo 0;}?>" id="egrand_total" class="form-control " style="width: 100%;">                 
+                                    </div>
+                                 </div>
+
+                                                <div id="ContentPlaceHolder1_upTotals">
+                                                <div style="float: right;padding-right: 20px;">
                                                         <span id="ContentPlaceHolder1_lbl">TOTAL</span>
                                                         <input name="total" type="text" value="<?php if($estimatedata!=0){echo $estimatedata[0]->total_amount; }?>" readonly="readonly" id="total" class="form-control " style="width: 100%;">
                                                         <span id="ContentPlaceHolder1_Label1">Vat Total</span>
@@ -1093,11 +1136,26 @@ var obj = [];
 
     function insertRow() {
 
+        currency=$("#unit_price").val(); 
+   var myVariable;
+   var request = $.ajax({
+    'async': false,
+    url: 'get_covfactor1/'+currency,
+    type: 'GET',
+   dataType: 'JSON'
+    });
+    request.done( function (result) { 
+      console.log(result);
+    var values=JSON.stringify(result);
+    myVariable = (result[0].conversion_factor); 
+    });
+    var conv_factor=myVariable; 
+
         var descID = 0;
         var desc = $("#description_job").val();
         var price = parseFloat($("#unitprice").val());
         var price1 = parseFloat($("#unitprice").val());
-        var conv_factor = parseFloat($("#conv_factor").val());
+       // var conv_factor = parseFloat($("#conv_factor").val());
         var price = price * conv_factor;
 
         var quantity = parseFloat($("#quantity").val());
@@ -1108,18 +1166,40 @@ var obj = [];
         var unit_val = $("#unit_price").val();
         var desc_id = $("#description_id").val();
 
-        $(".dataadd").append("<tr class='estmt_details'><td class='desc'>" + desc + " </td> <td class='price_val'>" + price1 + "</td> <td class='quanty'>" + quantity + "</td> <td class='subtotalval_data'>" + SubTotal + "</td> <td class='taxval_data'>" + taxvalue + "</td>  <td class='totalval_data'>" + total + "</td> <td class='hidden unittype'>" + unit_val + "</td><td class='hidden convfact'>" + conv_factor + "</td><td class='hidden desc_id'>" + desc_id + "</td><td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a></td>  </tr>");
+
+        var equantity=$("#suppqty").val();
+ var eprice=parseFloat($("#eunitprice").val());
+ var eprice = eprice *  conv_factor;
+      var ecode=$("#edesc_code").val();
+      var evatAmount=parseFloat($("#suppvat").val());
+     var eSubTotal=equantity*eprice;
+   var etaxvalue=((eSubTotal * evatAmount) / 100);
+   var etotal=eSubTotal+etaxvalue;
+
+
+ var supp =$("#view_supplier_name").val();
+ var suppid =$("#supplier_id").val();
+ var unit_sup=$("#eunitprice").val(); 
+
+ $(".dataadd").append("<tr class='estmt_details'><td class='desc'>" + desc + " </td> <td class='price_val'>" + price1 + "</td> <td class='quanty'>" + quantity + "</td> <td class='subtotalval_data'>" + SubTotal + "</td> <td class='taxval_data'>" + taxvalue + "</td>  <td class='totalval_data'>" + total + "</td> <td class='hidden unittype'>" + unit_val + "</td><td class='hidden convfact'>" + conv_factor + "</td><td class='hidden desc_id'>" + desc_id + "</td><td class='supp'>"+supp+"</td><td class='unit_sup'>"+unit_sup+"</td><td hidden class='esubtotalval_data'>"+eSubTotal+"</td><td hidden class='etaxval_data'>"+etaxvalue+"</td><td  class='etotalval_data'>"+etotal+"</td><td hidden class='equantitys'>"+equantity+"</td><td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a><input type='hidden' class='currency' value='"+currency+"'/><input type='hidden' class='cov_factor' value='"+conv_factor+"'/><input type='hidden' class='etaxpr_data' value='"+evatAmount+"'/><input type='hidden' class='supp_id' value='"+suppid+"'/> </td>  </tr>");
 
         calculates();
 
   
 // TO CLAR Text ARea and text box
         /*Clear textarea using id */
-				$('#step-3 #description_job').val('');
+		$('#step-3 #description_job').val('');
         $('#step-3 #unitprice').val('');
         $('#step-3 #conv_factor').val('1');
-				$('#step-3 #quantity').val('1');
+		$('#step-3 #quantity').val('1');
         $('#step-3 #vat').val('0');
+        $('#step-3 #view_supplier_name').val(''); 
+        $('#step-3 #eunitprice').val('0');
+        $('#step-3 #suppvat').val('0');
+        $('#step-3 #suppqty').val('1');
+
+
+
     }
 
     //total
@@ -1148,6 +1228,30 @@ var obj = [];
 
         $("#vat_total").val(taxval_data_val.toFixed(2));
         $("#grand_total").val(totalval_data_val.toFixed(2));
+
+        //Expense Total
+        var totsub_vale=0;
+  $(".esubtotalval_data").each(function(td) {
+      var se = parseFloat($(this).html());
+      totsub_vale=parseFloat(totsub_vale)+se;
+  });
+
+  var etaxval_data_val=0;
+  $(".etaxval_data").each(function(td) {
+      var se = parseFloat($(this).html());
+      etaxval_data_val=parseFloat(etaxval_data_val)+se;
+  });
+
+  var etotalval_data_val=0;
+  $(".etotalval_data").each(function(td) {
+      var se = parseFloat($(this).html());
+      etotalval_data_val=parseFloat(etotalval_data_val)+se;
+  });
+
+  $("#etotal").val(totsub_vale.toFixed(2));
+
+ $("#evat_total").val(etaxval_data_val.toFixed(2));
+ $("#egrand_total").val(etotalval_data_val.toFixed(2));
 
 
     }
@@ -1351,3 +1455,30 @@ if(length!=8)
                     });  
         });
 </script>
+<script>
+ $(document).ready(function(){
+
+  var obj=[];
+              $.ajax({
+               url: "<?php echo base_url(); ?>transaction/Supplierexpense_Controller/getsupplierdata",
+               type: 'post',
+               dataType: "json",
+               success: function( data ) 
+               {
+                   console.log(data);
+                obj=data;
+                $('#view_supplier_name').autocomplete({
+                              source: obj,
+                              select: function (event, ui) {
+                                  $("#view_supplier_name").val(ui.item.label);
+                                 $("#supplier_id").val(ui.item.value);
+                                  return false;
+  
+                              }
+                          });
+               }
+            });
+  
+  });
+
+  </script>

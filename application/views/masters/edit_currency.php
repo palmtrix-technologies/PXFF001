@@ -14,7 +14,11 @@
                       <input type="hidden" name="id" id="id"  value="<?php  echo $value[0]->id;?>" />
                       <input type="text" autocomplete="off" class="form-control" required id="currency"   value="<?php  echo $value[0]->currency; ?>">
                     </div>
-                  
+                    <div class="form-group col-md-6 ">
+                      <label for="conversion_factor">Conversion Factor</label>
+                      
+                      <input type="text" autocomplete="off" class="form-control" required id="conversion_factor"   value="<?php  echo $value[0]->conversion_factor; ?>">
+                    </div>
                   </div><!-- /.box-body -->
 
                   <div class="box-footer">

@@ -4,9 +4,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="<?php echo base_url(); ?>/assets/js/bootstrap-tagsinput.min.js"></script>
-<!-- <link rel="stylesheet" href="../css/bootstrap-tagsinput.css"> -->
-<!-- <script src="<?php echo base_url(); ?>assets/js/dropzone.min.js"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dropzone.min.css"> -->
+ <link rel="stylesheet" href="../css/bootstrap-tagsinput.css"> 
+ <script src="<?php echo base_url(); ?>assets/js/dropzone.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dropzone.min.css">
 
 <!-- Bootstrap Date-Picker Plugin -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
@@ -888,7 +888,7 @@ foreach ($truck as $truck_name) {
 
 <script src="<?php echo base_url(); ?>/assets/js/moment.js"></script>
 <script src="<?php echo base_url(); ?>/assets/user_scripts/transaction/job_script.js"></script>
-<!-- <script src="<?php echo base_url(); ?>/assets/user_scripts/transaction/plannes_script.js"></script> -->
+ <script src="<?php echo base_url(); ?>/assets/user_scripts/transaction/plannes_script.js"></script> 
 <script src="<?php echo base_url(); ?>/assets/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function() {

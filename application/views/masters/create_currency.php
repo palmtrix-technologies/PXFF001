@@ -11,10 +11,18 @@
                   <div class="box-body" style="min-height: 300px;">
                     <div class="form-group col-md-6 ">
                       <label for="name">Currency</label>
-                      <input type="text" autocomplete="off" class="form-control" required id="currency" value="">
+                      <input type="text" autocomplete="off" class="form-control" required id="currency" name="currency" value="">
                     </div>
-                  
+                   
+                    <div class="form-group col-md-6 ">
+                      <label for="conversion_factor">Conversion Factor</label>
+                      <input type="text" autocomplete="off" class="form-control" required id="conversion_factor" name="conversion_factor" value="">
+                    </div>
                   </div><!-- /.box-body -->
+                
+                    
+                  
+                 
 
                   <div class="box-footer">
                     <button type="button" onclick="add();" class="btn btn-success">Save</button>

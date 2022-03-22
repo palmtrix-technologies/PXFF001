@@ -56,49 +56,63 @@ var request = $.ajax({
  console.log(clientid);
 $("#invctotal").text(result["invoicetotal"][0].sumvalue);
 //invoice
-var Invsum=0;
+var Invsum=0;Invsum1=0;
     var slno=0;
-    $(".dataadd").html("");
+    $(".dataadd").html("");$(".datainv").html("");
     $.each(result["invoicedata"], function(index, value){
-      
+
          slno=slno+1;
         var inv=value.Inv;
         var date=value.Date;
-        // var particulars="";
         var mode=value.InvoiceType;
-        // var sub=value.Total;
-        var vattotal=value.Vat;
-        
-        var subtotaldata=parseFloat(value.Total)-parseFloat(value.Vat).toFixed(2);
+        // var vattotal=value.Vat;
+        // var Remarks=value.Remark;
+         var subtotaldata=parseFloat(value.GrandTotal)-parseFloat(value.VatTotal).toFixed(2);
+        // sum=parseFloat(subtotaldata);
+        // var grandtotal=parseFloat(value.Total).toFixed(2);
+        var vattotal=value.VatTotal;
+        var Remarks=value.Remark;
         sum=parseFloat(subtotaldata);
-
-        var grandtotal=parseFloat(value.Total).toFixed(2);
-
         var status=value.Status;
-        
         var invmasterid=value.InvoiceMasterId;
+        if(status=='Drafted')
+        {
+          var grandtotal=parseFloat(value.GrandTotal).toFixed(2);
         Invsum=parseFloat(Invsum)+parseFloat(grandtotal);
-
+        var subtotaldata1=value.Total;
+        }
+        else
+        {
+          var subtotaldata2=value.Total;
+          var grandtotal1=parseFloat(value.GrandTotal).toFixed(2);
+          Invsum1=parseFloat(Invsum1)+parseFloat(grandtotal1);
+        }
+      
        var stringval='<ul class="nav"><li class="dropdown"> <a class="btn btn-sm dropdown-toggle" style="width: 50px;" data-toggle="dropdown" href="#"><i class="fa fa-ellipsis-v"></i></a><ul class="dropdown-menu">';          
          if(status=='Drafted')
          {
            stringval=stringval+'<li role="presentation"><a role="menuitem" tabindex="-1" href="'+baseurl+'edit-job-invoice/'+invmasterid+'">Edit</a></li>';
            stringval=stringval+'<li role="presentation"><a role="menuitem" tabindex="-1" href="'+baseurl+'change-invoice-status/'+invmasterid+'/'+clientid+'">Post invoice and print</a></li>';
          }
-        //  else{
-
          stringval=stringval+'<li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="'+baseurl+'invoice-print/'+invmasterid+'">View invoice</a></li>';
-        //  }
+      
          stringval=stringval+'</ul> </li>  </ul>';
-
-         $(".dataadd").append( "<tr class='tbl_row'><td class='sl'>"+slno+" </td> <td class='inv'>"+inv+"</td><td class='date'>"+date+"</td>  <td class='mode'>"+mode+"</td>  <td class='vattotal'>"+vattotal+"</td><td class='totaldata'>"+subtotaldata+"</td><td class='grandtotal' style='text-align:right;'>"+grandtotal+"</td><td>"+stringval+" </td></tr>" );
-
-                
+         if(status=='Drafted')
+         {
+         $(".dataadd").append( "<tr class='tbl_row'><td class='sl'>"+slno+" </td> <td class='inv'>"+inv+"</td><td class='date'>"+date+"</td>  <td class='mode'>"+mode+"</td>  <td class='vattotal'>"+vattotal+"</td><td class='totaldata'>"+subtotaldata+"</td><td class='grandtotal' style='text-align:right;'>"+grandtotal+"</td><td class='remark' style='text-align:left;'>"+Remarks+" </td><td>"+stringval+" </td></tr>" );
+         }
+         else
+         {
+         $(".datainv").append( "<tr class='tbl_row'><td class='sl'>"+slno+" </td> <td class='inv'>"+inv+"</td><td class='date'>"+date+"</td>  <td class='mode'>"+mode+"</td>  <td class='vattotal'>"+vattotal+"</td><td class='totaldata'>"+subtotaldata+"</td><td class='grandtotal' style='text-align:right;'>"+grandtotal1+"</td><td class='remark' style='text-align:left;'>"+Remarks+" </td><td>"+stringval+" </td></tr>" );
+         }
 
     });
     Invsum=parseFloat(Invsum).toFixed(2);
-    $(".dataadd").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='6' > Total Invoice </td><td style='text-align: right;'>"+Invsum+"</td><td></td></tr>"); 
-
+    Invsum1=parseFloat(Invsum1).toFixed(2);
+    $(".dataadd").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='6' > Total Invoice </td><td style='text-align: right;'>"+Invsum+"</td><td></td><td></td></tr>"); 
+   
+    $(".datainv").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='6' > Total Invoice </td><td style='text-align: right;'>"+Invsum1+"</td><td></td><td></td></tr>"); 
+   
 //Estimate
 var Invsum=0;
     var slno=0; 
@@ -126,17 +140,18 @@ var Invsum=0;
  if(status1=='drafted')
          {
          stringval=stringval+'<li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="'+baseurl+'estimate-invoice/'+value.estimate_masterid+'">Post to Invoice</a></li>';
+         stringval=stringval+'<li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="'+baseurl+'edit-consignment/'+value.job_id+'">Edit Estimate</a></li>';
         }
          stringval=stringval+'</ul> </li>  </ul>';
 
          $(".dataadda").append( "<tr class='tbl_row'><td class='sl'>"+slno+" </td> <td class='inv'>"+inv+"</td><td class='date'>"+date+"</td>   <td class='vattotal'>"+vattotal+"</td><td class='totaldata'>"+subtotaldata+"</td><td class='grandtotal' style='text-align:right;'>"+grandtotal+"</td><td>"+stringval+" </td></tr>" );
 
-                
+      
 
     });
     Invsum=parseFloat(Invsum).toFixed(2);
     $(".dataadda").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='6' > Total Invoice </td><td style='text-align: right;'>"+Invsum+"</td><td></td></tr>"); 
-
+   
 
   //  console.log(Invsum);
     //credit note 
@@ -169,7 +184,7 @@ var Invsum=0;
     });
     Creditsum=parseFloat(Creditsum).toFixed(2);
     
-    $(".creditdata").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='5' > Total Amount </td><td >"+Creditsum+"</td></tr>"); 
+    $(".creditdata").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='4' > Total Amount </td><td >"+Creditsum+"</td><td></td></tr>"); 
 
     //payment receipt
     var slno=0;

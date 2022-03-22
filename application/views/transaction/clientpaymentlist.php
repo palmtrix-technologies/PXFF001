@@ -9,6 +9,7 @@
           <div class="box box-success">
          
           <div class="box-body">
+            
               <table class="table table-striped table-hover indexer" id="table-permissionList">
                 <thead>
                   <tr>

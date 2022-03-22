@@ -1,7 +1,5 @@
 <?php 
-   // var_dump($curreny);
-   // // var_dump ($Inv);
-   // die();
+ 
    $month = date('m');
    $day = date('d');
    $year = date('Y');
@@ -61,8 +59,12 @@
                         <div class="row">
                            <div class="form-group col-md-2">
                               <label class="control-label">Inv*</label>
+                              <?php $ab=$this->session->userdata('user_id');?>
+                           <input   type="hidden" id="userid"  class="form-control" placeholder="<?php echo $ab;?>"  value="<?php echo $ab; ?>"/>
                               <input   type="text" id="inv_code" required="required" class="form-control" readonly="readonly"  placeholder="<?php echo $invoicedata[0]->Inv;?>"  value="<?php echo $invoicedata[0]->Inv;?>"/>
                                 <input type="hidden" id="invid" value="<?php echo $invoicedata[0]->InvoiceMasterId;?>" />
+                                <input maxlength="100" type="hidden" id="job_id"  class="form-control"  value="<?php echo $expensedata[0]->JobID;?>"/>
+                                <input maxlength="100" type="hidden" id="epost_code"  class="form-control"  value="<?php echo $expensedata[0]->PostId;?>"/>
                            </div>
                            <div class="form-group col-md-3">
                               <label class="control-label">Date</label>
@@ -82,27 +84,9 @@
 
                            </div>
                            <div class="row">
-                              <div class="form-group col-md-2">
-                                 <label class="control-label">Unit Price</label>
-                                 <input maxlength="100" autocomplete="off" type="text" id="unitprice" required="required" class="form-control " placeholder=" unit price" />
-                              </div>
-                              <div class="form-group col-md-2">
-                                 <label class="control-label">Currency</label>
-                                 <select class="form-control" id="unit_price" name="unit_price"  value="--Select Type--">
-                                    <?php 
-
-foreach($currency as $currency)
-{ 
-  echo '<option value="'.$currency->currency.'" id="'.$currency->id.'">'.$currency->currency.'</option>';
-  
-
-}
-?>
-                                 </select>
-                              </div>
                               <div class="form-group col-md-1">
-                                 <label class="control-label">Conv.Fact</label>
-                                 <input maxlength="100" autocomplete="off" type="text" id="conv_factor"  required="required" class="form-control " value="1" />
+                                 <label class="control-label">UnitPrice</label>
+                                 <input maxlength="100" autocomplete="off" type="text" id="unitprice" required="required" class="form-control "  placeholder=" unit price" />
                               </div>
                               <div class="form-group col-md-1">
                                  <label class="control-label">Quantity</label>
@@ -112,6 +96,43 @@ foreach($currency as $currency)
                                  <label class="control-label">VAT</label>
                                  <input maxlength="100" autocomplete="off" type="text" id="vat" required="required" class="form-control" value=" 0" />
                               </div>
+                              <div class="form-group col-md-1">
+                                 <label class="control-label">Currency</label>
+                                 <select class="form-control" id="unit_price" name="unit_price"  value="--Select Type--" style="width: 70px;">
+                                    <?php 
+
+foreach($currency as $currency)
+{ ?>
+   <option value="<?php echo $currency->currency;?>"><?php echo $currency->currency;?></option>
+  
+<?php
+}
+?>
+                                 </select>
+                              </div>
+                              <!-- <div class="form-group col-md-1">
+                                 <label class="control-label">Conv.Fact</label>
+                                 <input maxlength="100" autocomplete="off" type="text" id="conv_factor"  required="required" class="form-control " value="1" />
+                              </div> -->
+                             
+                              <div class="form-group col-md-2">
+                  <label class="control-label" for="date"> Supplier</label>
+                  <input maxlength="100" type="text" id="view_supplier_name" required="required" class="form-control" placeholder=" supplier_name" value="">
+                  <input maxlength="100" type="hidden" id="supplier_id" class="form-control" value="">
+                 </div>
+                 <div class="form-group col-md-1">
+                                 <label class="control-label">UnitPrice</label>
+                                 <input maxlength="100" type="number" autocomplete="off" id="eunitprice" value="0"  required="required" class="form-control " placeholder="unit price" style="width: 65px;" />
+                              </div>
+                              <div class="form-group col-md-1">
+                                 <label class="control-label">Quantity</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppqty" value=" 1" required="required" class="form-control " placeholder="Quantity" style="width: 65px;" />
+                              </div>
+
+                              <div class="form-group col-md-1">
+                                 <label class="control-label"> SuppVat</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppvat" value="0" required="required" class="form-control " placeholder="vat" style="width: 65px;" />
+                              </div>  
 
                            </div>
 
@@ -134,6 +155,9 @@ foreach($currency as $currency)
                                              <th>SubTotal</th>
                                              <th>VAT</th>
                                              <th>TOTAL</th>
+                                             <th>Supplier</th>
+                                             <th>Unitprice</th>
+                                             <th>TOTAL</th>
                                              <th></th>
                                           </tr>
                                        </thead>
@@ -147,8 +171,14 @@ foreach($currency as $currency)
                                 <td class="subtotalval_data"><?php echo $value->Total-$value->Vat; ?></td> 
                                 <td class="taxval_data"><?php echo $value->Vat; ?> </td>
                                  <td class="totalval_data"><?php echo $value->Total; ?></td>
+                                 <td class="supp"><?php echo $value->supplier_name; ?></td>
+                                 <td class="unit_sup"><?php echo $value->unitprice_supp; ?></td> 
+                                 <td class="esubtotalval_data" hidden><?php echo $value->Amount; ?></td> 
+                                 <td  class="etaxval_data_val" hidden><?php echo $value->evat; ?></td> 
+                                 <td  class="etotalval_data" ><?php echo $value->extotal; ?></td> 
                                   <td>
-                                  <a class="" onclick="deletedids(<?php echo $value->InvoiceDetailId; ?>,this)"><i class="fa fa-trash-o"></i></a>
+                                  <a class="" onclick="deletedids(<?php echo $value->InvoiceDetailId; ?>,<?php echo $value->ExpenseDetailId; ?>,this)"><i class="fa fa-trash-o"></i></a>
+                                 
                                   <input type="hidden" class="currency" value="<?php echo $value->Currency; ?>"/>
                                   <input type='hidden' class="cov_factor" value="<?php echo $value->ConvFactor; ?>"/>
                                   <input type='hidden' class="inv_detail_id" value="<?php echo $value->InvoiceDetailId; ?>"/>
@@ -162,6 +192,16 @@ foreach($currency as $currency)
                                  </div>
                                  <div id="ContentPlaceHolder1_upTotals">
                                     <div style="float: right;">
+                                       <span id="ContentPlaceHolder1_lbl">EXPENSE TOTAL</span>        
+                                       <input name="total" type="text" value="<?php echo $expensedata[0]->SubTotal; ?>" readonly="readonly" id="etotal" class="form-control " style="width: 100%;">
+                                       <span id="ContentPlaceHolder1_Label1">Vat Total</span>        
+                                       <input name="vat_total" type="text" value="<?php echo $expensedata[0]->VatTotal; ?>" readonly="readonly" id="evat_total" class="form-control " style="width: 100%;"> 
+                                       <span id="ContentPlaceHolder1_Label2">Grand Total</span>        
+                                       <input name="grand_total" type="text" value="<?php echo $expensedata[0]->GrandTotal; ?>" readonly="readonly" id="egrand_total" class="form-control " style="width: 100%;">                 
+                                    </div>
+                                 </div>
+                                 <div id="ContentPlaceHolder1_upTotals">
+                                    <div style="float: right;padding-right: 20px;">
                                        <span id="ContentPlaceHolder1_lbl">TOTAL</span>        
                                        <input name="total" type="text" value="<?php echo $invoicedata[0]->Total; ?>" readonly="readonly" id="total" class="form-control " style="width: 100%;">
                                        <span id="ContentPlaceHolder1_Label1">Vat Total</span>        
@@ -216,6 +256,12 @@ foreach($currency as $currency)
                            <div class="form-group col-md-4" id="amnt">
                               <label class="control-label"></label>
                               <input maxlength="100" type="text" id="amount"  class="form-control " value="<?php echo $invoicedata[0]->Amount; ?>" />
+                           </div>
+
+                           <div class="form-group col-md-4" id="remark">
+                              <label class="control-label">Remarks</label>
+                              <textarea id="remark" name="remark" rows="1" cols="10" class="form-control" value="" ></textarea>
+                             
                            </div>
                            <div class="form-group col-md-2">
                               <input type="button" name="submit" onclick="update_jobInvoice_details();" style=" margin-top:20px;" value="Update" id="submit" class="btn btn-success"  >
@@ -305,3 +351,34 @@ foreach($currency as $currency)
 
     });
 </script>
+
+<script>
+          $(document).ready(function(){
+  
+
+  var obj=[];
+              $.ajax({
+               url: "<?php echo base_url(); ?>transaction/Job_invoice_controller/getsupplierdata",
+               type: 'post',
+               dataType: "json",
+               success: function( data ) 
+               {
+                   console.log(data);
+                obj=data;
+                $('#view_supplier_name').autocomplete({
+                              source: obj,
+                              select: function (event, ui) {
+                                  $("#view_supplier_name").val(ui.item.label);
+                                 $("#supplier_id").val(ui.item.value);
+                                  return false;
+  
+                              }
+                          });
+               }
+            });
+  
+  });
+  
+
+  </script>
+  

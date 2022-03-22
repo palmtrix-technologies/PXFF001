@@ -79,7 +79,7 @@
 
                      <div class="form-group col-md-3">
                   <label class="control-label" for="date">Select Supplier</label>
-                  <input maxlength="100" type="text" id="view_supplier_name" required="required" class="form-control" placeholder=" supplier_name" value="">
+                  <input maxlength="100" type="text" id="view_supplier_name" autocomplete="off" required="required" class="form-control" placeholder=" supplier_name" value="">
                   <input maxlength="100" type="hidden" id="supplier_id" class="form-control" value="">
               </div>
               <div class="form-group col-md-3">

@@ -47,7 +47,7 @@ class Currency extends CI_Controller {
 		$result['permission']=$this->Login_model->select_all_menu($user_id);
 		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
 
-		$result['roles']=$this->Login_model->userdetails($user_id);
+		$result['roles']=$this->Login_model->userdetails($user_id); 
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 		$this->load->view('masters/create_currency');

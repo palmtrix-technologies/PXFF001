@@ -65,7 +65,7 @@ class Transaction extends CI_Controller {
 		$data['currencylist']=$this->Transaction_model->list_currency();
 		$data['userlist']=$this->Transaction_model->list_user();
 		$data['truck']=$this->Transaction_model->list_truck();
-		
+		$result['supcode']=$this->Transaction_model->selectcode_estexpns();
 		$user_image['values']=$res[0]->user_image;
 		$result['permission']=$this->Login_model->select_all_menu($user_id);
 		
@@ -201,21 +201,24 @@ class Transaction extends CI_Controller {
 		else{
 			$data['consigneedata']="";
 		}
-		if($masterid!="0"){
-			$data['estimate']=$this->Transaction_model->job_estimate_details($masterid);
-			$data['estimatedata']=$this->Transaction_model->editestimateedetails($id);
-		
+		if($masterid!="0"){ 
+			//$data['estimate']=$this->Transaction_model->job_estimate_details($masterid);
+			$data['estimate']=$this->Transaction_model->job_estimate_expdetails($masterid); 
+			$data['estimatedata']=$this->Transaction_model->editestimateedetails1($masterid);
+			$data['expensedata']=$this->Transaction_model->editestimate_expense_edetails($masterid);  
+			
 
 		}
 		else{
 			$data['estimate']=0;
 			$data['estimatedata']=0;
+			$data['expensedata']=0;  
 			$estmasterid=$this->Transaction_model->selectmaxid_estimatemaster($id);
 			$estmasterid=$estmasterid+1;
 			$data['estmasterid']=$estmasterid;
 		
 		}
-		
+		//var_dump($data['estimate']);die();
 		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
 		$data['uploadedfile']=$this->Transaction_model->selectuploaded_file($id);
 		$this->load->view('includes/header',$user_image);
@@ -290,7 +293,29 @@ class Transaction extends CI_Controller {
 			  echo json_encode($result);
 			  
 		  }
-		public function store_estimate()
+		  public function store_estimate()
+		  {
+			  $postdata=$this->input->post('postData');
+			  $estimate_data=$postdata["estimate_master_details"];
+			  $result= $this->Transaction_model->add_estimate($postdata["estimate_master"]);		
+			  $my_values = array();
+			  if($result!=0)
+		  {
+			  
+			  foreach($estimate_data as $row)
+			  {
+				  $row["estimate_masterid"]=$result;
+				  $row["vat"]=floatval($row["vat"]);
+				  $row["total"]=$row["total"];
+				  $this->Transaction_model->add_estimatedetails($row);
+				  $my_values[] = $row;
+			  }
+		  }
+		  echo json_encode($result);
+			  
+		  }
+
+		public function store_jobestimate()
 		{
 			$postdata=$this->input->post('postData');
 			$estimate_data=$postdata["estimate_master_details"];
@@ -308,6 +333,59 @@ class Transaction extends CI_Controller {
 				$my_values[] = $row;
 			}
 		}
+
+		$jobdata=$postdata["ExpenseDetails"];
+		$jobdeta=$postdata["ExpenseData"]; 
+      
+      if(!empty($jobdeta))
+      {
+		foreach($jobdeta as $row1)
+		{   
+            $postid=$row1['postid'];
+			$PostingDate=$row1['postingdate'];
+			$JobID=$row1['jobid'];
+			$SupplierID=$row1['supplierid'];
+			$row1['EstMasterId']=$result;   
+
+			if($SupplierID!='')   {
+			$data=$this->Transaction_model->viewestmaster_expense($postid,$SupplierID); 
+			if(empty($data))
+			{ 
+			
+			$result1=$this->Transaction_model->addestmaster_expense($row1); 
+			$SubTotal=0;  $VatTotal=0;$GrandTotal=0;
+			foreach($jobdata as $row)
+			{
+				
+				if($row1["supplierid"]==$row["SupplierID"])
+				{
+				$r["EstimateExpId"]=$result1;
+				$r["description"]=$row["description"];
+				$r["amount"]=$row["amount"];
+				$r["convfactor"]=$row["convfactor"];
+				$r["vat"]=$row["vat"];
+				$r["Extotal"]=$row["Extotal"];
+				$r["currency"]=$row["currency"];
+				$r["code"]=$row["code"];
+				$r["vatpersentage"]=$row["vatpersentage"];
+				$r["expensequantity"]=$row["expensequantity"];
+				$r["unitpricesupp"]=$row["unitpricesupp"];
+				$r['EstMasterid']=$result; 
+
+				$this->Transaction_model->addestimate_expense($r); 
+				$my_values[] = $row;
+				$SubTotal=$SubTotal + $row["amount"];
+				$VatTotal=$VatTotal + $row["vat"];
+				$GrandTotal=$GrandTotal + $row["Extotal"];
+				}
+				$up=$this->Transaction_model->estimateupdate_expense($SubTotal,$VatTotal,$GrandTotal,$result1); 
+			} 
+		
+	       }  
+		}	
+		}
+		} 
+
 		echo json_encode($result);
 			
 		}
@@ -364,9 +442,6 @@ public function jobclosed_status($id)
 		$id=$data["Id"];
 		$deletedids=$data["deleted"];
 		$dat=$data["Dat"];
-
-		//var_dump($id) ;
-		// die();
 		if($dat==0)
 		{
 
@@ -388,13 +463,130 @@ public function jobclosed_status($id)
 				$this->Transaction_model->insert_estimatedetails($row);
 				$my_values[] = $row;
 		}
+		}                                                
+///////////////////////Edit Estimate expense $result
+      
+$jobdata=$data["ExpenseDetails"];  
+		$jobdeta=$data["ExpenseData"];   
+		if(!empty($jobdeta))
+		{
+		foreach($jobdeta as $row1)
+		{   
+            $postid=$row1['postid'];
+			$PostingDate=$row1['postingdate'];
+			$JobID=$row1['jobid'];
+			$SupplierID=$row1['supplierid'];
+			$row1['EstMasterId']=$id1; 
+            if($SupplierID!='')   
+			{
+			$data=$this->Transaction_model->viewjobmaster_expense($postid,$SupplierID); 
+			if(empty($data))
+			{ 
+			
+			$result1=$this->Transaction_model->addjobmaster_expense($row1); 
+			$SubTotal=0;  $VatTotal=0;$GrandTotal=0;
+			foreach($jobdata as $row)
+			{
+				
+				if($row1["supplierid"]==$row["SupplierID"])
+				{
+					$r["EstimateExpId"]=$result1;
+					$r["description"]=$row["description"];
+					$r["amount"]=$row["amount"];
+					$r["convfactor"]=$row["convfactor"];
+					$r["vat"]=$row["vat"];
+					$r["Extotal"]=$row["Extotal"];
+					$r["currency"]=$row["currency"];
+					$r["code"]=$row["code"];
+					$r["vatpersentage"]=$row["vatpersentage"];
+					$r["expensequantity"]=$row["expensequantity"];
+					$r["unitpricesupp"]=$row["unitpricesupp"];
+					$r['EstMasterid']=$id1; 
+
+				$this->Transaction_model->addjobinvoicedetailsinsert_expense($r);
+				$my_values[] = $row;
+				$SubTotal=$SubTotal + $row["amount"];
+				$VatTotal=$VatTotal + $row["vat"];
+				$GrandTotal=$GrandTotal + $row["Extotal"];
+				}
+				$up=$this->Transaction_model->expensemaster_expense($SubTotal,$VatTotal,$GrandTotal,$result1); 
+			} 
+		
+	       }  
+
+
+        else
+		{
+            $result1=$data[0]->EstimateExpId;
+            $SubTotal=$data[0]->subtotal;  $VatTotal=$data[0]->vattotal; $GrandTotal=$data[0]->grandtotal;
+			foreach($jobdata as $row)
+			{
+				
+				if($row1["supplierid"]==$row["SupplierID"])
+				{
+					$r["EstimateExpId"]=$result1;
+					$r["description"]=$row["description"];
+					$r["amount"]=$row["amount"];
+					$r["convfactor"]=$row["convfactor"];
+					$r["vat"]=$row["vat"];
+					$r["Extotal"]=$row["Extotal"];
+					$r["currency"]=$row["currency"];
+					$r["code"]=$row["code"];
+					$r["vatpersentage"]=$row["vatpersentage"];
+					$r["expensequantity"]=$row["expensequantity"];
+					$r["unitpricesupp"]=$row["unitpricesupp"];
+					$r['EstMasterid']=$id1; 
+
+				$this->Transaction_model->addjobinvoicedetailsinsert_expense($r);
+				$my_values[] = $row;
+				$SubTotal=$SubTotal + $row["amount"];
+				$VatTotal=$VatTotal + $row["vat"];
+				$GrandTotal=$GrandTotal + $row["Extotal"];
+				}
+				$up=$this->Transaction_model->expensemaster_expense($SubTotal,$VatTotal,$GrandTotal,$result1); 
+			} 
+
 		}
+	  }
+			
+		} 
+	}
+
+
+
+
+	
+
 		if($deletedids!="")
 		{
 		foreach($deletedids as $row)
 		{
-				$id=$row;
+				$id=$row['id'];;
 				$result=$this->Transaction_model->delete_estimatedetails($id);
+
+				$ids=$row['eid'];
+				$data=$this->Transaction_model->viewjobdetails_expense($ids); 
+				$mid=$data[0]->EstimateExpId;
+				$Amount=$data[0]->amount;
+				$Vat=$data[0]->vat;
+				$Total=$data[0]->Extotal;
+                  
+				$master=$this->Transaction_model->viewmasterdata_expense($mid);  //print_r($mid);die();
+                $SubTotal=$master[0]->subtotal;
+				$VatTotal=$master[0]->vattotal;
+				$GrandTotal=$master[0]->grandtotal;
+
+				$sub=$SubTotal-$Amount;
+				$VatT=$VatTotal-$Vat;
+				$GrandT=$GrandTotal-$Total;
+                $up=$this->Transaction_model->expensemaster_expense($sub,$VatT,$GrandT,$mid); 
+				$masternull=$this->Transaction_model->viewmasterdata_expense($mid);
+				if($masternull[0]->grandtotal ==0)
+				{
+					$results=$this->Transaction_model->deletexpensmaser($mid);
+				}
+
+				$result=$this->Transaction_model->deletexpenseedetailsinsert($ids);
 			
 		}
 	}

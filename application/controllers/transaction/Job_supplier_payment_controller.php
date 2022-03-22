@@ -33,7 +33,7 @@ class Job_supplier_payment_controller extends CI_Controller {
 		$result['currency']=$this->Job_invoice_model->select_currency();
         $result['bank']=$this->Job_supplier_payment_model->select_all_bank();
         $result['supplier']=$this->Job_supplier_payment_model->select_supplier_details($supid);
-        $result['invno']=$this->Job_supplier_payment_model->select_invoice_number($supid);
+        $result['invno']=$this->Job_supplier_payment_model->select_invoice_numbers($supid);
 		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
@@ -45,14 +45,12 @@ class Job_supplier_payment_controller extends CI_Controller {
     
         
               $result= $this->Job_supplier_payment_model->selectclientdetails($value);
-            //   var_dump($result);
-            //   die();
               echo json_encode($result);
                 
           }
           //to insert data into tables
           
-          public function insert_supplier_payment()
+ public function insert_supplier_payment()
 	{
 
 		 $data=$this->input->post('postData');
@@ -200,8 +198,9 @@ public function list_supplier()
        	$user_image['values']=$res[0]->user_image;
 		$result['permission']=$this->Login_model->select_all_menu($user_id);
 		$result['suppliers']=$this->Job_supplier_payment_model->select_all_suppliers();
-// var_dump($result['suppliers']);
-// die();
+
+		 $result['balances']= $this->Job_supplier_payment_model->selectclientdetails_total();
+
 $user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
 
 		$this->load->view('includes/header',$user_image);

@@ -103,7 +103,9 @@
                                     <th class="ctr" width="10%">Qty
                                        
                                     </th>
-                                    <th width="15.2%">Vat 
+                                    <th width="15.2%">Vat %
+                                       </th>
+                                    <th width="15.2%">Vat Amount
                                        </th>
                                     <th width="12.3%">Amount
                                        
@@ -140,6 +142,7 @@
                                             <td style="text-align: right;">
                                               <?php echo $value->Quantity;?>
                                             </td>
+                                            <td style="text-align: right;">   <?php echo $value->VAT_percentage;?></td>
                                             <td style="text-align: right;">   <?php echo $value->Vat;?></td>
                                             <td style="text-align: right;" data-price="<?=  $value->UnitPrice; ?>" data-qty="<?=  $value->Quantity; ?>" class="currency">
                                              <?php echo $totalval;  ?>

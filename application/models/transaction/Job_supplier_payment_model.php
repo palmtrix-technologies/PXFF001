@@ -30,6 +30,14 @@ class Job_supplier_payment_model extends CI_Model
       $result = $query->result();
       return $result;
    }
+   public function select_invoice_numbers($supid)
+   {
+      $dataq = "select * from jm_expensemaster where Status='Posted' and SupplierID=". $supid . ";";
+
+      $query = $this->db->query($dataq);
+      $result = $query->result();
+      return $result;
+   }
    public function selectinvoicenumber($id)
    {
       $dataq = "select * from jm_supplierpaymentmaster
@@ -49,6 +57,16 @@ class Job_supplier_payment_model extends CI_Model
       $result = $query->result();
       return $result;
    }
+
+     public function selectclientdetails_total()
+   {
+      $data = "select * ,jm_expensemaster.GrandTotal-ifnull((select sum(Total) from jm_supplierpaymentdetail where jm_supplierpaymentdetail.SupplierExpenseMasterID=jm_expensemaster.ExpenseMasterId),0) as balance from jm_expensemaster
+      inner join  jm_job on jm_expensemaster.JobId=jm_job.JobId";
+      $query = $this->db->query($data);
+      $result = $query->result();
+      return $result;
+   }
+
    //to select code
    public function selectcode()
    {

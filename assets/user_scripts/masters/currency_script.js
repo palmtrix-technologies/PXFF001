@@ -2,15 +2,16 @@
     //add permission
     function add()
     {
-      var now = moment().format('YYYY-MM-DD h:mm:ss a');
-  
+      var now = moment().format('YYYY-MM-DD h:mm:ss a'); 
+    
       postData = {
-            "currency":$('#currency').val(), 
+            "currency":$('#currency').val(),
+            "conversion_factor":$('#conversion_factor').val(), 
                 "created_at": now,
                 "IsActive":1  
       };
   
-  
+ 
       var request = $.ajax({
       url: 'currency-store',
       type: 'POST',
@@ -39,8 +40,8 @@
       var now = moment().format('YYYY-MM-DD h:mm:ss a');
       Data = {
         "currency":$('#currency').val(),
-          
-        "updated_at": now
+         "conversion_factor":$('#conversion_factor').val(), 
+          "updated_at":now
   };
 
       var postData = {

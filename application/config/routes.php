@@ -238,6 +238,7 @@ $route['transportation-update'] = 'transaction/Transaction/update';
 $route['transportation-description/(:any)'] = 'transaction/Transaction/getdescription/$1';
 $route['transportation-jobdetails/(:any)'] = 'transaction/Transaction/jobdetails/$1';
 $route['transportation-estimate'] = 'transaction/Transaction/store_estimate';
+$route['transportation-estimate-job'] = 'transaction/Transaction/store_jobestimate';
 $route['transportation-carrier/(:any)'] = 'transaction/Transaction/getcarrier/$1';
 $route['list-job'] = 'transaction/Transaction/job_transactionlist';
 $route['list-consignment'] = 'transaction/Transaction/job_consignment';
@@ -253,6 +254,10 @@ $route['images-list_files']='transaction/Transaction/images_list_files';
 $route['remove_uploadedfile/(:any)']='transaction/Transaction/remove_uploadedfile/$1)';
 
 
+$route['job-invoice/get_covfactor/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
+$route['edit-job-invoice/get_covfactor/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
+$route['get_covfactors/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
+$route['edit-consignment/get_covfactor1/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
 
 //invoice
 //job-invoice
