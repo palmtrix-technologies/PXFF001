@@ -53,6 +53,15 @@ public function select_client_details($clientid)
      $result = $query->result();
      return $result;
   }
+
+  public function paymentreceipt_selectdetails()
+  {
+    
+     $data = "select *, CASE WHEN jm_invoicemaster.Status='partialy Paid' THEN jm_invoicemaster.GrandTotal-(SELECT SUM(Amount) FROM `jm_receiptdetail` WHERE InvoiceMasterID=jm_invoicemaster.InvoiceMasterId) else jm_invoicemaster.GrandTotal END AS payable from jm_invoicemaster inner join jm_job on jm_invoicemaster.JobId=jm_job.JobId inner join mst_client on mst_client.id=jm_job.client_id where jm_invoicemaster.Status='partialy Paid' OR jm_invoicemaster.Status='Posted' ";
+   $query = $this->db->query($data);
+     $result = $query->result();
+     return $result;
+  }
    //to insert into paymentreceiptmaster tb
    public function insert_receiptmaster($data_array)
    {
@@ -88,12 +97,11 @@ return $id;
       return $chequedetailid;
    }
   
-   public function insert_receiptdetails($data_array)
-   {
-
+   public function insert_receiptdetails_data($data_array)
+   {   
+     
       $this->db->insert('jm_receiptdetail', $data_array);
-      // $receipt_details_id = $this->db->insert_id();
-      // return $receipt_details_id;
+      return 1;
    }
 
    //to edit details and master table
@@ -163,7 +171,7 @@ return $id;
    public function selectreceiptdetails($data)
    {
      
-   $dataq="select ji.ID,ji.Date,ji.VatTotal,ji.SubTotal,Mode,ChequeNo,name,concat(c.name,'|',c.address,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientenglish,c.vat_no,
+   $dataq="select ji.ID,ji.Date,ji.VatTotal,ji.SubTotal,Mode,ChequeNo,name,country,trn_no,concat(c.address,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientenglish,c.vat_no,
    concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientearabic,
   
    concat(bn.bank_name,',',bn.acc_number,',',bn.other_info,',',bn.iban) as bank

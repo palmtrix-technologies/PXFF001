@@ -379,7 +379,7 @@ public function job_estimate_expdetails($mid)
    $dataq="select DISTINCT ji.*,
    (jj.description)asdesc,jj.EstimateExpDId,jj.amount,jj.expensequantity,jj.unitpricesupp,jj.convfactor,(jj.vat)evat,jj.Extotal,jj.currency,jj.EstimateExpId,jj.code,jj.vatpersentage,jj.EstMasterid,
    c.supplier_name  from jm_estimate_master_details 
-    ji left join estimate_expensedetails jj on jj.EstMasterid=ji.estimate_masterid left join estimate_expense_master jm on jj.EstimateExpId=jm.EstimateExpId
+    ji left join estimate_expensedetails jj on jj.code=ji.estimate_details_id left join estimate_expense_master jm on jj.EstimateExpId=jm.EstimateExpId
      left join mst_supplier c on c.id=jm.supplierid where ji.estimate_masterid=".$mid.";";
    $query = $this->db->query($dataq);
    $result = $query->result();
@@ -574,8 +574,8 @@ public function estimatemaster_details($id)
 public function  client_details($id)
 {
   $data="
-  select concat(c.name,'|',c.address,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientenglish ,
-  concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientarabic,c.vat_no
+  select c.name,c.country,c.trn_no,concat(c.name,'|',c.address,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientenglish ,
+  concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'\n',c.email) as clientarabic,c.vat_no,jj.*
   from mst_client c
   inner join jm_job jj on jj.client_id=c.id
   inner join jm_estimate_master ji on ji.job_id=jj.JobId

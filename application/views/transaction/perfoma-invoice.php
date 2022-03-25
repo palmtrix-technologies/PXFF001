@@ -113,6 +113,9 @@
                                     <p>Remarks</p>
                                 </div>
                             </div>
+                            <div class="remark-text">
+                            <?php echo $invoicedata[0]->Remark;?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -219,7 +222,7 @@
                                             </div>
                                             <div class="col-lg-6 col-12">
                                                 <div class="text-1">
-                                                    <p></p>
+                                                    <p><?php echo $invoicedata[0]->credit_date;?></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -552,7 +555,7 @@
                             </div>
                             <div class="col-lg-10 col-7">
                                 <div class="bank-details-text-1">
-                                    <p>NAVIO SHIPPING LLC</p>
+                                    <p>XYZ Bank</p>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-5">
@@ -586,7 +589,7 @@
                                             </div>
                                             <div class="col-lg-8 col-5">
                                                 <div class="bank-details-text-1">
-                                                    <p>ABU DHABI COMMERCIAL BANK [AED]</p>
+                                                    <p>ABC COMMERCIAL BANK [AED]</p>
                                                 </div>
                                             </div>
                                         </div>

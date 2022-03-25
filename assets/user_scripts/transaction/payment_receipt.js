@@ -77,12 +77,26 @@ return false;
 });
 function insertRow()
 {
-//   var descID=0;
+
+  currency=$("#unit_price").val(); 
+  var myVariable;
+  var request = $.ajax({
+   'async': false,
+   url: 'get_covfactor_receipt/'+currency,
+   type: 'GET',
+  dataType: 'JSON'
+   });
+   request.done( function (result) { 
+     console.log(result);
+   var values=JSON.stringify(result);
+   myVariable = (result[0].conversion_factor); 
+   });
+   var conv_factor=myVariable;  
+
     var invid= $("#inv_id").val();
     var details=$("#job_no").val();
     var amount=parseFloat($("#amount").val());
     var amount_actual=parseFloat($("#amount_actual").val());
-    var conv_factor=parseFloat($("#conv_factor").val());
      var price = amount *  conv_factor;
     var currency=$("#unit_price").val();
     
@@ -157,7 +171,7 @@ function insert_payment_receipt() {
                        "Total": parseFloat($(this).find('.job_quantity').text()),
                        "InvoiceMasterID": $(this).find('.inv').text(),
                        "status": status,
-                       "Actual_amout" : actual_val
+                       "Actual_amount" : actual_val
                      
                   };
                   PaymentReceiptDetails.push(Data);
@@ -171,24 +185,103 @@ function insert_payment_receipt() {
         Chequedata:Chequedata,
         Clientid:Clientid,
         Mode:Mode
-        };
+        };                                                            //   alert(JSON.stringify(postData, "", 2));
+
         console.log(postData);
-        var request = $.ajax({
-          url: '../insert-payment-receipt-details',
-          type: 'POST',
-          data: {postData:postData} ,
-          dataType: 'JSON'
-          });
-        request.done( function ( data ) {
-          window.location.href='../payment-receipt-print/'+data
+        // var request = $.ajax({
+        //   url: '../insert-payment-receipt-details',
+        //   type: 'POST',
+        //   data: {postData:postData} ,
+        //   dataType: 'JSON'
+        //   });
+        // request.done( function ( data ) { 
+        //   window.location.href='../payment-receipt-print/'+data
+        // });
+        // request.fail( function ( jqXHR, textStatus) {
+        //   swallokalert('payment receipt Creation failed','#');
+        //   });
 
-
-        });
-        request.fail( function ( jqXHR, textStatus) {
-          swallokalert('payment receipt Creation failed','#');
-        // alert("payment receipt Creation failed");
-       
-
-          });
+        $.ajax({  
+          url:'../insert-payment-receipt-details',
+          method:"POST", 
+          dataType: 'JSON',
+          data: {postData:postData} ,  
+          success:function(data){   
+            
+               window.location.href='../payment-receipt-print/'+data;
+          }  
+     });  
     
       }
+
+      function insert_bulk_client_payment()
+      {
+        var myVariable;
+        currency=$("#unit_price").val(); 
+        var request = $.ajax({
+         'async': false,
+         url: 'get_covfactor_receipt/'+currency,
+         type: 'GET',
+        dataType: 'JSON'
+         });
+         request.done( function (result) { 
+           console.log(result);
+         var values=JSON.stringify(result);
+         myVariable = (result[0].conversion_factor); 
+         });
+         var conv_factor=myVariable;  
+
+        $.ajax({
+          url: "../getclientpayment-detail",
+          type: 'post',
+         dataType: "json",
+          success: function( response ) 
+          {   
+            var payingamnts=parseFloat($("#payamnt").val());
+            
+              
+            while(payingamnts>0)
+            {  
+           $.each(response, function (key, value) { 
+             if(value.payable > 0){                            
+                      
+         var bln=(payingamnts - value.payable); 
+         
+          if(bln<=0)
+          {
+          var blns=  parseFloat(value.payable);
+            pay=blns + bln;   
+          }
+          else{ pay=payingamnts -(bln);     }
+         
+
+            payingamnts=bln;       
+
+           
+  
+
+             var invid= (value.InvoiceMasterId);
+              var details=(value.JobId);
+              var amount=pay;
+              var amount_actual=value.payable;
+            // var conv_factor=parseFloat($("#conv_factor").val());  
+               var price = amount *  conv_factor;
+              var currency=$("#unit_price").val();
+             var SubTotal=price;
+           var taxvalue=0;
+           var total=SubTotal+taxvalue; //alert(total);
+          $(".dataadd").append( "<tr class='tbl_row' actual_val='"+amount_actual+"'><td class='inv'>"+invid+" </td> <td class='details'>"+details+"</td><td class='amount'>"+amount+"</td> <td class='currency'>"+currency+"</td> <td class='cov_factor'>"+conv_factor+"</td>  <td class='job_quantity'>"+price+"</td> <td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a></td></tr>" );
+          console.log(price);
+          calculates();
+
+          if(payingamnts<=0){ exit;  }
+            }  })  }
+                  
+          }
+       });
+
+
+
+
+
+      }   

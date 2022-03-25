@@ -66,7 +66,13 @@ class Bank_controller extends CI_Controller {
 		$postdata=$this->input->post('postData');
 		$data=$postdata["postData1"];
 		$name=$postdata["Bankname"];
+		$type=$postdata["Actype"];
+
+       if($type=='credit')
+	   {$result1= $this->Bank_model->add_ledger_credit($name); }
+	   else{
 		$result1= $this->Bank_model->add_ledger($name);
+	   }
 
 		$result= $this->Bank_model->add($data,$result1);
 		echo json_encode($result);

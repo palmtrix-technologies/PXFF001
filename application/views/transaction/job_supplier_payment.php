@@ -43,8 +43,18 @@
                               <input maxlength="100" type="hidden" id="sup_id"  class="form-control"  value=" <?php echo $supplier[0]->id;?>"/>
 
                            </div>
+                           
+                           <div class="form-group col-md-4"><br/>
+                              <label class="control-label">Bulk Payment</label>
+                              <input type="radio" value="bulk" name="bulks" id="bulk" onclick='Checkdep(this.value);' >
+                               <label class="control-label"> Single Payment</label>
+                                         <input type="radio" value="single" name="bulks" id="single" onclick='Checkdep(this.value);' checked="checked">
+                           </div>
+                                          
                         </div>
                         <div class="row">
+                                          
+                           <div id="singledata">
                         <div class="form-group col-md-2">
                                  <label class="control-label">Inv No</label>
                                
@@ -55,7 +65,7 @@
                                  foreach($invno as $key=>$value){
                                      ?>
                                  
-                                    <option value="<?php echo $value->ExpenseMasterId?>"><?php echo $value->PostId?></option>
+                                    <option value="<?php echo $value->ExpenseMasterId?>"><?php echo $value->PostId;?></option>
                                  <?php } ?>  
                                  </select>
                               </div>
@@ -72,16 +82,41 @@
                            </div>
                               <div class="form-group col-md-2">
                               <label class="control-label">Amount Paying</label>
-                              <input type="text"  autocomplete="off" class="form-control" required id="payingamnt" name="payingamnt" ></input>
+                              <input type="text"  autocomplete="off" class="form-control" required id="payingamnt" name="payingamnt" onblur="balance();" ></input>
 
                            </div>
+                           <div class="form-group col-md-1">
+                                 <label class="control-label">Balance</label>
+                                 <input maxlength="" autocomplete="" type="text" id="balance"  required="required" class="form-control " value=""  /> 
+                              </div>
+                           
                            <div class="form-group col-md-1">
                                  <label class="control-label">Conv.Factor</label>
                                  <input maxlength="100" autocomplete="off" type="text" id="conv_factor"  required="required" class="form-control " value="1" readonly />
                               </div>
-                           </div>
-                           
+                              </div>
+                                
                            <input type="button" name="add" value="ADD"  id="add" class="btn btn-success" style="float: right;" onclick="insert_job_supplier_payment();">
+                           </div>
+                          <div id="bulksdiv" style='display:none;'>
+                          <div class="form-group col-md-2">
+                       <?php $total=0; foreach($totalamt as $key=>$value){
+                                                  $total=$total+$value->balance;
+                       }?>
+
+                              <label class="control-label">Total Amount </label>
+                              <input type="number"  autocomplete="off" class="form-control" value="<?php echo $total;?>" readonly id="totalamount" name="totalamount"  >
+
+                           </div>
+                           <div class="form-group col-md-2">
+                              <label class="control-label">Amount Paying</label>
+                              <input type="number"  autocomplete="off" class="form-control" required id="payamnt" name="payamnt" onblur="checkamount();">
+
+                           </div>
+                           <div class="form-group col-md-2">
+                           <label class="control-label"></label>
+                           <input type="button" name="adds" value="ADD"  id="adds" class="btn btn-success"  style="margin-top: 20px;" onclick="insert_bulk_supplier_payment();">
+                                 </div>  </div>
                         </div>
                         <br>
                         <!-- /.panel body -->
@@ -210,4 +245,51 @@
                          
    </section>
 <script src="<?php echo base_url(); ?>/assets/user_scripts/transaction/job_supplier_payment.js"></script>
+<script>
+  //    $('#balance').click(function(){
+         function balance()
+   {
+   var amount= parseFloat(document.getElementById("amount").value);
+   var payed= parseFloat(document.getElementById("payingamnt").value);
+   var bal=amount- payed;
+   $("#balance").val(bal);
+   }
+//});
+      </script>
+
+<script type="text/javascript">
+function Checkdep(val)
+{
+ 
+ if(val=='bulk')
+ {
+        document.getElementById('singledata').style.display='none';          
+
+        document.getElementById('bulksdiv').style.visibility='visible';
+           document.getElementById('bulksdiv').style.display = 'block';
+}
+ if(val=='single')
+ { 
+          document.getElementById('singledata').style.visibility='visible';
+           document.getElementById('singledata').style.display = 'block';
+
+           document.getElementById('bulksdiv').style.display='none';  
+          
+ }
+}
+
+</script>  
+
+
+<script>
+   function checkamount11()
+   {
+      
+      var payamt= $("#payamnt").val();  
+      var total= $("#totalamount").val();      
+      if(payamt > total){  $("#payamnt").val("0"); alert("Total payment amount is "+total);  }
+   }
+
+</script>
+
 <!-- <script type="text/javascript"> -->

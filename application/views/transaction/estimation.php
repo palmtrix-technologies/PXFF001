@@ -442,7 +442,7 @@ var equantity=$("#suppqty").val();
  var suppid =$("#supplier_id").val();
  var unit_sup=$("#eunitprice").val();
 
-$(".dataadd").append("<tr class='estmt_details'><td class='desc'>" + desc + " </td> <td class='price_val'>" + price1 + "</td> <td class='quanty'>" + quantity + "</td> <td class='subtotalval_data'>" + SubTotal + "</td> <td class='taxval_data'>" + taxvalue + "</td>  <td class='totalval_data'>" + total + "</td> <td class='hidden unittype'>" + unit_val + "</td><td class='hidden convfact'>" + conv_factor + "</td><td class='hidden desc_id'>" + desc_id + "</td><td class='supp'>"+supp+"</td><td class='unit_sup'>"+unit_sup+"</td><td hidden class='esubtotalval_data'>"+eSubTotal+"</td><td hidden class='etaxval_data'>"+etaxvalue+"</td><td  class='etotalval_data'>"+etotal+"</td><td hidden class='equantitys'>"+equantity+"</td><td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a></td><input type='hidden' class='etaxpr_data' value='"+evatAmount+"'/><input type='hidden' class='supp_id' value='"+suppid+"'/>  </tr>");
+$(".dataadd").append("<tr class='estmt_details'><td class='desc'>" + desc + " </td> <td class='price_val'>" + price1 + "</td> <td class='quanty'>" + quantity + "</td> <td class='subtotalval_data'>" + SubTotal + "</td> <td class='taxval_data'>" + taxvalue + "</td>  <td class='totalval_data'>" + total + "</td> <td class='hidden unittype'>" + unit_val + "</td><td class='hidden convfact'>" + conv_factor + "</td><td class='hidden desc_id'>" + desc_id + "</td><td class='supp'>"+supp+"</td><td class='unit_sup'>"+unit_sup+"</td><td hidden class='esubtotalval_data'>"+eSubTotal+"</td><td hidden class='etaxval_data'>"+etaxvalue+"</td><td  class='etotalval_data'>"+etotal+"</td><td hidden class='equantitys'>"+equantity+"</td><td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a></td><input type='hidden' class='etaxpr_data' value='"+evatAmount+"'/><input type='hidden' class='taxpr_data' value='"+vatAmount+"'/><input type='hidden' class='supp_id' value='"+suppid+"'/>  </tr>");
 
 calculates();
 // TO CLAR Text ARea and text box
@@ -453,6 +453,8 @@ $('#step-3 #conv_factor').val('1');
         $('#step-3 #quantity').val('1');
 $('#step-3 #vat').val('0');
 $('#step-3 #view_supplier_name').val('');
+$('#supplier_id').val('');
+
         $('#step-3 #eunitprice').val('0');
         $('#step-3 #suppvat').val('0');
         $('#step-3 #suppqty').val('1');

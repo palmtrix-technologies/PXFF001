@@ -5,18 +5,30 @@ p
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar" style="height: 100%;">
           <!-- Sidebar user panel -->
-          <div class="user-panel">
+          <!-- <div class="user-panel">
             <div class="pull-left image">
               <img src="<?php echo IMAGE_PATH.$cmpnydata[0]->Icon_image; ?>" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p><?php echo $cmpnydata[0]->Cmpny_name; ?></p>
-
-              <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
             </div>
-          </div>
+          </div> -->
+          <div class="user-panel" style="padding: 0;
+    background: white;
+    text-align: center;">
+              <img src="assets/images/backgrounds/freighbrid-logo.png" style="background: white;
+    width: 9rem;
+    height: 3rem;" >
+            </div>
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+
+            <li class="treeview">
+              <a href="<?php echo base_url(); ?>user-home">
+                <i class=" fa fa-dashboard"></i> <span>Dashboard </span> <i class=" pull-right"></i>
+              </a>
+          
+            </li>
            
             <li class="treeview">
               <a href="">

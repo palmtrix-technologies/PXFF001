@@ -46,8 +46,15 @@
                               <input maxlength="100" type="hidden" id="client_id" name="client_id" class="form-control"  value="<?php echo $client[0]->id;?>"/>
 
                            </div>
+                           <div class="form-group col-md-4"><br/>
+                              <label class="control-label">Bulk Payment</label>
+                              <input type="radio" value="bulk" name="bulks" id="bulk" onclick='Checkdep(this.value);' >
+                               <label class="control-label"> Single Payment</label>
+                                         <input type="radio" value="single" name="bulks" id="single" onclick='Checkdep(this.value);' checked="checked">
+                           </div>
                         </div>
                         <div class="row">
+                           <div id="singledata">
                         <div class="form-group col-md-2">
                                  <label class="control-label">Inv No</label>
                                
@@ -89,14 +96,51 @@
                                    ?>
                                  </select>
                               </div>
-                              <div class="form-group col-md-1">
+                              <!-- <div class="form-group col-md-1">
                                  <label class="control-label">Conv.Factor</label>
                                  <input maxlength="100" autocomplete="off" type="text" id="conv_factor"  required="required" class="form-control " value="1" />
-                              </div>
+                              </div> -->
                              
                              
                            </div>
                            <input type="button" name="add" value="ADD"  id="add" class="btn btn-success" style="float: right;" onclick="insert_client_payment();" >
+                                 </div>
+
+                                 <div id="bulksdiv" style='display:none;'>
+                          <div class="form-group col-md-2">
+                          <?php $total=0; foreach($totalamt as $key=>$value){
+                                                  $total=$total+$value->payable;
+                       }?>
+
+                              <label class="control-label">Total Amount </label>
+                              <input type="number"  autocomplete="off" class="form-control" value="<?php echo $total;?>" readonly id="totalamount" name="totalamount"  >
+
+                           </div>
+                           <div class="form-group col-md-2">
+                              <label class="control-label">Amount Paying</label>
+                              <input type="number"  autocomplete="off" class="form-control" required id="payamnt" name="payamnt" onblur="checkamount();">
+
+                           </div>
+                           <div class="form-group col-md-2">
+                                 <label class="control-label">Currency</label>
+                                 <select class="form-control" id="unit_price1" name="unit_price1"  value="--Select Type--">
+                                    <?php 
+                                  foreach($currency as $key=>$value)
+                                  {
+?>
+                                 <option value="<?php echo $value->currency;?>"><?php echo $value->currency;?></option>
+                                  <?php
+                                  }
+                                   ?>
+                                 </select>
+                              </div>
+                           <div class="form-group col-md-2">
+                           <label class="control-label"></label>
+                           <input type="button" name="adds" value="ADD"  id="adds" class="btn btn-success"  style="margin-top: 20px;" onclick="insert_bulk_client_payment();">
+                                 </div>  </div>
+
+
+
                         </div>
                         <!-- /.panel body -->
                         <div class="col-md-12">
@@ -239,3 +283,36 @@
    </section>
 <script src="<?php echo base_url(); ?>/assets/user_scripts/transaction/payment_receipt.js"></script>
 <!-- <script type="text/javascript"> -->
+
+<script type="text/javascript">
+function Checkdep(val)
+{
+ 
+ if(val=='bulk')
+ {
+        document.getElementById('singledata').style.display='none';          
+
+        document.getElementById('bulksdiv').style.visibility='visible';
+           document.getElementById('bulksdiv').style.display = 'block';
+}
+ if(val=='single')
+ { 
+          document.getElementById('singledata').style.visibility='visible';
+           document.getElementById('singledata').style.display = 'block';
+
+           document.getElementById('bulksdiv').style.display='none';  
+          
+ }
+}
+
+</script>  
+<script>
+   function checkamount11()
+   {
+      
+      var payamt= $("#payamnt").val();  
+      var total= $("#totalamount").val(); //   alert(total); alert(payamt); 
+      if(total <= payamt){  $("#payamnt").val("0"); alert("Total payment amount is "+total);  }
+   }
+
+</script>

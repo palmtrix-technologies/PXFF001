@@ -224,20 +224,20 @@
 </div> -->
                     </div>
                     <div class=" row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-4" style="display:none">
                             <label class="control-label">Shipper Name</label>
                             <input maxlength="100" type="text" required="required" id="shippername" class="form-control" placeholder="Enter shipper Name" />
                             <input maxlength="100" type="hidden" required="required" id="shipperid" class="form-control" />
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-4" style="display:none">
                             <label class="control-label">Consignee Name</label>
                             <input maxlength="100" type="text" required="required" id="consigneename" class="form-control" placeholder="Enter Consignee Name" />
                             <input maxlength="100" type="hidden" required="required" id="consignor_id" class="form-control" />
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="exampleInputname1">Client Name</label>
+                            <label for="exampleInputname1">Client Name</label> <h6 style="color:red;">* Required</h6>
                             <input type="hidden" name="client_id" id="client_id" value="" />
-                            <select class="form-control" name="client_name" id="client_name" value="--Select Type--">
+                            <select class="form-control" name="client_name" id="client_name" value="--Select Type--" required="required"  >
                                 <option value="select">--Select Type--</option>
                                 <?php
 
@@ -315,16 +315,16 @@
                             </select>
                         </div> -->
                 
-                        <div class="form-group col-md-4">
+                        <!-- <div class="form-group col-md-4">
                             <label class="control-label">PO No. </label>
                             <input maxlength="100" type="text" autocomplete="off" id="PoNo_air" required="required" class="form-control" placeholder=" PO No." />
-                        </div>
+                        </div> -->
                         <div class="col-md-4">
                             <div class="row">
 
                                 <div class="form-group col-md-4">
                                     <label class="control-label">MAWB </label>
-                                    <input  type="text" autocomplete="off" id="Mawb_air" readonly="readonly" required="required" class="form-control mawbcarrier" id="mawbcarrier" placeholder="prefix code"  />
+                                    <input  type="text" autocomplete="off" id="Mawb_air1" value="MAWB" readonly="readonly" required="required" class="form-control mawbcarrier"  placeholder="prefix code"  />
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label class="control-label"> &nbsp;</label><span id='mawbmsg'></span>
@@ -332,10 +332,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <!-- <div class="form-group col-md-4">
                             <label class="control-label"> HAWB</label>
                             <input maxlength="100" type="text" id="Hawb" autocomplete="off" required="required" class="form-control" placeholder=" HAWB" />
-                        </div>
+                        </div> -->
                         <div class="form-group col-md-4">
                             <label class="control-label"> No_pcs</label>
                             <input maxlength="100" type="text" id="Nopcs_air" autocomplete="off" required="required" class="form-control" placeholder=" No_pcs" />
@@ -745,14 +745,14 @@ foreach ($truck as $truck_name) {
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <div class="box-body">
-
+                            <input   type="hidden" id="epost_code" required="required" class="form-control" readonly="readonly"  placeholder="<?php echo $supcode[0]->postid+1;?>"  value="<?php echo $supcode[0]->postid+1;?>"/>
                                 <!-- <div class="form-group col-md-1"> -->
 
 
                                 <!-- <label class="control-label">Code</label>
                                             <input maxlength="100" onchange="getdata();" type="text" id="desc_code" class="form-control" placeholder=" code" /> -->
                                 <!-- </div> -->
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
 
                                     <label class="control-label">Description</label>
                                     <input maxlength="100" type="text" id="description_job" class="form-control" placeholder=" Description" value="" />
@@ -760,35 +760,57 @@ foreach ($truck as $truck_name) {
                                     <input type="hidden" id="estimate_code" name="code" class="form-control" placeholder="<?php echo $codes[0]->estimate_no + 1; ?>" readonly="readonly" value="<?php echo $codes[0]->estimate_no + 1; ?>">
 
                                 </div>
-                                <div class="form-group col-md-2">
-                                    <label class="control-label">Unit Price</label>
-                                    <input maxlength="100" type="text" autocomplete="off" id="unitprice" class="form-control " placeholder=" unit price" />
+                                <div class="form-group col-md-1">
+                                    <label class="control-label">UnitPrice</label>
+                                    <input maxlength="100" type="text" autocomplete="off" id="unitprice" class="form-control " placeholder=" unit price" style="width: 50px;" />
                                 </div>
-                                <div class="form-group col-md-2">
-                                    <label class="control-label">Currency</label>
-                                    <select class="form-control" id="unit_price" name="unit_price" value="--Select Type--">
-                                        <option value="bank">--Select Type--</option>
-                                        <?php
-
-                                        foreach ($currencylist as $currency) {
-                                            echo '<option value="' . $currency->currency . '" id="' . $currency->id . '">' . $currency->currency . '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label class="control-label">Conv.Factor</label>
-                                    <input maxlength="100" type="text" autocomplete="off" id="conv_factor" class="form-control " placeholder=" conv.factor" />
-                                </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-1">
                                     <label class="control-label">Quantity</label>
-                                    <input maxlength="100" type="text" autocomplete="off" id="quantity" class="form-control " placeholder=" quantity" />
+                                    <input maxlength="100" type="text" autocomplete="off" id="quantity" class="form-control " placeholder=" quantity" style="width: 50px;"/>
                                 </div>
                                 <div class="form-group col-md-1">
                                     <label class="control-label">VAT</label>
-                                    <input maxlength="100" type="text" id="vat" autocomplete="off" class="form-control" placeholder=" vat" />
+                                    <input maxlength="100" type="text" id="vat" autocomplete="off" class="form-control" placeholder=" vat" style="width: 50px;" />
                                 </div>
+                                <div class="form-group col-md-1">
+                                    <label class="control-label">Currency</label>
+                                    <select class="form-control" id="unit_price" name="unit_price" value="--Select Type--" style="width: 70px;">
+                                        <option value="bank">--Select Type--</option>
+                                        <?php 
+                                  foreach($currencylist as $key=>$value)
+                                  {?>
+                                 <option value="<?php echo $value->currency;?>"><?php echo $value->currency;?></option>
+                                  <?php
+                                  }
+                                   ?>
+                                    </select>
+                                </div>
+                                <!-- <div class="form-group col-md-2">
+                                    <label class="control-label">Conv.Factor</label>
+                                    <input maxlength="100" type="text" autocomplete="off" id="conv_factor" class="form-control " placeholder=" conv.factor" />
+                                </div> -->
+                                
+                                
+                                <div class="form-group col-md-2">
+                  <label class="control-label" for="date"> Supplier</label>
+                  <input maxlength="100" type="text" id="view_supplier_name" required="required" class="form-control" placeholder=" supplier_name" value="">
+                  <input maxlength="100" type="hidden" id="supplier_id" class="form-control" value="">
+                 </div>
+                 <div class="form-group col-md-1">
+                                 <label class="control-label">UnitPrice</label>
+                                 <input maxlength="100" type="number" autocomplete="off" id="eunitprice" value="0"  required="required" class="form-control " placeholder="unit price" style="width: 65px;" />
+                              </div>
+                              <div class="form-group col-md-1">
+                                 <label class="control-label">Quantity</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppqty" value=" 1" required="required" class="form-control " placeholder="Quantity" style="width: 65px;" />
+                              </div>
+
+                              <div class="form-group col-md-1">
+                                 <label class="control-label"> SuppVat</label>
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppvat" value="0" required="required" class="form-control " placeholder="vat" style="width: 65px;" />
+                              </div>    
                                 <br>
+                                <br/>
                                 <input type="submit" name="add" value="ADD" id="add" class="btn btn-success" style="float: right;">
                                 <br>
                             </div>
@@ -800,13 +822,16 @@ foreach ($truck as $truck_name) {
 
                                             <table id="datatable" class="table table-striped table-bordered">
                                                 <thead>
-                                                    <tr>
+                                                <tr>
                                                         <th>Description</th>
                                                         <th>UnitPrice</th>
                                                         <th>Quantity</th>
                                                         <th>SubTotal</th>
                                                         <th>VAT</th>
                                                         <th>TOTAL</th>
+                                                        <th>Supplier</th>
+                                             <th>Unitprice</th>
+                                             <th>Total</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -817,8 +842,18 @@ foreach ($truck as $truck_name) {
                                                 </tfoot>
                                             </table>
                                         </div>
+                                       <div id="ContentPlaceHolder1_upTotals">
+                                    <div style="float: right;">
+                                       <span id="ContentPlaceHolder1_lbl">EXPENSE TOTAL</span>        
+                                       <input name="total" type="text" value="0" readonly="readonly" id="etotal" class="form-control " style="width: 100%;">
+                                       <span id="ContentPlaceHolder1_Label1">Vat Total</span>        
+                                       <input name="vat_total" type="text" value="0" readonly="readonly" id="evat_total" class="form-control " style="width: 100%;"> 
+                                       <span id="ContentPlaceHolder1_Label2">Grand Total</span>        
+                                       <input name="grand_total" type="text" value="0" readonly="readonly" id="egrand_total" class="form-control " style="width: 100%;">                 
+                                    </div>
+                                 </div>
                                         <div id="ContentPlaceHolder1_upTotals">
-                                            <div style="float: right;">
+                                        <div style="float: right;padding-right: 20px;">
                                                 <span id="ContentPlaceHolder1_lbl">TOTAL</span>
                                                 <input name="total" type="text" value="" readonly="readonly" id="total" class="form-control " style="width: 100%;">
                                                 <span id="ContentPlaceHolder1_Label1">Vat Total</span>
@@ -888,7 +923,7 @@ foreach ($truck as $truck_name) {
 
 <script src="<?php echo base_url(); ?>/assets/js/moment.js"></script>
 <script src="<?php echo base_url(); ?>/assets/user_scripts/transaction/job_script.js"></script>
- <script src="<?php echo base_url(); ?>/assets/user_scripts/transaction/plannes_script.js"></script> 
+<!-- <script src="<?php echo base_url(); ?>/assets/user_scripts/transaction/plannes_script.js"></script> -->
 <script src="<?php echo base_url(); ?>/assets/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -1159,32 +1194,67 @@ $('#ContainerNo').on('beforeItemAdd', function(event) {
 
     function insertRow() {
 
-        var descID = 0;
-        var desc = $("#description_job").val();
-        var price = parseFloat($("#unitprice").val());
-        var price1 = parseFloat($("#unitprice").val());
-        var conv_factor = parseFloat($("#conv_factor").val());
-        var price = price * conv_factor;
+        var currency = $("#unit_price").val(); 
+        var myVariable;
+   var request = $.ajax({
+    'async': false,
+    url: 'get_covfactors/'+currency,
+    type: 'GET',
+   dataType: 'JSON'
+    });
+    request.done( function (result) { 
+      console.log(result);
+    var values=JSON.stringify(result);
+    myVariable = (result[0].conversion_factor); 
+    });
+    var conv_factor=myVariable;    
 
-        var quantity = parseFloat($("#quantity").val());
-        var vatAmount = parseFloat($("#vat").val());
-        var SubTotal = quantity * price;
-        var taxvalue = ((SubTotal * vatAmount) / 100);
-        var total = SubTotal + taxvalue;
-        var unit_val = $("#unit_price").val();
-        var desc_id = $("#description_id").val();
+var descID = 0;
+var desc = $("#description_job").val();
+var price = parseFloat($("#unitprice").val());
+var price1 = parseFloat($("#unitprice").val());
+//var conv_factor = parseFloat($("#conv_factor").val());
+var price = price * conv_factor;
 
-        $(".dataadd").append("<tr class='estmt_details'><td class='desc'>" + desc + " </td> <td class='price_val'>" + price1 + "</td> <td class='quanty'>" + quantity + "</td> <td class='subtotalval_data'>" + SubTotal + "</td> <td class='taxval_data'>" + taxvalue + "</td>  <td class='totalval_data'>" + total + "</td> <td class='hidden unittype'>" + unit_val + "</td><td class='hidden convfact'>" + conv_factor + "</td><td class='hidden desc_id'>" + desc_id + "</td><td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a></td>  </tr>");
+var quantity = parseFloat($("#quantity").val());
+var vatAmount = parseFloat($("#vat").val());
+var SubTotal = quantity * price;
+var taxvalue = ((SubTotal * vatAmount) / 100);
+var total = SubTotal + taxvalue;
+var unit_val = $("#unit_price").val();
+var desc_id = $("#description_id").val();
 
-        calculates();
-        
+var equantity=$("#suppqty").val();
+        var eprice=parseFloat($("#eunitprice").val());
+       var eprice = eprice *  conv_factor;
+      var ecode=$("#edesc_code").val();
+      var evatAmount=parseFloat($("#suppvat").val());
+      var eSubTotal=equantity*eprice;
+      var etaxvalue=((eSubTotal * evatAmount) / 100);
+      var etotal=eSubTotal+etaxvalue;
+
+
+ var supp =$("#view_supplier_name").val();
+ var suppid =$("#supplier_id").val();
+ var unit_sup=$("#eunitprice").val();
+
+$(".dataadd").append("<tr class='estmt_details'><td class='desc'>" + desc + " </td> <td class='price_val'>" + price1 + "</td> <td class='quanty'>" + quantity + "</td> <td class='subtotalval_data'>" + SubTotal + "</td> <td class='taxval_data'>" + taxvalue + "</td>  <td class='totalval_data'>" + total + "</td> <td class='hidden unittype'>" + unit_val + "</td><td class='hidden convfact'>" + conv_factor + "</td><td class='hidden desc_id'>" + desc_id + "</td><td class='supp'>"+supp+"</td><td class='unit_sup'>"+unit_sup+"</td><td hidden class='esubtotalval_data'>"+eSubTotal+"</td><td hidden class='etaxval_data'>"+etaxvalue+"</td><td  class='etotalval_data'>"+etotal+"</td><td hidden class='equantitys'>"+equantity+"</td><td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a></td><input type='hidden' class='etaxpr_data' value='"+evatAmount+"'/><input type='hidden' class='taxpr_data' value='"+vatAmount+"'/><input type='hidden' class='supp_id' value='"+suppid+"'/>  </tr>");
+
+calculates();
 // TO CLAR Text ARea and text box
-        /*Clear textarea using id */
-				$('#step-3 #description_job').val('');
-        $('#step-3 #unitprice').val('');
-        $('#step-3 #conv_factor').val('1');
-				$('#step-3 #quantity').val('1');
-        $('#step-3 #vat').val('0');
+/*Clear textarea using id */
+        $('#step-3 #description_job').val('');
+$('#step-3 #unitprice').val('');
+$('#step-3 #conv_factor').val('1');
+        $('#step-3 #quantity').val('1');
+$('#step-3 #vat').val('0');
+$('#step-3 #view_supplier_name').val('');
+$('#supplier_id').val('');
+
+        $('#step-3 #eunitprice').val('0');
+        $('#step-3 #suppvat').val('0');
+        $('#step-3 #suppqty').val('1');
+
 
 
     }
@@ -1215,6 +1285,30 @@ $('#ContainerNo').on('beforeItemAdd', function(event) {
 
         $("#vat_total").val(taxval_data_val.toFixed(2));
         $("#grand_total").val(totalval_data_val.toFixed(2));
+//Expense Total
+var totsub_vale=0;
+  $(".esubtotalval_data").each(function(td) {
+      var se = parseFloat($(this).html());
+      totsub_vale=parseFloat(totsub_vale)+se;
+  });
+
+  var etaxval_data_val=0;
+  $(".etaxval_data").each(function(td) {
+      var se = parseFloat($(this).html());
+      etaxval_data_val=parseFloat(etaxval_data_val)+se;
+  });
+
+  var etotalval_data_val=0;
+  $(".etotalval_data").each(function(td) {
+      var se = parseFloat($(this).html());
+      etotalval_data_val=parseFloat(etotalval_data_val)+se;
+  });
+
+  $("#etotal").val(totsub_vale.toFixed(2));
+
+ $("#evat_total").val(etaxval_data_val.toFixed(2));
+ $("#egrand_total").val(etotalval_data_val.toFixed(2));
+
 
 
     }
@@ -1379,4 +1473,32 @@ if(length1!=8)
                     });  
         });
 </script>
+
+<script>
+ $(document).ready(function(){
+
+  var obj=[];
+              $.ajax({
+               url: "<?php echo base_url(); ?>transaction/Supplierexpense_Controller/getsupplierdata",
+               type: 'post',
+               dataType: "json",
+               success: function( data ) 
+               {
+                   console.log(data);
+                obj=data;
+                $('#view_supplier_name').autocomplete({
+                              source: obj,
+                              select: function (event, ui) {
+                                  $("#view_supplier_name").val(ui.item.label);
+                                 $("#supplier_id").val(ui.item.value);
+                                  return false;
+  
+                              }
+                          });
+               }
+            });
+  
+  });
+
+  </script>
 

@@ -258,6 +258,7 @@ $route['job-invoice/get_covfactor/(:any)'] = 'transaction/Job_invoice_controller
 $route['edit-job-invoice/get_covfactor/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
 $route['get_covfactors/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
 $route['edit-consignment/get_covfactor1/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
+$route['payment-receipt/get_covfactor_receipt/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
 
 //invoice
 //job-invoice
@@ -285,6 +286,8 @@ $route['edit-job-supplier-payment/(:any)'] = 'transaction/Job_supplier_payment_c
 $route['update-supplier-payment'] = 'transaction/Job_supplier_payment_controller/update_supplier_payment';
 $route['print-supplier-payment/(:any)'] = 'transaction/Job_supplier_payment_controller/print_supplier_payment/$1';
 $route['list-supplier'] = 'transaction/Job_supplier_payment_controller/list_supplier';
+$route['getsupplierpayment-detail'] = 'transaction/Job_supplier_payment_controller/getsupplierpayment_detail';
+
 
 //edit_job_supplier_payment_receipt
 $route['payment-receipt/(:any)'] = 'transaction/Payment_receipt_controller/receipt/$1';
@@ -293,6 +296,7 @@ $route['insert-payment-receipt-details'] = 'transaction/Payment_receipt_controll
 $route['edit-payment-receipt-details/(:any)'] = 'transaction/Payment_receipt_controller/edit_job_payment_receipt/$1';
 $route['update-payment-receipt-details'] = 'transaction/Payment_receipt_controller/update_payment_receipt_details';
 $route['payment-receipt-print/(:any)'] = 'transaction/Payment_receipt_controller/payment_receipt_print/$1';
+$route['getclientpayment-detail'] = 'transaction/Payment_receipt_controller/get_payment_receipt';
 //supplier expense
 
 

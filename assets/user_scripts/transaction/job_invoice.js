@@ -125,6 +125,7 @@ calculates();
 				$('#step-1 #quantity').val('1');
         $('#step-1 #vat').val('0');
         $('#step-1 #view_supplier_name').val('');
+        $('#supplier_id').val('');
         $('#step-1 #eunitprice').val('0');
         $('#step-1 #suppvat').val('0');
         $('#step-1 #suppqty').val('1');
@@ -236,10 +237,10 @@ var ExpenseData = [];
   "InvDate":$('#date').val(),
   "SupplierID":$(this).find('.supp_id').val(),
   "Reference": $('#inv_code').val(),
-  "OurInv": '',
+  "OurInv": $('#inv_code').val(),
   "Mode":$('#type').val(),
   "Status":"Drafted",
-  "JobId":$('#job_id').val(),
+  "JobID":$('#job_id').val(),
   "SupplierInvoiceNo":1,
   "SubTotal":0,
   "VatTotal":0,
@@ -250,7 +251,7 @@ var ExpenseData = [];
 ExpenseData.push(Datas);
 });
 
-var ExpenseDetails_bc=0;
+var ExpenseDetails_bc=0; var count=0;
 var ExpenseDetails = [];
 $(".tbl_row").each(function () {
    ExpenseDetails_bc=1;
@@ -261,7 +262,7 @@ $(".tbl_row").each(function () {
       "Vat": parseFloat($(this).find('.etaxval_data').text()),
       "Total": parseFloat($(this).find('.etotalval_data').text()),
         "Currency": $(this).find('.currency').val(),
-        "Code":0,
+        "Code":count,
         "SupplierID":$(this).find('.supp_id').val(),
         "expense_quantity": $(this).find('.equantitys').text(),
         "vat_persentage": $(this).find('.etaxpr_data').val(),
@@ -269,6 +270,7 @@ $(".tbl_row").each(function () {
           
      
     };
+   count=count+1;
     ExpenseDetails.push(Data1);
 });
 
@@ -288,9 +290,10 @@ var postDatas = {
   JobDetails:JobDetails,
   JobData: JobData,
    ExpenseDetails: ExpenseDetails,
-      ExpenseData: ExpenseData
+    ExpenseData: ExpenseData
     };                          
-                                                // alert(JSON.stringify(JobData, "", 2));
+      console.log(postDatas);                             //      alert(JSON.stringify(ExpenseData, "", 2));
+
     var postData = {
       ExpenseDetails: ExpenseDetails,
       ExpenseData: ExpenseData
@@ -333,9 +336,9 @@ var postDatas = {
      $.ajax({  
                 url:'../insert-job-details',
                 method:"POST", 
-                dataType: 'JSON',
+             dataType: 'JSON',
                 data: {postData:postDatas} ,  
-                success:function(data){  
+                success:function(data){ 
                   
                      window.location.href='../invoice-print/'+data;
                 }  

@@ -150,6 +150,8 @@ public function insert_job_details()
 		$jobdata=$data["JobDetails"]; 
 		$result=$this->Job_invoice_model->addjobmaster($data["JobData"]);
 		$my_values = array();
+		$invoiceids = array();
+		$count=0;
 		if($result!=0)
 		{
 			
@@ -158,13 +160,15 @@ public function insert_job_details()
 				$row["InvoiceMasterId"]=$result;
 				$row["Vat"]=floatval($row["Vat"]);
 				$row["Total"]=floatval($row["Total"]);
-				$this->Job_invoice_model->addjobinvoicedetailsinsert($row);
+				$id=$this->Job_invoice_model->addjobinvoicedetailsinsert($row);
+				$invoiceids[$count]=$id;
 				$my_values[] = $row;
+				$count=$count+1;
 			}
 		} ///expense details
 
 
-        $jobdata=$data["ExpenseDetails"];
+        $jobdata=$data["ExpenseDetails"]; 
 		$jobdeta=$data["ExpenseData"]; 
       
       if(!empty($jobdeta))
@@ -173,7 +177,7 @@ public function insert_job_details()
 		{   
             $postid=$row1['PostId'];
 			$PostingDate=$row1['PostingDate'];
-			$JobID=$row1['JobId'];
+			$JobID=$row1['JobID'];
 			$SupplierID=$row1['SupplierID'];
 			$row1['InvMasterId']=$result;   
 
@@ -182,8 +186,8 @@ public function insert_job_details()
 			//if($data[0]=='' or $data[0]->PostId != $postid or $data[0]->PostId=='') 
 			if(empty($data))
 			{ 
-			
-			$result1=$this->Job_invoice_model->addjobmaster_expense($row1); 
+		
+			$result1=$this->Job_invoice_model->addjobmaster_expense($row1);   	
 			$SubTotal=0;  $VatTotal=0;$GrandTotal=0;
 			foreach($jobdata as $row)
 			{
@@ -197,7 +201,7 @@ public function insert_job_details()
 				$r["Vat"]=$row["Vat"];
 				$r["Total"]=$row["Total"];
 				$r["Currency"]=$row["Currency"];
-				$r["Code"]=$row["Code"];
+				$r["Code"]= $invoiceids[$row["Code"]];
 				$r["vat_persentage"]=$row["vat_persentage"];
 				$r["expense_quantity"]=$row["expense_quantity"];
 				$r["unitprice_supp"]=$row["unitprice_supp"];
@@ -306,7 +310,7 @@ public function insert_job_details()
 		 $result['companyinfo']=$this->Transaction_model->basic_company_details();
 		 $result['invoiceinfo']=$this->Transaction_model->basic_invoice_details();
 		 
-		//var_dump($result['invoice']);die();
+	//	var_dump($result);die();
 		$this->load->view('transaction/perfoma-invoice',$result);
 	
 	}

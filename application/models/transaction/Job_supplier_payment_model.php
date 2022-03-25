@@ -58,10 +58,19 @@ class Job_supplier_payment_model extends CI_Model
       return $result;
    }
 
+   public function allselectclientdetails()
+   {
+      $data = "select * ,jm_expensemaster.GrandTotal-ifnull((select sum(Total) from jm_supplierpaymentdetail where jm_supplierpaymentdetail.SupplierExpenseMasterID=ExpenseMasterId),0) as balance from jm_expensemaster
+      inner join  jm_job on jm_expensemaster.JobId=jm_job.JobId ";
+      $query = $this->db->query($data);
+      $result = $query->result();
+      return $result;
+   }
+
      public function selectclientdetails_total()
    {
       $data = "select * ,jm_expensemaster.GrandTotal-ifnull((select sum(Total) from jm_supplierpaymentdetail where jm_supplierpaymentdetail.SupplierExpenseMasterID=jm_expensemaster.ExpenseMasterId),0) as balance from jm_expensemaster
-      inner join  jm_job on jm_expensemaster.JobId=jm_job.JobId";
+      inner join  jm_job on jm_expensemaster.JobId=jm_job.JobId where jm_expensemaster.Status='Posted'";
       $query = $this->db->query($data);
       $result = $query->result();
       return $result;
@@ -125,8 +134,7 @@ return $id;
    }
    public function changeexpensemasterstatus($data_array)
    {
-// var_dump($data_array);
-// die();
+
       $this->db->set('Status',"Paid" );
       $this->db->where('ExpenseMasterId', $data_array["ExpenseMasterId"]);
       $this->db->update('jm_expensemaster');

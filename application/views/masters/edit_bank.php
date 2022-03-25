@@ -28,6 +28,7 @@
                       <option selected="selected" value="<?php  echo $value[0]->acc_type;?>"><?php  echo $value[0]->acc_type;?></option>
                      <?php if($value[0]->acc_type!="savings"){ ?>  <option value="savings">Savings</option><?php } ?> 
                      <?php if($value[0]->acc_type!="current"){ ?>  <option value="current">Current</option><?php } ?> 
+                     <?php if($value[0]->acc_type!="credit"){ ?>  <option value="credit">Credit</option><?php } ?> 
 
                       </select>
                     </div>

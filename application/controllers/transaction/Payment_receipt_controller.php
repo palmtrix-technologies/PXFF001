@@ -22,18 +22,18 @@ class Payment_receipt_controller extends CI_Controller {
 
          public function receipt($id)
          {
-              $user_id=	$this->session->userdata('user_id');
+             $user_id=	$this->session->userdata('user_id');
              $res = $this->Permission_model->userdetails($user_id);
              $result['roles']=$this->Login_model->userdetails($user_id);
-                $user_image['values']=$res[0]->user_image;
+             $user_image['values']=$res[0]->user_image;
              $result['permission']=$this->Login_model->select_all_menu($user_id);
              $result['bank']=$this->Payment_receipt_model->select_all_bank();
              $result['client']=$this->Payment_receipt_model->select_client_details($id);
              $result['receiptcode']=$this->Payment_receipt_model->selectcode();
              $result['invno']=$this->Payment_receipt_model->select_invoice_number($id);
              $user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
-      $result['currency']=$this->Payment_receipt_model->select_currency();
-
+             $result['currency']=$this->Payment_receipt_model->select_currency();
+             $result['totalamt']=$this->Payment_receipt_model->paymentreceipt_selectdetails();
              $this->load->view('includes/header',$user_image);
              $this->load->view('includes/navigation',$result,$user_image);
              $this->load->view('transaction/payment_receipt',$result);
@@ -45,11 +45,16 @@ class Payment_receipt_controller extends CI_Controller {
          
              
                    $result= $this->Payment_receipt_model->paymentreceipt_selectclientdetails($value);
-                 //   var_dump($result);
-                 //   die();
                    echo json_encode($result);
                      
                }
+
+               public function get_payment_receipt()
+               {
+                         $result= $this->Payment_receipt_model->paymentreceipt_selectdetails(); 
+                         echo json_encode($result);
+                           
+              }       
                //to insert data into tables
                  
                       
@@ -66,27 +71,27 @@ class Payment_receipt_controller extends CI_Controller {
               $result2=$this->Payment_receipt_model->insert_account_chequedetails($data["Chequedata"]);
               }
            
-              $result=$this->Payment_receipt_model->insert_receiptmaster($data["PaymentReceiptData"]);
-              $my_values = array();
+              $result=$this->Payment_receipt_model->insert_receiptmaster($data["PaymentReceiptData"]);   
+             $my_values = array();
               if($result!=0)
-              {
+              {                       
                   
                   foreach($receiptdata as $row)
                   {
                     
-                      $row["ReceiptMasterId"]=$result;
+                     $row["ReceiptMasterId"]=$result;   
                    
-                      $row["Total"]=floatval($row["Total"]);
-                    $data["InvoiceMasterId"]=$row["InvoiceMasterID"];
+                     $row["Total"]=floatval($row["Total"]);
+                   $data["InvoiceMasterId"]=$row["InvoiceMasterID"];      
                  
-                      $this->Payment_receipt_model->insert_receiptdetails($row);
+                   $this->Payment_receipt_model->insert_receiptdetails_data($row);    
                       
-                      $this->Payment_receipt_model->changeinvoivemasterstatus($data,$row["status"]);
-
-                      $my_values[] = $row;
+                   $this->Payment_receipt_model->changeinvoivemasterstatus($data,$row["status"]);
+                   $my_values[] = $row;
+                     
                   }
               }
-              $data=$this->Payment_receipt_model->select_receipt_data($result);
+              $data=$this->Payment_receipt_model->select_receipt_data($result); 
 
               foreach($data as $row)
               {
@@ -181,7 +186,7 @@ public function payment_receipt_print($id)
     $result['receiptdata']=$this->Payment_receipt_model->selectreceiptdetails($ID);
      $result['receiptdetails']=$this->Payment_receipt_model->select_payment_receipt_details($ID);
      $result['companyinfo']=$this->Transaction_model->basic_company_details();
-	 $result['invoiceinfo']=$this->Transaction_model->basic_invoice_details();
+	 $result['invoiceinfo']=$this->Transaction_model->basic_invoice_details();  //var_dump($result);die();
    $this->load->view('transaction/payment_receipt_print',$result);
 
 }

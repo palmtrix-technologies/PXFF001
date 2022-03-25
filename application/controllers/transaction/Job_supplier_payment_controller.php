@@ -35,6 +35,7 @@ class Job_supplier_payment_controller extends CI_Controller {
         $result['supplier']=$this->Job_supplier_payment_model->select_supplier_details($supid);
         $result['invno']=$this->Job_supplier_payment_model->select_invoice_numbers($supid);
 		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
+		$result['totalamt']=$this->Job_supplier_payment_model->allselectclientdetails();
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 		$this->load->view('transaction/job_supplier_payment',$result);
@@ -43,11 +44,18 @@ class Job_supplier_payment_controller extends CI_Controller {
     public function select_client_details($value)
 	{
     
-        
               $result= $this->Job_supplier_payment_model->selectclientdetails($value);
               echo json_encode($result);
-                
-          }
+     }
+
+
+		  public function getsupplierpayment_detail()
+		  {
+		  
+			  
+					$result= $this->Job_supplier_payment_model->allselectclientdetails();
+					echo json_encode($result);
+				}		  
           //to insert data into tables
           
  public function insert_supplier_payment()

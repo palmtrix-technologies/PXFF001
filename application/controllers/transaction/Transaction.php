@@ -42,7 +42,7 @@ class Transaction extends CI_Controller {
 				// $this->index($result);
 		 $data['values'] = $this->Transaction_model->list();
 		 $user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
-
+		 $result['supcode']=$this->Transaction_model->selectcode_estexpns();
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 		$this->load->view('transaction/transaction',$data);
@@ -298,7 +298,9 @@ class Transaction extends CI_Controller {
 			  $postdata=$this->input->post('postData');
 			  $estimate_data=$postdata["estimate_master_details"];
 			  $result= $this->Transaction_model->add_estimate($postdata["estimate_master"]);		
-			  $my_values = array();
+			  $my_values = array();	$my_values = array();
+			  $invoiceids = array();
+		  $count=0;
 			  if($result!=0)
 		  {
 			  
@@ -307,10 +309,67 @@ class Transaction extends CI_Controller {
 				  $row["estimate_masterid"]=$result;
 				  $row["vat"]=floatval($row["vat"]);
 				  $row["total"]=$row["total"];
-				  $this->Transaction_model->add_estimatedetails($row);
+				 $id= $this->Transaction_model->add_estimatedetails($row);
+				  $invoiceids[$count]=$id;
 				  $my_values[] = $row;
+				  $count=$count+1; 
 			  }
 		  }
+
+
+		  $jobdata=$postdata["ExpenseDetails"];
+		  $jobdeta=$postdata["ExpenseData"]; 
+		
+		if(!empty($jobdeta))
+		{
+		  foreach($jobdeta as $row1)
+		  {   
+			  $postid=$row1['postid'];
+			  $PostingDate=$row1['postingdate'];
+			  $JobID=$row1['jobid'];
+			  $SupplierID=$row1['supplierid'];
+			  $row1['EstMasterId']=$result;   
+  
+			  if($SupplierID!='')   {
+			  $data=$this->Transaction_model->viewestmaster_expense($postid,$SupplierID); 
+			  if(empty($data))
+			  { 
+			  
+			  $result1=$this->Transaction_model->addestmaster_expense($row1);  
+			  $SubTotal=0;  $VatTotal=0;$GrandTotal=0;
+			  foreach($jobdata as $row)
+			  {
+				  
+				  if($row1["supplierid"]==$row["SupplierID"])
+				  {
+				  $r["EstimateExpId"]=$result1;
+				  $r["description"]=$row["description"];
+				  $r["amount"]=$row["amount"];
+				  $r["convfactor"]=$row["convfactor"];
+				  $r["vat"]=$row["vat"];
+				  $r["Extotal"]=$row["Extotal"];
+				  $r["currency"]=$row["currency"];
+				  $r["code"]=$invoiceids[$row["code"]];   
+				  $r["vatpersentage"]=$row["vatpersentage"];
+				  $r["expensequantity"]=$row["expensequantity"];
+				  $r["unitpricesupp"]=$row["unitpricesupp"];
+				  $r['EstMasterid']=$result;                           
+  
+				  $d=$this->Transaction_model->addestimate_expense($r);
+				  $my_values[] = $row;
+				  $SubTotal=$SubTotal + $row["amount"];
+				  $VatTotal=$VatTotal + $row["vat"];
+				  $GrandTotal=$GrandTotal + $row["Extotal"];
+				  }
+				  $up=$this->Transaction_model->estimateupdate_expense($SubTotal,$VatTotal,$GrandTotal,$result1); 
+			  } 
+		  
+			 }  
+		  }	
+		  }
+		  } 
+
+
 		  echo json_encode($result);
 			  
 		  }
@@ -321,6 +380,8 @@ class Transaction extends CI_Controller {
 			$estimate_data=$postdata["estimate_master_details"];
 			$result= $this->Transaction_model->add_estimate($postdata["estimate_master"]);		
 			$my_values = array();
+			$invoiceids = array();
+		$count=0;
 			if($result!=0)
 		{
 			
@@ -329,8 +390,10 @@ class Transaction extends CI_Controller {
 				$row["estimate_masterid"]=$result;
 				$row["vat"]=floatval($row["vat"]);
 				$row["total"]=$row["total"];
-				$this->Transaction_model->add_estimatedetails($row);
+				$id=$this->Transaction_model->add_estimatedetails($row);
+				$invoiceids[$count]=$id;
 				$my_values[] = $row;
+				$count=$count+1; 
 			}
 		}
 
@@ -352,7 +415,7 @@ class Transaction extends CI_Controller {
 			if(empty($data))
 			{ 
 			
-			$result1=$this->Transaction_model->addestmaster_expense($row1); 
+			$result1=$this->Transaction_model->addestmaster_expense($row1);  
 			$SubTotal=0;  $VatTotal=0;$GrandTotal=0;
 			foreach($jobdata as $row)
 			{
@@ -366,13 +429,13 @@ class Transaction extends CI_Controller {
 				$r["vat"]=$row["vat"];
 				$r["Extotal"]=$row["Extotal"];
 				$r["currency"]=$row["currency"];
-				$r["code"]=$row["code"];
+				$r["code"]=$invoiceids[$row["code"]];   
 				$r["vatpersentage"]=$row["vatpersentage"];
 				$r["expensequantity"]=$row["expensequantity"];
 				$r["unitpricesupp"]=$row["unitpricesupp"];
-				$r['EstMasterid']=$result; 
+				$r['EstMasterid']=$result;                           
 
-				$this->Transaction_model->addestimate_expense($r); 
+				$d=$this->Transaction_model->addestimate_expense($r);
 				$my_values[] = $row;
 				$SubTotal=$SubTotal + $row["amount"];
 				$VatTotal=$VatTotal + $row["vat"];
@@ -442,10 +505,13 @@ public function jobclosed_status($id)
 		$id=$data["Id"];
 		$deletedids=$data["deleted"];
 		$dat=$data["Dat"];
+		
 		if($dat==0)
 		{
 
 		$id1=$this->Transaction_model->insert_estimatemaster($data["estimate_master"]);
+		$invoiceids = array();
+		$count=0;
 		}
 		else{
 			$result=$this->Transaction_model->update_estimatemaster($id,$data["estimate_master"]);
@@ -461,7 +527,9 @@ public function jobclosed_status($id)
 				$row["vat"]=floatval($row["vat"]);
 				$row["total"]=floatval($row["total"]);
 				$this->Transaction_model->insert_estimatedetails($row);
+				$invoiceids[$count]=$id;
 				$my_values[] = $row;
+				$count=$count+1; 
 		}
 		}                                                
 ///////////////////////Edit Estimate expense $result
@@ -497,7 +565,7 @@ $jobdata=$data["ExpenseDetails"];
 					$r["vat"]=$row["vat"];
 					$r["Extotal"]=$row["Extotal"];
 					$r["currency"]=$row["currency"];
-					$r["code"]=$row["code"];
+					$r["code"]=$invoiceids[$row["code"]]; 
 					$r["vatpersentage"]=$row["vatpersentage"];
 					$r["expensequantity"]=$row["expensequantity"];
 					$r["unitpricesupp"]=$row["unitpricesupp"];
@@ -623,7 +691,7 @@ $jobdata=$data["ExpenseDetails"];
 				$result['consignee_data']="0";
 			}
 			
-
+			$result['companyinfo']=$this->Transaction_model->basic_company_details();
 			$result['estimate'] = $this->Transaction_model->estimate_details($estimateid);
 			$result['invoiceinfo'] = $this->Transaction_model->basic_invoice_details();
 if(($result['estimatedata'])=="NULL")
@@ -639,7 +707,7 @@ if(($result['invoiceinfo'])=="NULL")
 {
 	$result['invoiceinfo']=0;
 }	
-
+//var_dump($result['estimate']);die();
 $this->load->view('transaction/jobestimate_print', $result);
 	}
 	

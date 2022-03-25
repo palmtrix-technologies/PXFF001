@@ -3,8 +3,7 @@
     //add bank 
     function storebank()
     {
-      // alert("ivdethi");
-      // console.log("jhhgsdhghjsad");
+     
       var now = moment().format('YYYY-MM-DD h:mm:ss a');
   
       Data = {
@@ -19,11 +18,13 @@
             "created_date": now
       };
       var Bankname=$('#name').val();
+      var actype=$('#acc_type').val();
       
       var postData = {
         postData1: Data,
-        Bankname: Bankname
-      }
+        Bankname: Bankname,
+        Actype: actype
+      };
       var request = $.ajax({
       url: 'bank-store',
       type: 'POST',

@@ -225,7 +225,7 @@ var estimateDetails_bc=0;
          });                                
          
          
-         var ExpenseDetails = [];
+         var ExpenseDetails = []; var count=0;
          var ExpenseDetails_bc=0;
          $(".estmt_details").each(function () {
           ExpenseDetails_bc=1;
@@ -236,7 +236,7 @@ var estimateDetails_bc=0;
                "vat": parseFloat($(this).find('.etaxval_data').text()),
                "Extotal": parseFloat($(this).find('.etotalval_data').text()),
                  "currency": $(this).find('.currency').val(),
-                 "code":0,
+                 "code":count,
                  "SupplierID":$(this).find('.supp_id').val(),
                  "expensequantity": $(this).find('.equantitys').text(),
                  "vatpersentage": $(this).find('.etaxpr_data').val(),
@@ -244,6 +244,7 @@ var estimateDetails_bc=0;
                    
               
              };
+             count=count+1;
              ExpenseDetails.push(Data1);
          });
                                                                       
@@ -268,7 +269,7 @@ var estimateDetails_bc=0;
            {
             deletedidarray="";
            }
-                                                alert(JSON.stringify(deletedidarray, "", 2));
+                                              // alert(JSON.stringify(deletedidarray, "", 2));
  
  var postData = {
   

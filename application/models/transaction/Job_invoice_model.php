@@ -98,10 +98,10 @@ $dataq="select * from jm_expensemaster
 
 public function addjobmaster_expense($data_array)
        {
-      
+   
           $this->db->insert('jm_expensemaster', $data_array);
           $ExpenseMasterId=$this->db->insert_id();
-          return $ExpenseMasterId;
+          return $ExpenseMasterId;     
        
        }
        public function addjobinvoicedetailsinsert_expense($data_array)
@@ -139,7 +139,7 @@ public function addjobmaster($data_array)
 public function selectinvoicedetails($data)
 {
  
-$dataq="select ji.Inv,ji.Date,ji.Total,ji.VatTotal,ji.GrandTotal,concat(jj.Hawb,'-',jj.Mawb) as awb,concat(jj.Hbl,'-',jj.Mbl) as hblmbl,jj.Number,jj.ActualWeight,jj.PoNo,jj.ContainerNo,jj.Jobcode,jj.Etd,jj.Eta,c.name,c.country,c.trn_no,concat(c.address,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientenglish,c.vat_no, concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientearabic, jj.Shipper as consignor, jj.Consignee as consignee, concat(bn.bank_name,'<br>',bn.acc_number,'<br>',bn.other_info,'<br>',bn.iban) as bank from jm_invoicemaster ji inner join mst_bank bn on bn.id=ji.Bank inner join jm_job jj on ji.JobId=jj.JobId inner join mst_client c on c.id=jj.client_id inner join mst_shipper consignor on consignor.id=jj.consignor_id inner join mst_shipper consignee on consignee.id=jj.consignee_id where ji.InvoiceMasterId=".$data.";";
+$dataq="select ji.Inv,ji.Date,ji.Total,ji.VatTotal,ji.credit_date,ji.Remark,ji.GrandTotal,concat(jj.Hawb,'-',jj.Mawb) as awb,concat(jj.Hbl,'-',jj.Mbl) as hblmbl,jj.Number,jj.ActualWeight,jj.PoNo,jj.ContainerNo,jj.Jobcode,jj.Etd,jj.Eta,c.name,c.country,c.trn_no,concat(c.address,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientenglish,c.vat_no, concat(c.name_arabic,'|',c.address_arabic,'|',c.telephone,'-',c.mobile,'<br>',c.email) as clientearabic, jj.Shipper as consignor, jj.Consignee as consignee, concat(bn.bank_name,'<br>',bn.acc_number,'<br>',bn.other_info,'<br>',bn.iban) as bank from jm_invoicemaster ji inner join mst_bank bn on bn.id=ji.Bank inner join jm_job jj on ji.JobId=jj.JobId inner join mst_client c on c.id=jj.client_id inner join mst_shipper consignor on consignor.id=jj.consignor_id inner join mst_shipper consignee on consignee.id=jj.consignee_id where ji.InvoiceMasterId=".$data.";";
 
  $query = $this->db->query($dataq);
  return $query->result();
@@ -175,8 +175,8 @@ public function select_job_invoice_details_all($data)
    $this->db->select('jm_invoicedetail.*,mst_description.description_arabic,jm_expensedetail.Amount,jm_expensedetail.ExpenseDetailId,jm_expensedetail.expense_quantity,jm_expensedetail.unitprice_supp,jm_expensedetail.ExpenseMasterId,jm_expensedetail.Code,jm_expensedetail.vat_persentage,jm_expensedetail.InvMasterid,(jm_expensedetail.Total)as extotal,(jm_expensedetail.Vat)as evat,mst_supplier.supplier_name');    
    $this->db->from('jm_invoicedetail');
    $this->db->join('mst_description', 'mst_description.description = jm_invoicedetail.Description','left');
-   $this->db->join('jm_expensedetail', 'jm_expensedetail.InvMasterid = jm_invoicedetail.InvoiceMasterId');
-   $this->db->join('jm_expensemaster', 'jm_expensemaster.ExpenseMasterId = jm_expensedetail.ExpenseMasterId');
+   $this->db->join('jm_expensedetail', 'jm_expensedetail.Code = jm_invoicedetail.InvoiceDetailId','left');
+   $this->db->join('jm_expensemaster', 'jm_expensemaster.ExpenseMasterId = jm_expensedetail.ExpenseMasterId','left');
    $this->db->join('mst_supplier', 'mst_supplier.id = jm_expensemaster.SupplierID','left');
    $query = $this->db->get();
    $result = $query->result();

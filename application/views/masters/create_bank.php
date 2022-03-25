@@ -30,6 +30,7 @@
                       <select class="form-control" required name="acc_type" id="acc_type" value="">
                         <option value="savings">Savings</option>
                         <option value="current">Current</option>
+                        <option value="credit">Credit</option>
                       </select>
                     </div>
                                 <div class="form-group col-md-6">

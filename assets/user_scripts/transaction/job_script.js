@@ -43,7 +43,7 @@
         var Destination=$("#destination_air").val();
         var carrier=$("#Carrier_air").val();
         var PoNo=$("#PoNo_air").val();
-        var Mawb=$("#Mawb_air").val()+'-'+$("#Mawb_code").val();
+        var Mawb=$("#Mawb_air1").val()+'-'+$("#Mawb_code").val();
         var Nopcs=$("#Nopcs_air").val();
         var ActualWeight=$("#ActualWeight_air").val();
         var ChargeableWeight=$("#ChargeableWeight_air").val();
@@ -96,8 +96,8 @@
         "Number":$('#code').val(),
         "Jobcode":"FBL"+''+$('#code').val()+'-'+$('#client_name').val(),//$('#client_name').val()+'.'+$('#code').val(),
         "Date": $('#date').val(),
-        "Shipper": $('#shippername').val(),
-        "Consignee": $('#consigneename').val(),
+       "Shipper": $('#shippername').val(),
+       "Consignee": $('#consigneename').val(),
         "client_name": $('#client_name').val(),
         "shipment_type": $('#shipment_type').val(),
     
@@ -132,9 +132,9 @@
         "Description": $('#Description').val(),
         "PoP": $('#PoP').val(),
         "salesman": $('#salesman').val(),
-        "consignor_id": $('#shipperid').val(),
-        "consignee_id": $('#consignor_id').val(),
-        // "Documenttype": $('#Documenttype').val(),
+       "consignor_id": $('#shipperid').val(),
+       "consignee_id": $('#consignor_id').val(),
+         "Documenttype": $('#Documenttype').val(),
         "client_id": $('#client_name').find('option:selected').attr('id')
 
   };
@@ -142,7 +142,7 @@
       var postData = {
        postData1: Data,
         id: $('#id').val(),
-        Shippername:$('#shippername').val(),
+       Shippername:$('#shippername').val(),
         consignorname:$('#consigneename').val(),
         old_id:$("#dummyjobid").val(),
 
@@ -379,34 +379,87 @@ var estimate_master_details =[];
     };
     estimate_master_details.push(Data);
   });
+
+  var ExpenseData_bc=0;
+  var ExpenseData = [];
+    $(".estmt_details").each(function () {
+        ExpenseData_bc=$(this).find('.supp_id').val();
+      var Datas = {
+    "postid": $('#epost_code').val(), 
+    "postingdate":today,
+    "supplierid":$(this).find('.supp_id').val(),
+    "status":"Drafted",
+    "jobid":id ,
+    "supplierinvoiceno":1,
+    "subtotal":0,
+    "vattotal":0,
+    "grandtotal":0,
+    "Userid":$('#userid').val()
+  };                                              
+  ExpenseData.push(Datas);
+  });                                               
+  
+  var ExpenseDetails_bc=0; var count=0;
+  var ExpenseDetails = [];
+  $(".estmt_details").each(function () {
+     ExpenseDetails_bc=1;
+      var Data1 = {
+        "description":$(this).find('.desc').text(),
+        "amount":$(this).find('.esubtotalval_data').text(),
+        "convfactor": $(this).find('.convfact').val(),
+        "vat": parseFloat($(this).find('.etaxval_data').text()),
+        "Extotal": parseFloat($(this).find('.etotalval_data').text()),
+          "currency": $(this).find('.unittype').val(),
+          "code":count,
+          "SupplierID":$(this).find('.supp_id').val(),
+          "expensequantity": $(this).find('.equantitys').text(),
+          "vatpersentage": $(this).find('.etaxpr_data').val(),
+           "unitpricesupp": $(this).find('.unit_sup').text()
+       
+      };
+      count=count+1;
+      ExpenseDetails.push(Data1);
+  });
+  
+                                   
+
   var postData = {
-   
     estimate_master: estimate_master,
-     estimate_master_details: estimate_master_details
-      };                                                          //alert(JSON.stringify(postData, "", 2));
-  var request = $.ajax({
-    url: 'transportation-estimate',
-    type: 'POST',
-    data: {postData:postData} ,
-    dataType: 'JSON'
-    });
-    request.done( function ( data) {
-      console.log(data);
-     // window.location.href='estimate-print/'+data
-      swallokalert('Estimate Created Successfully!!','estimate-print/'+data);
-    // if(!alert('estimate Created Successfully!')){window.location.href=""}
-    });
-    request.fail( function ( jqXHR, textStatus) {
-     swallokalert('estimate Creation failed!!','#');
-      // alert('estimate Created Successfully');
-      // window.location.reload();
-      if (jqXHR.responseText=="success")
-      {
-      //  swallokalert('estimate Created Successfully!!','#');
-      //  if(!alert('estimate3 created Successfully!')){window.location.href=""}
-   
-      }
-    });
+     estimate_master_details: estimate_master_details,
+     ExpenseDetails: ExpenseDetails,
+     ExpenseData: ExpenseData
+      };             
+
+      $.ajax({  
+        url:'transportation-estimate',
+        method:"POST", 
+       dataType: 'JSON',
+        data: {postData:postData} ,  
+        success:function(data){ // alert(data);
+          
+             window.location.href='estimate-print/'+data;
+        }  
+    });  
+
+
+                                                        //alert(JSON.stringify(postData, "", 2));
+  // var request = $.ajax({
+  //   url: 'transportation-estimate',
+  //   type: 'POST',
+  //   data: {postData:postData} ,
+  //   dataType: 'JSON'
+  //   });
+  //   request.done( function ( data) {
+  //     console.log(data);
+  //     swallokalert('Estimate Created Successfully!!','estimate-print/'+data);
+  //   });
+  //   request.fail( function ( jqXHR, textStatus) {
+  //    swallokalert('estimate Creation failed!!','#');
+  //     if (jqXHR.responseText=="success")
+  //     {
+     
+  //     }
+  //   });
 }
 
 function new_estimate()
@@ -446,11 +499,12 @@ var estimate_master_details =[];
         "conv_factor": $(this).find('.convfact').text(),
          "quantity":$(this).find('.quanty').text(),
          "vat": parseFloat($(this).find('.taxval_data').text()),
-         "total": parseFloat($(this).find('.totalval_data').text())
+         "total": parseFloat($(this).find('.totalval_data').text()),
+         "vatPercentage": $(this).find('.taxpr_data').val(),
     };
     estimate_master_details.push(Data);
   });
-
+                                                     
 
   var ExpenseData_bc=0;
   var ExpenseData = [];
@@ -471,7 +525,7 @@ var estimate_master_details =[];
   ExpenseData.push(Datas);
   });                                               
   
-  var ExpenseDetails_bc=0;
+  var ExpenseDetails_bc=0; var count=0;
   var ExpenseDetails = [];
   $(".estmt_details").each(function () {
      ExpenseDetails_bc=1;
@@ -482,24 +536,25 @@ var estimate_master_details =[];
         "vat": parseFloat($(this).find('.etaxval_data').text()),
         "Extotal": parseFloat($(this).find('.etotalval_data').text()),
           "currency": $(this).find('.unittype').val(),
-          "code":0,
+          "code":count,
           "SupplierID":$(this).find('.supp_id').val(),
           "expensequantity": $(this).find('.equantitys').text(),
           "vatpersentage": $(this).find('.etaxpr_data').val(),
            "unitpricesupp": $(this).find('.unit_sup').text()
        
       };
+      count=count+1;
       ExpenseDetails.push(Data1);
   });
   
-                               //       alert(JSON.stringify(ExpenseDetails, "", 2));  
+                                   
 
   var postData = {
     estimate_master: estimate_master,
      estimate_master_details: estimate_master_details,
      ExpenseDetails: ExpenseDetails,
      ExpenseData: ExpenseData
-      };
+      };                                           // alert(JSON.stringify(ExpenseDetails, "", 2));  
   // var request = $.ajax({
   //   url: 'transportation-estimate',
   //   type: 'POST',
@@ -518,13 +573,13 @@ var estimate_master_details =[];
      
   //     }
   //   });
-
+  console.log(postData)  ;   
   $.ajax({  
     url:'transportation-estimate-job',
     method:"POST", 
-    dataType: 'JSON',
+   dataType: 'JSON',
     data: {postData:postData} ,  
-    success:function(data){  
+    success:function(data){ // alert(data);
       
          window.location.href='estimate-print/'+data;
     }  

@@ -78,7 +78,7 @@
 		.bg {
     visibility: visible;
     /* The image used */
-    background-image: url("<?php echo base_url(); ?>/assets/images/vd_background.jpg");
+    /* background-image: url("<?php echo base_url(); ?>/assets/images/vd_background.jpg"); */
     /* Full height */
     height: 100%;
     /* Center and scale the image nicely */
@@ -145,7 +145,8 @@
                        <table style="width: 100%; " class="" >
                         <tr>
                             <td>
-                            <img src="<?php echo base_url(); ?>/assets/images/vd_head.jpg" style="width: 100%;" alt="logo"></td>
+                            <!-- <img src="<?php echo base_url(); ?>/assets/images/vd_head.jpg" style="width: 100%;" alt="logo">-->
+                        </td> 
 
                         </tr>
                     </table>
@@ -225,7 +226,8 @@ Bank Name : Saudi British Bank( SABB ) </p>
                <table style="width: 100%; margin-bottom: -1px; margin-top: 40px; "  >
                         <tr>
                             <td>
-                            <img src="<?php echo base_url(); ?>/assets/images/vd_footer.jpg" style="width: 100%;" alt="logo"></td>
+                            <!-- <img src="<?php echo base_url(); ?>/assets/images/vd_footer.jpg" style="width: 100%;" alt="logo"> -->
+                        </td>
 
                         </tr>
                     </table>

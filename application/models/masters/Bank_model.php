@@ -55,6 +55,15 @@ public function add_ledger($name)
   $accountsid=   $this->db->insert_id();
   return $accountsid;
 }
+public function add_ledger_credit($name)
+{
+  $query1="insert into accounts_ledger (LedgerID,LedgerGroupID,Ledger_Name) values('','4','".$name."')";
+  $this->db->query($query1);
+
+  $accountsid=   $this->db->insert_id();
+  return $accountsid;
+}
+
 public function edit($id)
 {
     $this->db->where('id', $id);

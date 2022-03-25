@@ -58,10 +58,9 @@ $("#amount").val(result[0].balance);
   }
   
   function insert_job_supplier_payment()
-{
+{                                                          
   if($('#inv_id,#unit_price,#conv_factor').val() == ''){
     swallokalert('Insert all fields!!','#');
-    // alert('Insert all fields');
  }
 else{
   insertRow();
@@ -122,7 +121,8 @@ function calculates() {
 }
 //to insert job supplier payment details
 
-function insert_supplier_payment() {
+function insert_supplier_payment()
+ {                                     
     // var Data;
 
     var JobSupplierPaymentData = {
@@ -140,7 +140,7 @@ function insert_supplier_payment() {
       "TransactionId":$('#transaction_id').val(),
       "Userid":$('#userid').val()
 
-    };
+    };                                                              
     var Mode=$('#type').val();
 
     var Chequedata = {
@@ -156,11 +156,13 @@ function insert_supplier_payment() {
       var JobSupplierPaymentDetails = [];
     var conversionfactor=1;
               $(".tbl_row").each(function () {
-                conversionfactor=1;
+                conversionfactor=1;                       
                 if($(this).find('.amount').text()==$(this).find('.payingamnt').text())
                 {
                   conversionfactor=2;
                 }
+
+
                   var Data = {
                     "JobNo":$(this).find('.details').text(),
                       "Amount": $(this).find('.amount').text(),
@@ -203,3 +205,57 @@ function insert_supplier_payment() {
           });
     
       }
+
+
+      function insert_bulk_supplier_payment()
+      {
+       
+        $.ajax({
+          url: "../getsupplierpayment-detail",
+          type: 'post',
+          dataType: "json",
+          success: function( response ) 
+          {  
+            var payingamnts=parseFloat($("#payamnt").val()); 
+            
+              
+            while(payingamnts>0)
+            {  
+           $.each(response, function (key, value) { 
+             if(value.balance > 0){
+                     
+         var bln=(payingamnts - value.balance); 
+         
+          if(bln<=0)
+          {
+          var blns=  parseFloat(value.balance);
+            pay=blns + bln;   
+          }
+          else{ pay=payingamnts -(bln);     }
+         
+
+          payingamnts=bln;     
+
+        var invid= value.ExpenseMasterId;
+          var details=value.JobID;
+          var amount=parseFloat(value.balance);
+          var conv_factor=parseFloat($("#conv_factor").val()); 
+          var currency=$("#unit_price").val();
+          var payingamnt=(pay);
+          var price = payingamnt *  conv_factor;
+         var SubTotal=price;
+       var taxvalue=0;
+       var total=SubTotal+taxvalue;
+      $(".dataadd").append( "<tr class='tbl_row'><td class='inv'>"+invid+" </td> <td class='details'>"+details+"</td><td class='amount'>"+amount+"</td> <td class='payingamnt'>"+payingamnt+"</td> <td class='cov_factor'>"+conv_factor+"</td>  <td class='job_quantity'>"+price+"</td> <td><a class='rmvbutton'><i class='fa fa-trash-o'></i></a></td></tr>" );
+      console.log(price);
+      calculates();
+
+          if(payingamnts<=0){ exit;  }
+            }  })  }
+                  
+          }
+       });
+
+
+      
+      }    
