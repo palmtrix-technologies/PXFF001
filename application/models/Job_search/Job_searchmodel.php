@@ -187,6 +187,31 @@ inner join mst_client c on c.id=jj.client_id
    
       
 }
+public function estimateprofit($jobid)
+    {
+        $datajobledger=" select * from(
+            SELECT 'Invoice'as types,jm_estimate_master.e_date,concat('Invoice -',estimate_no) As Descriptions,jm_estimate_master.grand_total as Debit,0 as Credit
+            FROM jm_estimate_master
+            INNER JOIN jm_job ON jm_estimate_master.job_id = jm_job.JobId 
+            where jm_job.JobId=".$jobid." and jm_estimate_master.status='drafted'
+        
+               union all
+               SELECT 'Expense Voucher'as types,estimate_expense_master.postingdate,'Expense' as Descriptions,0 as Debit,estimate_expense_master.grandtotal as Credit  FROM estimate_expense_master
+         INNER JOIN mst_supplier ON estimate_expense_master.supplierid = mst_supplier.id
+         inner join jm_job on jm_job.JobId=estimate_expense_master.jobid
+          where jm_job.JobId=".$jobid." and estimate_expense_master.status='Drafted'
+                 
+            ) as abc order by e_date asc ; ";
+
+ $query = $this->db->query($datajobledger);
+    $result = $query->result();
+        return $result;
+    }
+
+
+
+
+
 public function select_job_ledger_details($jobid)
     {
         $datajobledger=" select * from(
@@ -225,9 +250,6 @@ public function select_job_ledger_details($jobid)
  $query = $this->db->query($datajobledger);
     $result = $query->result();
         return $result;
-     
-   
-      
     }
   
     public function get_all_job_doc($id)

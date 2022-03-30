@@ -8,9 +8,10 @@ class Payment_receipt_controller extends CI_Controller {
 		$this->load->model('usermanagement/User_model');
 		$this->load->model('usermanagement/Login_model');
 		$this->load->model('usermanagement/Permission_model');
-		$this->load->library(array('form_validation','session','upload'));
+		$this->load->library(array('form_validation','session','upload','email'));
 		$this->load->helper(array('url','html','form'));
 		$this->load->library('pagination');
+		 $this->load->library('email');
          $this->load->database(); 
 		 $this->load->library('session');
 		 $this->load->helper('url');
@@ -187,7 +188,28 @@ public function payment_receipt_print($id)
      $result['receiptdetails']=$this->Payment_receipt_model->select_payment_receipt_details($ID);
      $result['companyinfo']=$this->Transaction_model->basic_company_details();
 	 $result['invoiceinfo']=$this->Transaction_model->basic_invoice_details();  //var_dump($result);die();
-   $this->load->view('transaction/payment_receipt_print',$result);
+	 
+	 
+
+
+$toemail = "silgy@palmtrix.com";
+
+$from_email = "email@example.com";
+        $this->load->library('email');
+        $this->email->from($from_email, 'Receipt');
+        $this->email->to($toemail);
+        $this->email->set_mailtype("html");
+        $this->email->subject('Receipt'); 
+          $body =  $this->load->view('transaction/client_receipt_mail',$result,true);
+            $this->email->message($body); 
+        //$this->email->message('The email send using codeigniter library');
+        //Send mail
+        if($this->email->send())
+            $this->session->set_flashdata("email_sent","Congragulation Email Send Successfully.");
+        else
+            $this->session->set_flashdata("email_sent","You have encountered an error");
+	 
+  $this->load->view('transaction/payment_receipt_print',$result);
 
 }
 }

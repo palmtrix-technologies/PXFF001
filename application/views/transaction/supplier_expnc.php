@@ -50,6 +50,26 @@
             <h3 class="panel-title">Supplier Expenditure</h3>
          </div>
          <div class="panel-body">
+         <div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Delete </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+
             <section class="content">
             <div class="col-md-10">
                <h4 class="box-title">Details</h4>
@@ -120,21 +140,19 @@
                                  <label class="control-label">Currency</label>
                                  <select class="form-control" id="eunit_price" name="unit_price"  value="--Select Type--">
 
-                                    <?php 
-
-foreach($currency as $currency)
-{ 
-  echo '<option value="'.$currency->currency.'" id="'.$currency->id.'">'.$currency->currency.'</option>';
-  
-
-}
-?>
-                                 </select>
+                                 <?php 
+                                  foreach($currency as $key=>$value)
+                                  {
+                                  ?>
+                                 <option value="<?php echo $value->currency;?>"><?php echo $value->currency;?></option>
+                                  <?php
+                                  }
+                                   ?></select>
                               </div>
-                              <div class="form-group col-md-2">
+                              <!-- <div class="form-group col-md-2">
                                  <label class="control-label">Conv.Fact</label>
                                  <input maxlength="100" autocomplete="off" type="number" id="econv_factor"  required="required" class="form-control " value="1" />
-                              </div>
+                              </div> -->
                              
                               <div class="form-group col-md-2">
                                  <label class="control-label">VAT</label>
@@ -184,6 +202,44 @@ foreach($currency as $currency)
                            </div>
                         </div>
                      </div>
+
+
+                     <div class=" row">
+
+<div class="form-group col-md-4">
+<label for="issue_auth" class="col-sm-3 col-form-label">Document Type</label>
+            <input type="text" name="doc_type" id="doc_type" class="form-control " value="">
+            <span id="doc_type"></span>
+</div>
+<div class="form-group col-md-4">
+<label for="fileupld" class="col-sm-3 col-form-label">Document Upload</label>
+        <input type="file" name="fileupld" id="fileupld"  class="form-control " >
+        <span id="filedoc"></span>
+</div>
+<div class="form-group col-md-4" style="margin-top: 44px;">
+<input type="button" class="btn btn-primary btn-succes" id="btn_doc"   value="Add More Documents">
+</div>
+</div>
+<div class="row">
+   <div class="col-md-12">
+   <table class="table">
+   <thead>
+   <tr>
+   <td>Document Type</td>
+   <td>Document</td>
+   <td></td>
+   </tr>
+   </thead>
+   <tbody class="data-body">
+   </tbody>
+   </table>
+   </div>
+   </div>
+
+   <?php echo form_close() ?> 
+      <?php  echo form_open_multipart('controller', array('id' => 'job_doc')); ?>
+      <input type="hidden" value="<?php echo(rand(2000,6000));?>" name="dummyjobid" id="dummyjobid">
+      <?php echo form_close() ?> 
                      <div class="col-md-12 ">
                         <br><br>
                         <div class="row">
@@ -330,4 +386,79 @@ foreach($currency as $currency)
         //var obj=[{"value":1,"label":'anu'},{"value":2,"label":'rejina'}];
 
     });
+</script>
+
+
+<script>
+  $('#job_doc').on('submit', function(e){ 
+        
+        var dummyid=$("#epost_code").val();  
+      
+        var type=$("#doc_type").val();                          
+        var file_data = $('#fileupld').prop('files')[0];        //   alert(JSON.stringify(file_data, "", 2));
+     
+    
+          var formdata = new FormData(this);
+          formdata.append("exp_id", dummyid);
+          formdata.append("doc_type", type);
+          formdata.append("fileupld", file_data);
+        
+          e.preventDefault();              
+               
+                    $.ajax({  
+                         url: "<?php echo base_url(); ?>transaction/Supplierexpense_Controller/create_exp_doc_ajax", 
+                         method:"POST",  
+                         fileElementId:'fileupld',
+                         dataType: 'JSON',
+                         data:formdata,  
+                         contentType: false,  
+                         cache: false,  
+                         processData:false,  
+                         success:function(response)  
+                         {   
+                              var   data =response.file_name;        
+                                 did=response.did; 
+                                 console.log(data);
+      
+                         
+                              var extension = get_url_extension(data.replace(" ", "_"));       
+                              var url = '<?php echo base_url(); ?>/assets/images/'+data.replace(" ", "_");
+                           
+                              if(extension=="pdf"){
+                                url = '<?php echo base_url(); ?>/assets/images/pdf.png';
+                              }else if(extension=="csv"){
+                                url = '<?php echo base_url(); ?>/assets/images/excel.png';
+                              }else if(extension=="doc"){
+                                url = '<?php echo base_url(); ?>/assets/images/doc.png';
+                              }else if(extension=="docx"){
+                                url = '<?php echo base_url(); ?>/assets/images/doc.png'; 
+                              }  
+                             $(".data-body").append('<tr id="row' + did + '"><td>'+type+'</td><td><a href="<?php echo base_url(); ?>/assets/images/'+data+'" style="width:100px;" target="_blank"><img src="'+url+'" style="width:100px;"></a></td><td><button type="button"  class="btn btn-info btn-lg" onclick="confirmDeleteModal('+did+')">Delete</button></td></tr>');
+                             $("#doc_type").val('');
+                             $('#fileupld').val('');
+                         }
+                    });  
+        });
+</script>
+
+<script type="text/javascript">
+function confirmDeleteModal(id){   
+    $('#deleteModal').modal();  
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){  //alert(id);
+    $('#row' + id).remove();
+    $.ajax({  
+                url: '<?php echo base_url(); ?>transaction/Supplierexpense_Controller/delete_exp_documents/'+id,                                   
+                method:"POST", 
+            dataType: 'JSON',
+                data: {id:id} ,  
+                success:function(data){ 
+                  
+                   
+                }  
+           });  
+  
+  $('#deleteModal').modal('hide'); // now close modal
+}  
 </script>

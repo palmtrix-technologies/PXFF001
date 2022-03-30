@@ -174,6 +174,7 @@
               <li class=""><a href="#invoice" data-toggle="tab" aria-expanded="false">Invoice</a></li>
               <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">Proforma Invoice</a></li>
               <li class=""><a href="#estima" data-toggle="tab" aria-expanded="false">Estimate</a></li>
+              <li class=""><a href="#estimateprofit" data-toggle="tab" aria-expanded="false">Estimate Profit</a></li>
               <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">Supplier Expense</a></li>
               <li class=""><a href="#document" data-toggle="tab" aria-expanded="true">Documents</a></li>
               <?php 
@@ -451,6 +452,44 @@
 
 <br><br>
 
+              </div>
+
+
+              <div class="tab-pane active" id="estimateprofit">
+              <section class="content">
+              <div class="row">
+      <div class="col-md-12">
+      <h3 class="box-title"> Estimate Profit Report </h3>
+      <div class="box">
+         
+         
+            
+            <div class="box-body">
+               <table class="table table-stripped">
+                  <thead>
+                     <tr>
+                        <th> Sl.no</th>
+                        <th> Date</th>
+                        <th> Transaction Type</th>
+                        <th> Description</th>
+                        <th style='text-align: right;'> Credit</th>
+                        <th style='text-align: right;'> Debit</th>
+                       
+                     </tr>
+                  </thead>
+                 
+                  <tbody class="estimateledger">
+                     
+                    
+                  </tbody>
+               </table>
+                         </div>
+      </div>
+      </div>
+                         </div>
+                         </section>
+               
+               
               </div>
 
 

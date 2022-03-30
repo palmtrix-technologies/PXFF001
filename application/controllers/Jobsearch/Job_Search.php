@@ -69,7 +69,9 @@ class Job_Search extends CI_Controller {
 		
 		$result['jobledger']=$this->Job_searchmodel->select_job_ledger_details($masterid);
 
-		$result['estimatedata']=$this->Transaction_model->editestimateedetails($masterid);
+		$result['estimateprofit']=$this->Job_searchmodel->estimateprofit($masterid);
+
+		$result['estimatedata']=$this->Transaction_model->editestimateedetails($masterid); 
 		
 		echo json_encode($result);
 	

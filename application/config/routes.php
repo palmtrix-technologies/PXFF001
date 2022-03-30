@@ -249,6 +249,7 @@ $route['images-upload/(:any)']='transaction/Transaction/images_upload/$1';
 $route['create-job-doc-ajax']='transaction/Transaction/create_job_doc_ajax';
 $route['images-remove']='transaction/Transaction/images_remove';
 $route['delete-doc/(:any)']='transaction/Transaction/delete_doc/$1';
+$route['delete_documents/(:any)']='transaction/Transaction/delete_documents/$1';
 $route['update-job-doc-ajax']='transaction/Transaction/update_job_doc_ajax';
 $route['images-list_files']='transaction/Transaction/images_list_files';
 $route['remove_uploadedfile/(:any)']='transaction/Transaction/remove_uploadedfile/$1)';
@@ -259,7 +260,8 @@ $route['edit-job-invoice/get_covfactor/(:any)'] = 'transaction/Job_invoice_contr
 $route['get_covfactors/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
 $route['edit-consignment/get_covfactor1/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
 $route['payment-receipt/get_covfactor_receipt/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
-
+$route['supplier-expense/get_covfactor_supplier/(:any)'] = 'transaction/Job_invoice_controller/get_covfactor/$1';
+$route['delete_exp_documents/(:any)']='transaction/Supplierexpense_Controller/delete_exp_documents/$1';
 //invoice
 //job-invoice
 $route['new_invoice'] = 'transaction/Job_invoice_controller/new_invoice';
@@ -308,6 +310,7 @@ $route['supplier-expense-print/(:any)'] = 'transaction/Supplierexpense_Controlle
 $route['edit-supplier-expense/(:any)'] = 'transaction/Supplierexpense_Controller/edit_supplier_expense/$1';
 $route['update-supplier-expense'] = 'transaction/Supplierexpense_Controller/update_supplier_expense';
 $route['view-supplierexpense'] = 'transaction/Supplierexpense_Controller/index';
+$route['supplier-expense/create-exp-doc-ajax']='transaction/Transaction/create_exp_doc_ajax';
 
 //debit note
 

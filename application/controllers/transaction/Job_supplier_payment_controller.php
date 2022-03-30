@@ -205,9 +205,9 @@ public function list_supplier()
 		$result['permission']=$this->Login_model->select_all_menu($user_id);
 		$result['suppliers']=$this->Job_supplier_payment_model->select_all_suppliers();
 
-		 $result['balances']= $this->Job_supplier_payment_model->selectclientdetails_total();
+		$result['balances']= $this->Job_supplier_payment_model->selectclientdetails_total();
 
-$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
+      $user_image['cmpnydata']=$this->Transaction_model->basic_company_details(); 
 
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);

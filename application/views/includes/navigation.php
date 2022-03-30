@@ -1,4 +1,4 @@
-p
+
       <!-- =============================================== -->
       <!-- Left side column. contains the sidebar -->
       <aside class="main-sidebar">
@@ -16,7 +16,7 @@ p
           <div class="user-panel" style="padding: 0;
     background: white;
     text-align: center;">
-              <img src="assets/images/backgrounds/freighbrid-logo.png" style="background: white;
+              <img src="<?php echo IMAGE_PATH.$cmpnydata[0]->Icon_image; ?>" style="background: white;
     width: 9rem;
     height: 3rem;" >
             </div>
@@ -49,7 +49,7 @@ p
                 if (in_array("read permission",$permission))
                 { 
                    ?>
-               <li><a href="<?php echo base_url(); ?>permission"><i class="fa fa-circle-o"></i>Lsit Permission</a></li>
+               <li><a href="<?php echo base_url(); ?>permission"><i class="fa fa-circle-o"></i>List Permission</a></li>
                
               <?php
               }

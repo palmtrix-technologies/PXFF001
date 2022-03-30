@@ -41,6 +41,17 @@ if($result==NULL)
 return $result;
 
 }
+
+public function selectjobcode($id)
+{
+$this->db->select('*');
+$this->db->from('jm_job');
+$this->db->where('jm_job.JobId',$id);
+$query = $this->db->get();
+$result = $query->result();
+return $result;
+}
+
 public function add($data)
 {    
         $this->db->insert('jm_job',$data);
@@ -848,7 +859,9 @@ public function update_job_doc_ajax($id,$data = array())
 }
 public function job_doc_create($data = array())
     {
-        return $this->db->insert('jm_documents', $data);
+         $this->db->insert('jm_documents', $data);
+        $did=$this->db->insert_id();
+        return $did;
     }
 
     public function get_all_job_doc_all($docid)
@@ -880,9 +893,9 @@ public function update_job_documentid($id,$new_id)
     return 0;
   }
 }
-public function document_delete($id = null)
+public function document_delete($id)
 {
-    $this->db->where('job_id',$id)
+    $this->db->where('id',$id)
         ->delete('jm_documents');
 
     if ($this->db->affected_rows()) {

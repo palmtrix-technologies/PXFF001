@@ -73,11 +73,28 @@ $( document ).ready(function() {
   function insertRow1()
   {
     var descID=0;
+
+    currency=$("#eunit_price").val(); 
+    var myVariable;
+    var request = $.ajax({
+     'async': false,
+     url: 'get_covfactor_supplier/'+currency,
+     type: 'GET',
+    dataType: 'JSON'
+     });
+     request.done( function (result) { 
+       console.log(result);
+     var values=JSON.stringify(result);
+     myVariable = (result[0].conversion_factor); 
+     });
+     var econv_factor=myVariable; 
+
+
       var edesc= $("#edescription_job").val();
       var eprice=parseFloat($("#eunitprice").val());
       var ecurrency=$("#eunit_price").val(); 
       var eprice1=parseFloat($("#eunitprice").val());
-      var econv_factor=parseFloat($("#econv_factor").val());
+    //  var econv_factor=parseFloat($("#econv_factor").val());
       var emode=$("#emode").val();
       
        var eprice = eprice *  econv_factor;
@@ -97,7 +114,7 @@ $( document ).ready(function() {
 $('#step-1 #edescription_job').val('');
 
 $('#step-1 #eunitprice').val('');
-$('#step-1 #econv_factor').val('1');
+//$('#step-1 #econv_factor').val('1');
 $('#step-1 #evat').val('0');
 $('#step-1 #epost_date').val($.datepicker.formatDate("yy-mm-dd", new Date()));
 $('#view_supplier_name').attr('readonly', true);
@@ -135,7 +152,16 @@ $('#emode').attr('disabled', true);
   }
   //insert data to job-details table
   
-
+  $( "#btn_doc" ).click(function() { 
+    var type = $('#doc_type').val();
+  var fileupload = $('#fileupld').val();
+  
+  if(type !=="" && fileupload !==""){
+  $("#job_doc").submit();
+  }else{
+   alert("Please Fill document type");
+  }
+  });
 
 
 
@@ -208,5 +234,7 @@ $('#emode').attr('disabled', true);
     }
   
   
-  
+    function get_url_extension( url ) {
+      return url.split(/[#?]/)[0].split('.').pop().trim();
+    }
   

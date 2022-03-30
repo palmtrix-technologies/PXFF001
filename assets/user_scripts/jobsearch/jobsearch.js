@@ -23,18 +23,17 @@ $( document ).ready(function() {
   
 function visiblejobdescription()
 {
-   
+  
   
      $('#description').removeClass("hidden");
      $('#title').removeClass("hidden");
      postData=$('#q').val();
- // alert(postData);
-var request = $.ajax({
+     var request = $.ajax({
   url: 'job-description/'+postData,
   type: 'GET',
   dataType: 'JSON'
   });
-  request.done( function (result) { 
+  request.done( function (result) {
     // console.log(result);
   
    var values=JSON.stringify(result);
@@ -328,6 +327,34 @@ var Invsum=0;
   });
 
 
+
+  var slno=0;
+  var credittotal=0;
+  var debittotal=0;
+  $(".estimateledger").html("");    
+  $.each(result["estimateprofit"], function(index, value){  
+
+    slno=slno+1;
+      var date=value.e_date;
+      var type=value.types;
+      var description=value.Descriptions;
+      var credit=parseFloat(value.Debit).toFixed(2);
+      var debit=parseFloat(value.Credit).toFixed(2);
+      credittotal=parseFloat(credittotal)+parseFloat(credit);
+      debittotal=parseFloat(debittotal)+parseFloat(debit);
+      $(".estimateledger").append( "<tr class='tbl_row'><td class='sl'>"+slno+" </td> <td class='date'>"+date+"</td> <td class='type'>"+type+"</td> <td class='description'>"+description+"</td> <td class='credit' style='text-align: right;'>"+credit+"</td> <td class='debit' style='text-align: right;'>"+debit+"</td>  </tr>" );
+
+  });
+  credittotal=parseFloat(credittotal).toFixed(2);
+  debittotal=parseFloat(debittotal).toFixed(2);
+  prft=credittotal-debittotal;
+ 
+ 
+  $(".estimateledger").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='4' > Total: </td><td style='text-align: right;'>"+credittotal+"</td><td style='text-align: right;'>"+debittotal+"</td></tr>"); 
+  
+  $(".estimateledger").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='5' > Profit: </td><td style='text-align: right;'>"+prft+"</td></tr>"); 
+  
+
     var slno=0;
     var credittotal=0;
     var debittotal=0;
@@ -347,6 +374,7 @@ var Invsum=0;
     });
     credittotal=parseFloat(credittotal).toFixed(2);
     debittotal=parseFloat(debittotal).toFixed(2);
+
 
     $(".ledger").append( "<tr class='tbl_row' style='background-color: #e6e6ff;'><td colspan='4' > Total: </td><td style='text-align: right;'>"+credittotal+"</td><td style='text-align: right;'>"+debittotal+"</td></tr>"); 
     $("#invtotal").text(Invsum);

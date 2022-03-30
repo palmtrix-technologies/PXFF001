@@ -1,6 +1,12 @@
-<?php 
-  
-  ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>/assets/plugins/iCheck/icheck.min.js"></script>
+<script src="<?php echo base_url(); ?>/assets/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="<?php echo base_url(); ?>/assets/js/bootstrap-tagsinput.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
 
   <style>
  
@@ -17,8 +23,98 @@
 .strong
 {font-weight: bold;}
 </style>
+<style>
+    .nav-tabs-custom {
+        margin-bottom: 20px;
+        background: #fff;
+        box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+
+    .hidden {
+
+        visibility: hidden
+    }
+
+    .tab-pane {
+        min-height: 120px;
+        border-bottom: solid 1px #f4f4f4;
+    }
+
+    .input-checkbox {
+        font-weight: normal !important;
+    }
+
+    .permission-button-group {
+        padding: 15px 0 10px 20px;
+    }
+
+    .
+</style>
+
+<style>
+    .ui-autocomplete {
+        position: absolute;
+        z-index: 1000;
+        cursor: default;
+        padding: 0;
+        margin-top: 2px;
+        list-style: none;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .ui-autocomplete>li {
+        padding: 3px 20px;
+    }
+
+    .ui-autocomplete>li.ui-state-focus {
+        background-color: #DDD;
+    }
+
+    .ui-helper-hidden-accessible {
+        display: none;
+    }
+
+    .nextBtn {
+        font-size: 20px;
+        color: mintcream;
+    }
+
+    .bootstrap-tagsinput {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        display: block;
+        padding: 4px 6px;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 4px;
+        max-width: 100%;
+        line-height: 22px;
+        cursor: text;
+    }
+
+    .bootstrap-tagsinput input {
+        border: none;
+        box-shadow: none;
+        outline: none;
+        background-color: transparent;
+        padding: 0 6px;
+        margin: 0;
+        width: auto;
+        max-width: inherit;
+    }
+</style>
    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   
+    
 <section class="content-header">
             <h1>
           Supplier List
@@ -41,11 +137,15 @@
 
 
 
-                  <div id="content" >
-                    <label>Search:<input type="search" id="search" class="form-control input-sm" placeholder="" aria-controls="datatable-buttons"></label>
-                  
+                  <div id="content form-group" >
+                    <label>Search: <input maxlength="100"  name="view_supplier_name" type="text" id="view_supplier_name" required="required" class="form-control" placeholder=" supplier_name" value="">
+                  <input maxlength="100" type="hidden" id="supplier_id" class="form-control" value=""></label>
+                  <button type="submit" name="search_job" id="search_job"  class="btn btn-flat" onclick="search()"><i class="fa fa-search" ></i></button>
                  
                         <div class="form-group col-md-12">
+
+                       
+
  <div class="form-group col-md-1"></div>
             <?php 
           
@@ -63,19 +163,23 @@
 
                          </div>
 
+                         <div id="secondDiv">
 
-                        <?php 
+                        
+                        <?php  $count=0;
                         foreach($suppliers as $key=>$value)
                         {
                           ?>
-                         <div class="form-group col-md-12">
+                      
+                          <div id="entryDiv<?php echo $value->id; ?>">       
+                         <div class="form-group col-md-12" id="myTable" value="<?php echo $value->supplier_name;?>">
                  
                     <div id="container" class="form-group col-md-1">
                         <i onclick="showdata('<?php echo $value->id; ?>');" id="icon" class="fa fa-arrow-down"></i>
                         <div id="myDIV<?php echo $value->id; ?>" style="display: none;padding: 38px; margin-left: 42px;">
                          <div class="row">
                           <div class="col-12">
-                           <table  class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" style="width: 100rem !important;">
+                           <table  class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" style="width: 100rem !important;" >
                                 <tr>
                                   <th>sl.No</th>
                                   <th>Date</th>
@@ -87,9 +191,9 @@
                                   <th>Paid Amount</th>
                                    <th>Balance</th>
                                 </tr>
-                                <?php  $sl=1;$tpaid=0;$tbln=0;$ttotal=0;
+                                <?php  $sl=1;$tpaid=0;$tbln=0;$ttotal=0; 
                         foreach($balances as $key=>$values)
-                        {
+                        { 
                           if($value->id==$values->SupplierID){ 
                           ?>
                                 <tr>
@@ -130,16 +234,19 @@
           <?php } ?>
 
                  </div>
+                
  <div class="form-group col-md-1"> <?php echo $value->code;?><input type="hidden" id="sid" value="<?php  echo $value->id;?>"></div>
   <div class="form-group col-md-2" id="suppr"> <?php echo $value->supplier_name;?></div>
    <div class="form-group col-md-2"> <?php echo $value->address;?></div>
     <div class="form-group col-md-1"><?php echo $value->vat_no;?> </div>
      <div class="form-group col-md-1"> <?php echo $value->mobile;?></div>
       <div class="form-group col-md-1"> <?php echo $value->email;?></div>
-
+               
 </div>
 
-                      <?php } ?>
+                         </div>     <?php $count=$count+1; } ?> </div>
+<?php $cnt=$count+1;?>
+<input type="hidden" value="<?php echo $cnt;?>"  id="count">
 
                      <!--  <tbody>
                         <?php 
@@ -222,13 +329,16 @@ $(document).ready(function(){
      function showdata(id)
       { 
 
-current=id;
-a="#myDIV"+current;
-     $(a).toggle();
+  current=id;
+  a="#myDIV"+current;
+  $(a).toggle();
 
  
+  
       }  
  </script>
+
+
  <script type="text/javascript">
 
  $("#filter").keyup(function() {
@@ -254,4 +364,52 @@ a="#myDIV"+current;
       });
 
     });
+</script>
+
+<script>
+ $(document).ready(function(){
+
+  var obj=[]; 
+              $.ajax({
+               url: "<?php echo base_url(); ?>transaction/Supplierexpense_Controller/getsupplierdata",
+               type: 'post',
+               dataType: "json",
+               success: function( data ) 
+               {
+                   console.log(data);
+                obj=data; 
+                $('#view_supplier_name').autocomplete({ 
+                              source: obj,
+                              select: function (event, ui) {       
+                                  $("#view_supplier_name").val(ui.item.label);
+                                 $("#supplier_id").val(ui.item.value);
+                                  return false;
+  
+                              }
+                          });
+               }
+            });
+  
+  });
+
+  </script>
+
+<script>
+   function search()
+      { 
+      
+ var count= $("#count").val();  
+      
+ var id= $("#supplier_id").val();  
+  a="#entryDiv"+id;  
+  for(i=0;i<=count;i++)
+  {
+
+    aa="#entryDiv"+i;  $(aa).hide();
+
+  }                      
+  $(a).show();
+  
+   }
+
 </script>

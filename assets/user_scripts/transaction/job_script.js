@@ -100,6 +100,7 @@
        "Consignee": $('#consigneename').val(),
         "client_name": $('#client_name').val(),
         "shipment_type": $('#shipment_type').val(),
+        "job_nature": $('#nature').val(),
     
         "ShipmentTerms":shipterm,
         "CargoDescription": $('#cargo_description').val(),

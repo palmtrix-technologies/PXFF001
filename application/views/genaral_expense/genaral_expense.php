@@ -63,7 +63,7 @@
         
                 <div class="form-group col-md-3">
                               <label class="control-label">Expense Head</label>
-                              <select class="form-control" id="to_legder"   name="to_legder" required="required">
+                              <select class="form-control" id="to_legder"   name="to_legder" required="required" onchange="giveSelection(this.value);">
                                  <option value="">Select Expense head</option>
                                  <?php foreach($expenses as $row){?>
                                  <option value="<?php echo $row->LedgerID;?>"><?php echo $row->Ledger_Name;?></option>
@@ -76,29 +76,29 @@
                               <select class="form-control" id="expense_cat" name="expense_cat" required="required">
                                  <option value="">Select Expense Category</option>
                                  <option data-option="0">Other Expense</option>
-                                 <!--admin expense start-->
-                                 <!-- <option data-option="317">Printing & Stationary</option>
-                                 <option data-option="317">Office Maintenance</option>
-                                 <option data-option="317">Rent expenses</option>
-                                 <option data-option="317">Employee Welfare</option>
-                                 <option data-option="317">Food & Beverages</option>
-                                 <option data-option="317">Telephone & Utility</option>
-                                 <option data-option="317">Transportation Expense</option>
-                                 <option data-option="317">Visa expanses</option>
-                                 <option data-option="317">Govt Fee</option>
-                                 <option data-option="317">Air ticket </option>
-                                 <option data-option="317">Other Expenses </option>
-                                Admin expense end-->
-                                  <!--Vehicle expense start-->
-                                 <!-- <option data-option="318">Vehicle maintenance</option>
-                                 <option data-option="318">Fuel Expense</option>
-                                 <option data-option="318">Other Expenses </option> -->
+                                <!-- admin expense start-->
+                                 <option data-option="184">Printing & Stationary</option>
+                                 <option data-option="184">Office Maintenance</option>
+                                 <option data-option="184">Rent expenses</option>
+                                 <option data-option="184">Employee Welfare</option>
+                                 <option data-option="184">Food & Beverages</option>
+                                 <option data-option="184">Telephone & Utility</option>
+                                 <option data-option="184">Transportation Expense</option>
+                                 <option data-option="184">Visa expanses</option>
+                                 <option data-option="184">Govt Fee</option>
+                                 <option data-option="184">Air ticket </option>
+                                 <option data-option="184">Other Expenses </option>
+                              <!--  Admin expense end
+                                  Vehicle expense start-->
+                                  <option data-option="183">Vehicle maintenance</option>
+                                 <option data-option="183">Fuel Expense</option>
+                                 <option data-option="183">Other Expenses </option>
                                    <!--Vehicle expense end-->
                                    
                                      <!--employee expense start-->
-                                 <!-- <option data-option="319">Salary</option>
-                                 <option data-option="319">Gratuity</option>
-                                 <option data-option="319">Leave Salary </option> --> 
+                                 <option data-option="182">Salary</option>
+                                 <option data-option="182">Gratuity</option>
+                                 <option data-option="182">Leave Salary </option> 
                                    <!--employee expense end-->
                                    
                                
@@ -321,13 +321,13 @@ var options2 = sel2.querySelectorAll('option');
     
   }
   
-  if(selValue=="318")
+  if(selValue=="183")
   {
       $(".vehicle_input").removeClass("hidden");
        $(".site_input").addClass("hidden");
        $(".employee_input").addClass("hidden");
   }
-  else if(selValue=="319")
+  else if(selValue=="182")
   
   {  $(".vehicle_input").addClass("hidden");
        $(".site_input").removeClass("hidden");

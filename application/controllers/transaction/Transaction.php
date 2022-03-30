@@ -28,7 +28,7 @@ class Transaction extends CI_Controller {
 		$res = $this->Permission_model->userdetails($user_id);
 		$result['roles']=$this->Login_model->userdetails($user_id);
 		$data['code']=$this->Transaction_model->selectcode();
-		$data['codes']=$this->Transaction_model->selectcode_estimate();
+		$data['codes']=$this->Transaction_model->selectcode_estimate(); 
 		
 		$data['clientlist']=$this->Transaction_model->list_client();
 		$data['desclist']=$this->Transaction_model->list_desc();
@@ -90,6 +90,7 @@ class Transaction extends CI_Controller {
 		$res = $this->Permission_model->userdetails($user_id);
 		$result['roles']=$this->Login_model->userdetails($user_id);
 		$data['code']=$this->Transaction_model->selectcode();
+		$data['jobcode']=$this->Transaction_model->selectjobcode($id); 
 		$data['codes']=$this->Transaction_model->selectcode_estimate();
 		
 		$data['clientlist']=$this->Transaction_model->list_client();
@@ -145,7 +146,7 @@ class Transaction extends CI_Controller {
 		}
 		
 		$user_image['cmpnydata']=$this->Transaction_model->basic_company_details();
-		$data['uploadedfile']=$this->Transaction_model->selectuploaded_file($id);
+		$data['uploadedfile']=$this->Transaction_model->selectuploaded_file($id); 
 		$this->load->view('includes/header',$user_image);
 		$this->load->view('includes/navigation',$result,$user_image);
 		$this->load->view('transaction/edit_job',$data);
@@ -802,11 +803,8 @@ $doc_type = $this->input->post('doc_type');
 		public function create_job_doc_ajax()
 		{ 
 			
-			// $doc_type = $this->input->post('doc_type');
-	
-		   
-						   $file_name = time().$_FILES["fileupld"]['name'];
-							// $config['upload_path']   = base_url('/assets/images/'); 
+						   $file_name = time().$_FILES["fileupld"]['name'];     
+						// $config['upload_path']   = base_url('/assets/images/'); 
 							$config['upload_path']   ='./assets/images/'; 
 							$config['allowed_types'] = 'gif|jpg|png|pdf|csv|doc|docx'; 
 							$config['file_name'] = $file_name; 
@@ -814,22 +812,13 @@ $doc_type = $this->input->post('doc_type');
 							$this->upload->initialize($config);
 							if ( ! $this->upload->do_upload('fileupld')) {
 
-								// echo 'not_uploaded';
 								
 							   $error = array('error' => $this->upload->display_errors()); 
-							//    var_dump( $error);
-							//    die();
-							//    $this->load->view('upload_form', $error); 
 							
 							}
-							   
 						
-			// $logo = $this->fileupload->do_upload('assets/img/icons/','fileupld');
 		
-	$filepath='assets/images/'.$file_name;
-	
-	//         #-------------------------------#
-			
+	$filepath='assets/images/'.$file_name;  
 			  $emp_documnts = [
 					'job_id'    => $this->input->post('job_id'),
 				
@@ -840,15 +829,13 @@ $doc_type = $this->input->post('doc_type');
 					
 				]; 
 				$jobid=$this->input->post('job_id');
-			
-		
-				
-	
-				if ($this->Transaction_model->job_doc_create($emp_documnts)) { 
+
+				$did=$this->Transaction_model->job_doc_create($emp_documnts);
+				if ($did) { 
 				 
-			
-			
-				echo $file_name;
+			    $data['did']=$did;
+				$data['file_name']=$file_name; 
+				echo json_encode($data);
 
 				} 
 				else {
@@ -865,6 +852,13 @@ $doc_type = $this->input->post('doc_type');
 			$url = redirect('edit-job',$id);
 			echo $url;
 			die();
+
+		}
+		public function delete_documents($id){
+			
+           
+			$this->Transaction_model->document_delete($id);
+		 echo $id;
 
 		}
 

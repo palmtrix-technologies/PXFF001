@@ -49,6 +49,17 @@ class Supplier_expensemodel extends CI_Model {
     
     }
 
+    public function getsupplier_count()
+    {
+          
+    $this->db->select_count('id as count');
+    $this->db->from('mst_supplier');
+    $query = $this->db->get();
+    $result = $query->result();
+    return $result;
+    
+    }
+
     public function getcredit_invoice()
     {
        
@@ -111,7 +122,24 @@ class Supplier_expensemodel extends CI_Model {
        
       
       }
-      
+
+      public function exp_doc_create($data = array())
+    {
+         $this->db->insert('expense_documents', $data);
+        $did=$this->db->insert_id();
+        return $did;
+    }
+    public function document_exp_delete($id)
+    {
+        $this->db->where('id',$id)
+            ->delete('expense_documents');
+    
+        if ($this->db->affected_rows()) {
+            return true;
+        } else {
+            return false;
+        }
+    } 
       
       // to select_job_invoice details
       public function supplier_expense_details($data)

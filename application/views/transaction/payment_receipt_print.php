@@ -266,13 +266,6 @@
         </div>
     </div>
 
-    <!-- fifth section -->
-
-    <!-- sixth section -->
-  
-    <!-- sixth section -->
-
-    <!-- footer section -->
     <div class="row main">
         <div class="col-lg-12">
             <hr class="footer-line">

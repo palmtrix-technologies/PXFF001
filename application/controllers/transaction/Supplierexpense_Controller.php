@@ -91,6 +91,12 @@ public function supplier_expense_details()
 		
         echo json_encode($data); 
 	}
+	public function getsupplier_count(){
+        
+        $data = $this->Supplier_expensemodel->getsupplier_count();  
+		
+        echo json_encode($data); 
+	}
 	public function getcreditData(){
 
 		$data['rec'] = $this->Supplier_expensemodel->getcredit_invoice();  
@@ -105,7 +111,7 @@ public function supplier_expense_details()
 		$result['expdata']=$this->Supplier_expensemodel->selectexpensedetails($expid);
 		 $result['expense']=$this->Supplier_expensemodel->supplier_expense_details($expid);
 		 $result['companyinfo']=$this->Transaction_model->basic_company_details();
-		 $result['invoiceinfo']=$this->Transaction_model->basic_invoice_details();
+		 $result['invoiceinfo']=$this->Transaction_model->basic_invoice_details(); //var_dump($result);die();
 		$this->load->view('transaction/supplier_expenseprint',$result);
 	
 	}
@@ -215,4 +221,74 @@ $jobid=$row->JobID;
  redirect(base_url()."job-search");
 
 	}
+
+
+	public function create_exp_doc_ajax()
+		{ 
+			
+						   $file_name = time().$_FILES["fileupld"]['name'];      
+						// $config['upload_path']   = base_url('/assets/images/'); 
+							$config['upload_path']   ='./assets/images/'; 
+							$config['allowed_types'] = 'gif|jpg|png|pdf|csv|doc|docx'; 
+							$config['file_name'] = $file_name; 
+							$this->load->library('upload', $config);
+							$this->upload->initialize($config);
+							if ( ! $this->upload->do_upload('fileupld')) {
+
+								
+							   $error = array('error' => $this->upload->display_errors()); 
+							
+							}
+						
+		
+	$filepath='assets/images/'.$file_name;  
+			  $emp_documnts = [
+					'exp_id'    => $this->input->post('exp_id'),
+				
+					'doc_type'     => $this->input->post('doc_type'),
+					
+					'file_path' 	      => $filepath
+					// 'IsActive'   => 1,
+					
+				]; 
+				
+			
+
+				$did=$this->Supplier_expensemodel->exp_doc_create($emp_documnts);   
+				if ($did) { 
+				 
+			    $data['did']=$did;
+				$data['file_name']=$file_name; 
+				echo json_encode($data);
+
+				} 
+				else {
+					echo "error";
+				}
+		}
+
+
+		public function delete_exp_documents($id){
+			
+         
+			$this->Supplier_expensemodel->document_exp_delete($id);
+		 echo $id;
+
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	}

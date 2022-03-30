@@ -118,6 +118,7 @@
                 <a href="#step-1" type="button" class=" vzbtn1 btn btn-success btn-circle"> 1</a>
                 <p><small>Create Shipment</small></p>
             </div>
+          
             <div class="stepwizard-step col-xs-2">
                 <a href="#step-2" type="button" class=" vzbtn2 btn btn-default btn-circle">2</a>
                 <p><small>Port Details</small></p>
@@ -146,61 +147,133 @@
                             <h4> &nbsp; &nbsp; Which type of shipment would you like to create ?</h4>
                         </b><br>
                         &nbsp; &nbsp; &nbsp; &nbsp;
-                        <div class="row">
-                            <div class="form-group col-md-3">
-                                <button class="btn btn-info nextBtn pull-right trans-type  " id="air" type="button" value="Air" style="width:180px; height:50px;"><i class="text-blue fa fa-plane"></i> Air Export</button>
+                       
 
-                            </div>
-                            <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
+
+<select name="types" onchange="Slecttype();" class="btn btn-primary  pull-right trans-type " id="selects">
+  <option value="">--Select--</option>
+  <option value="Export1">Export</option>
+  <option value="Import1">Import</option>
+  <option value="Transfer1">Transfer</option>
+  <option value="Transportation1">Transportation</option>
+  
+</select>
+
+</div><br/>
+
+<div class="row" style="    margin: 54px;">
+                        <div id="exports" style="display: none;">
+                        <div class="row">
+<div class="form-group col-md-3">
+    <button class="btn btn-info nextBtn pull-right trans-type  " id="air" type="button" value="Air" style="width:180px; height:50px;"><i class="text-blue fa fa-plane"></i> Air </button>
+
+</div>
+
+<div class="form-group col-md-3">
+    <button class="btn btn-info pull-right trans-type  "   onclick="seadisplay();" id="SEA" type="button" value="Air" style="width:180px; height:50px;"><i class="text-blue fa fa-plane"></i> Sea</button>
+
+</div> <br/>
+<div class="row" id="seashow" style="display: none;">
+ <div class="form-group col-md-3">
+    <button class="btn btn-info nextBtn pull-right trans-type " id="sea" type="button" value="FCLExport" style="width:180px; height:50px;margin: 80px;"><i class="text-black fa fa-ship"></i> FCL</button>
+
+</div>
+
+ <div class="form-group col-md-3">
+    <button class="btn btn-primary nextBtn pull-right trans-type" id="lclexport" type="button" value="LCLExport" style="width:180px; height:50px;margin: 80px;"><i class="text-white fa fa-ship"></i> LCL</button>
+
+</div> </div>
+
+</div> 
+  </div>
+
+<div id="imports" style="display: none;">
+                        <div class="row">
+ <div class="form-group col-md-3">
                                 <button class="btn btn-primary nextBtn pull-right trans-type " id="airimport" type="button" value="AirImport" style="width:180px; height:50px;"> <i class="text-blue fa fa-plane"></i> Air Import</button>
 
                             </div>
-                            <div class="form-group col-md-3">
-                                <button class="btn btn-info nextBtn pull-right trans-type " id="sea" type="button" value="FCLExport" style="width:180px; height:50px;"><i class="text-black fa fa-ship"></i> FCL Export</button>
+
+<div class="form-group col-md-3">
+    <button class="btn btn-info pull-right trans-type  "   onclick="seadisplay2();" id="SEA" type="button" value="Air" style="width:180px; height:50px;"><i class="text-blue fa fa-plane"></i> Sea</button>
+
+</div> <br/>
+<div class="row" id="seashow2" style="display: none;">
+ <div class="form-group col-md-3">
+                                <button class="btn btn-primary nextBtn pull-right trans-type" id="fclimport" type="button" value="FCLImport" style="width:180px; height:50px;margin: 80px;"><i class="text-black fa fa-ship"></i> FCL </button>
 
                             </div>
-                            <div class="form-group col-md-3">
-                                <button class="btn btn-primary nextBtn pull-right trans-type" id="fclimport" type="button" value="FCLImport" style="width:180px; height:50px;"><i class="text-black fa fa-ship"></i> FCL Import</button>
 
-                            </div>
-                            <div class="form-group col-md-3">
-                                <button class="btn btn-primary nextBtn pull-right trans-type" id="lclexport" type="button" value="LCLExport" style="width:180px; height:50px;"><i class="text-white fa fa-ship"></i> LCL Export</button>
+  <div class="form-group col-md-3">
+                                <button class="btn btn-info nextBtn pull-right trans-type " id="lclimport" type="button" value="LCLImport" style="width:180px; height:50px;margin: 80px;"> <i class="text-white fa fa-ship"></i> LCL </button>
 
-                            </div>
-                            <div class="form-group col-md-3">
-                                <button class="btn btn-info nextBtn pull-right trans-type " id="lclimport" type="button" value="LCLImport" style="width:180px; height:50px;"> <i class="text-white fa fa-ship"></i> LCL Import</button>
+                            </div> </div>
 
-                            </div>
-                            <div class="form-group col-md-3">
+</div>    </div>
+
+
+
+<div id="lands" style="display: none;">
+                        <div class="row">
+                        <div class="form-group col-md-3">
                                 <button class="btn btn-primary nextBtn pull-right trans-type " id="land" type="button" value="LandExport" style="width:180px; height:50px;"> <i class="text-red fa fa-truck"></i> Land Export</button>
 
                             </div>
                             <div class="form-group col-md-3">
                                 <button class="btn btn-info nextBtn pull-right trans-type " id="landimport" type="button" value="LandImport" style="width:180px; height:50px;"><i class="text-red fa fa-truck"></i> Land Import</button>
                             </div>
-                            <div class="form-group col-md-3">
-                                <button class="btn btn-info nextBtn pull-right trans-type " id="transportation" type="button" value="Other" style="width:180px; height:50px;"><i class="text-yellow fa fa-train"></i>Transportation</button>
+                            </div>    </div>   
+                            
+                            <div id="tranps" style="display: none;">
+                        <div class="row">
+                        <div class="form-group col-md-3">
+                                <button class="btn btn-info nextBtn pull-right trans-type " id="transportation" type="button" value="Other" style="width:180px; height:50px;"><i class="text-yellow fa fa-train"></i>Next</button>
 
 
                             </div>
-                            <!-- <div class="form-group col-md-3">
-                                <button class="btn btn-danger nextBtn pull-right trans-type " id="clearanceanddelivery" type="button" value="Clearance And Delivery" style="width:180px; height:50px;"><i class=""></i>Clearance&Delivery</button>
+                            </div>    </div>                         
 
-
-                            </div> -->
-                        </div>
+                      
                     </div>
                 </div>
                 <!-- <button class="btn btn-primary nextBtn pull-right" type="button">Next</button> -->
             </div>
         </div>
     </form>
+
+    <!------------- 2ND step ----------------->
+
+   
+
+
         <!-- port details -->
         <div class="col-md-11 ">
             <div class="panel panel-primary setup-content" id="step-2">
                 <div class="panel-heading">
                     <h3 class="panel-title">Job Detials</h3>
                 </div>
+
+                <div id="deleteModal" class="modal fade" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Delete </h4>
+            </div>
+            <div class="modal-body">
+                <p>Do You Really Want to Delete This ?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<span id= 'deleteButton'></span>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+
                 <div class="panel-body">
                     <div class=" row">
                         <div class="form-group  col-md-3">
@@ -210,6 +283,7 @@
                             <input type="hidden" name="type" id="type" value="" />
                        
                             <input type="text" id="code" name="code" class="form-control" placeholder="<?php  echo $code[0]->Number + 1;  ?>" readonly="readonly" value="<?php  echo $code[0]->Number + 1;  ?>">
+                       
                         </div>
                         <div class="form-group col-md-3">
 
@@ -247,6 +321,12 @@
                                 ?>
 
                             </select>
+                        </div>
+
+                        <div class="form-group col-md-4" >
+                            <label class="control-label">Job Nature</label>
+                            <input maxlength="100" type="text" required="required" id="nature" class="form-control" placeholder="Enter Job Nature" />
+                          
                         </div>
                     </div>
                     <div class=" row">
@@ -732,7 +812,7 @@ foreach ($truck as $truck_name) {
 
 <!-- end port details -->
 <!-- consignment -->
-<div class="col-md-11">
+<div class="col-md-12">
     <div class="panel panel-primary setup-content " id="step-3">
         <div class="panel-heading">
             <h3 class="panel-title">Consignment</h3>
@@ -755,7 +835,7 @@ foreach ($truck as $truck_name) {
                                 <div class="form-group col-md-2">
 
                                     <label class="control-label">Description</label>
-                                    <input maxlength="100" type="text" id="description_job" class="form-control" placeholder=" Description" value="" />
+                                    <input maxlength="100" type="text" id="description_job" class="form-control" placeholder=" Description" value="" style="width: 110px;" />
                                     <input type="hidden" id="description_id" class="form-control" value="" />
                                     <input type="hidden" id="estimate_code" name="code" class="form-control" placeholder="<?php echo $codes[0]->estimate_no + 1; ?>" readonly="readonly" value="<?php echo $codes[0]->estimate_no + 1; ?>">
 
@@ -774,8 +854,8 @@ foreach ($truck as $truck_name) {
                                 </div>
                                 <div class="form-group col-md-1">
                                     <label class="control-label">Currency</label>
-                                    <select class="form-control" id="unit_price" name="unit_price" value="--Select Type--" style="width: 70px;">
-                                        <option value="bank">--Select Type--</option>
+                                    <select class="form-control" id="unit_price" name="unit_price" value="--Select Type--" style="width: 60px;">
+                                       
                                         <?php 
                                   foreach($currencylist as $key=>$value)
                                   {?>
@@ -793,25 +873,25 @@ foreach ($truck as $truck_name) {
                                 
                                 <div class="form-group col-md-2">
                   <label class="control-label" for="date"> Supplier</label>
-                  <input maxlength="100" type="text" id="view_supplier_name" required="required" class="form-control" placeholder=" supplier_name" value="">
+                  <input maxlength="100" type="text" id="view_supplier_name" class="form-control" placeholder=" supplier_name" value="" style="width: 108px;">
                   <input maxlength="100" type="hidden" id="supplier_id" class="form-control" value="">
                  </div>
                  <div class="form-group col-md-1">
                                  <label class="control-label">UnitPrice</label>
-                                 <input maxlength="100" type="number" autocomplete="off" id="eunitprice" value="0"  required="required" class="form-control " placeholder="unit price" style="width: 65px;" />
+                                 <input maxlength="100" type="number" autocomplete="off" id="eunitprice" value="0"  required="required" class="form-control " placeholder="unit price" style="width: 55px;" />
                               </div>
                               <div class="form-group col-md-1">
                                  <label class="control-label">Quantity</label>
-                                 <input maxlength="100" type="text" autocomplete="off" id="suppqty" value=" 1" required="required" class="form-control " placeholder="Quantity" style="width: 65px;" />
+                                 <input maxlength="100" type="text" autocomplete="off" id="suppqty" value=" 1" required="required" class="form-control " placeholder="Quantity" style="width: 55px;" />
                               </div>
 
                               <div class="form-group col-md-1">
                                  <label class="control-label"> SuppVat</label>
                                  <input maxlength="100" type="text" autocomplete="off" id="suppvat" value="0" required="required" class="form-control " placeholder="vat" style="width: 65px;" />
                               </div>    
-                                <br>
-                                <br/>
+                              <div class="form-group col-md-12">
                                 <input type="submit" name="add" value="ADD" id="add" class="btn btn-success" style="float: right;">
+                                </div>
                                 <br>
                             </div>
                             <div class="col-md-12">
@@ -912,6 +992,8 @@ foreach ($truck as $truck_name) {
     </div>
 </div>
 
+                                </div>
+
 <!-- end of consignment -->
 
 <!-- summary -->
@@ -985,10 +1067,9 @@ $('#ContainerNo').on('beforeItemAdd', function(event) {
         $('#airimport').click(function() {
             add("airimport", "Import");
             hideall();
-
             $('#airsection').removeClass("hidden");
             $('#airsummary').removeClass("hidden");
-            // $('#Airexport').addClass("hidden");
+          
 
         });
 
@@ -1424,36 +1505,37 @@ if(length1!=8)
 });
 </script>
 <script>
-    $('#job_doc').on('submit', function(e){ 
+    $('#job_doc').on('submit', function(e){  
         
-        var dummyid=$("#dummyjobid").val();
+        var dummyid=$("#dummyjobid").val(); 
       
-        var type=$("#doc_type").val();
-        var file_data = $('#fileupld').prop('files')[0];
-    //    alert(type);
-      
+        var type=$("#doc_type").val();                          
+        var file_data = $('#fileupld').prop('files')[0];        //   alert(JSON.stringify(file_data, "", 2));
+     
+    
           var formdata = new FormData(this);
           formdata.append("job_id", dummyid);
           formdata.append("doc_type", type);
           formdata.append("fileupld", file_data);
-          
-          e.preventDefault();
+        
+          e.preventDefault();                 
                
                     $.ajax({  
                          url: '<?php echo base_url("create-job-doc-ajax") ?>', 
                          method:"POST",  
                          fileElementId:'fileupld',
+                         dataType: 'JSON',
                          data:formdata,  
                          contentType: false,  
                          cache: false,  
                          processData:false,  
-                         success:function(data)  
-                         {  
-                            //  $id=$.trim(data);
-                            //  addcategory($id);
+                         success:function(response)  
+                         { 
+                                 data =response.file_name;
+                                 did=response.did;
                             console.log(data);
       
-                            //    var base_url= "<?php echo base_url(); ?>";
+                            
                               var extension = get_url_extension(data.replace(" ", "_"));
                               var url = '<?php echo base_url(); ?>/assets/images/'+data.replace(" ", "_");
                            
@@ -1464,14 +1546,36 @@ if(length1!=8)
                               }else if(extension=="doc"){
                                 url = '<?php echo base_url(); ?>/assets/images/doc.png';
                               }else if(extension=="docx"){
-                                url = '<?php echo base_url(); ?>/assets/images/doc.png';
-                              }
-                             $(".data-body").append('<tr><td>'+type+'</td><td><img src="'+url+'" style="width:100px;"></td> </tr>');
+                                url = '<?php echo base_url(); ?>/assets/images/doc.png'; /*<img src="'+url+'" style="width:100px;">*/
+                              } 
+                             $(".data-body").append('<tr id="row' + did + '"><td>'+type+'</td><td><a href="<?php echo base_url(); ?>/assets/images/'+data+'" style="width:100px;" target="_blank"><img src="'+url+'" style="width:100px;"></a></td><td><button type="button" class="btn btn-info btn-lg" onclick="confirmDeleteModal('+did+')">Delete</button></td></tr>');
                              $("#doc_type").val('');
                              $('#fileupld').val('');
                          }
                     });  
         });
+</script>
+
+<script type="text/javascript">
+function confirmDeleteModal(id){   
+    $('#deleteModal').modal();  $('#2').remove(); 
+	$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+}     
+function deleteData(id){ 
+    $('#row' + id).remove();
+    $.ajax({  
+                url:'delete_documents/'+id,
+                method:"POST", 
+            dataType: 'JSON',
+                data: {id:id} ,  
+                success:function(data){ //alert(data);
+                  
+                   
+                }  
+           });  
+  
+  $('#deleteModal').modal('hide'); // now close modal
+}  
 </script>
 
 <script>
@@ -1502,3 +1606,77 @@ if(length1!=8)
 
   </script>
 
+<script type="text/javascript">
+function Slecttype()
+{ 
+
+    val=document.getElementById('selects').value; 
+ 
+ if(val=='Export1')
+ {
+             document.getElementById('imports').style.display='none'; 
+             document.getElementById('lands').style.display='none'; 
+             document.getElementById('tranps').style.display='none'; 
+
+           document.getElementById('exports').style.visibility='visible';
+           document.getElementById('exports').style.display = 'block';
+}
+
+if(val=='Import1')
+ {
+            
+    document.getElementById('exports').style.display='none'; 
+    document.getElementById('lands').style.display='none';
+    document.getElementById('tranps').style.display='none';  
+
+           document.getElementById('imports').style.visibility='visible';
+           document.getElementById('imports').style.display = 'block';
+}
+
+if(val=='Transfer1')
+ {
+            
+    document.getElementById('exports').style.display='none'; 
+    document.getElementById('imports').style.display='none'; 
+    document.getElementById('tranps').style.display='none'; 
+
+
+           document.getElementById('lands').style.visibility='visible';
+           document.getElementById('lands').style.display = 'block';
+}
+
+if(val=='Transportation1')
+ {
+            
+    document.getElementById('exports').style.display='none'; 
+    document.getElementById('imports').style.display='none'; 
+    document.getElementById('lands').style.display='none'; 
+    
+
+
+           document.getElementById('tranps').style.visibility='visible';
+           document.getElementById('tranps').style.display = 'block';
+}
+
+
+ 
+}
+
+</script>  
+
+<script>
+function seadisplay()
+{
+    document.getElementById('seashow').style.visibility='visible';
+           document.getElementById('seashow').style.display = 'block';
+
+}
+</script>
+<script>
+function seadisplay2()
+{
+    document.getElementById('seashow2').style.visibility='visible';
+           document.getElementById('seashow2').style.display = 'block';
+
+}
+</script>

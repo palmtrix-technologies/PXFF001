@@ -196,7 +196,7 @@
                             <input type="hidden" name="id" id="id" value="<?php echo $values[0]->JobId; ?>" />
                             <input type="hidden" name="type" id="type" value="<?php echo $values[0]->Type; ?>" />
                             <?php 
-                             if( $values[0]->Number==0) { ?>
+                        /*     if( $values[0]->Number==0) { ?>
                             <input type="text" id="code" name="code" class="form-control" placeholder="" readonly="readonly" value="<?php echo $jobno+1; ?>">
                            
                             <?php
@@ -207,8 +207,10 @@
                                 <input type="text" id="code" name="code" class="form-control" placeholder="" readonly="readonly" value="<?php echo $values[0]->Jobcode; ?>">
                          
                                 <?php
-                                   }  
+                                   }   */
                             ?>
+                 <input type="hidden"  id="code" name="code" class="form-control" placeholder="" readonly="readonly" value="<?php echo $jobcode[0]->Number; ?>">
+                 <input type="text" id="code12" name="code12" class="form-control" placeholder="" readonly="readonly" value="<?php echo $jobcode[0]->Jobcode; ?>">
                         </div>
                         <div class="form-group col-md-3">
 
@@ -218,17 +220,7 @@
                         </div>
                     </div>
                     <div class=" row">
-                        <div class="form-group col-md-4">
-                            <label class="control-label">Shipper Name</label>
-                            <input maxlength="100" type="text" required="required" id="shippername" value="<?php echo $values[0]->Shipper; ?>" class="form-control" placeholder="Enter shipper Name" />
-                            <input maxlength="100" type="hidden" required="required" id="shipperid" value="<?php echo $values[0]->consignor_id; ?>" class="form-control" />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label class="control-label">Consignee Name</label>
-                            <input maxlength="100" type="text" required="required" id="consigneename" value="<?php echo $values[0]->Consignee; ?>" class="form-control" placeholder="Enter Consignee Name" />
-                            <input maxlength="100" type="hidden" required="required" id="consignor_id" value="<?php echo $values[0]->consignee_id; ?>" class="form-control" />
-                        </div>
-                        <div class="form-group col-md-4">
+                    <div class="form-group col-md-4">
                             <label for="exampleInputname1">Client Name</label>
                             <input type="hidden" name="client_id" id="client_id" value="" />
                             <select class="form-control" name="client_name" id="client_name" value="--Select Type--">
@@ -242,6 +234,17 @@
 
                             </select>
                         </div>
+                        <div class="form-group col-md-4" >
+                            <label class="control-label">Shipper Name</label>
+                            <input maxlength="100" type="text" required="required" id="shippername" value="<?php echo $values[0]->Shipper; ?>" class="form-control" placeholder="Enter shipper Name" />
+                            <input maxlength="100" type="hidden" required="required" id="shipperid" value="<?php echo $values[0]->consignor_id; ?>" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Consignee Name</label>
+                            <input maxlength="100" type="text" required="required" id="consigneename" value="<?php echo $values[0]->Consignee; ?>" class="form-control" placeholder="Enter Consignee Name" />
+                            <input maxlength="100" type="hidden" required="required" id="consignor_id" value="<?php echo $values[0]->consignee_id; ?>" class="form-control" />
+                        </div>
+                       
                     </div>
                     <!-- <div class=" row">
                         <div class="form-group col-md-4">
@@ -307,7 +310,7 @@
                                                 
                                 <div class="form-group col-md-4">
                                     <label class="control-label">MAWB </label>
-                                    <input maxlength="100" type="text" id="Mawb_air" readonly="readonly" required="required" class="form-control mawbcarrier" id="mawbcarrier" placeholder="prefix code"  />
+                                    <input maxlength="100" type="text" id="Mawb_air1" readonly="readonly" required="required" class="form-control mawbcarrier" id="mawbcarrier" placeholder="prefix code"  />
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label class="control-label"> &nbsp;</label><span id='mawbmsg'></span>
@@ -315,7 +318,7 @@
                                     <input maxlength="8" type="text" id="Mawb_code" required="required" class="form-control mawbcarrier" id="mawbcarrier" placeholder="enter serial number"  onblur="checkmawb1();" />                                </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-4" style="display:none;">
                             <label class="control-label"> HAWB</label>
                             <input maxlength="100" type="text" id="Hawb" value="<?php echo $values[0]->Hawb; ?>" required="required" class="form-control" placeholder=" HAWB" />
                         </div>
@@ -419,7 +422,7 @@
                                 ?>
                             </select>
                         </div> -->
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-4" style="display:none;">
                             <label class="control-label">PO no. </label>
                             <input maxlength="100" type="text" id="PoNo_sea" value="<?php echo $values[0]->PoNo; ?>" required="required" class="form-control" placeholder=" PO no." />
                         </div>
